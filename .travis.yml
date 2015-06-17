@@ -11,3 +11,11 @@ script:
 - bundle exec rspec
 before_script:
 - psql -c 'create database "soup-du-jour_test";' -U postgres
+deploy:
+  provider: heroku
+  api_key:
+    secure: PnPOo0scHU1gWS0B9RGdgLIMUJU9OsD/V9vmcBl/dJ1s9kD0SVcMGu0rsVVSTc5d7ykmxYDjjLvU8vOHpiVNPE6aDT6pO3hR5FqE/X1L/i+CiL8tI74ptg1cHTg0rQgPz/jOI2iQxihb98021paKmOOfbaRb6SoYGJs5TdQtV4ynvdSI0Y3VzS6vzuQzq8rRSluwtXJjMEuUkNrYk/IXl29Gm9gHoEDm1ttWaqrD4q9NW4fMlIxSAxeOpu1iGsEuzXlYCsU1bQd1z1FkgSzz8pRGGAg4i2+MtgzKKbuOyFw/4v/skHlD8aN6ht7Rbb/vs2gyPrNYkeRtwRbp6yYJL1j/yckIgzep+FRGToQF3GlOSe1oIRoUcvpurXHs+RPoE8pbqnxj/t3wbf8+HYyW1/66P8HgwigcRcfNCWahCd+gDS+oQ5+jcaMPc67DIw4TW09L//uBulWtvjXU7mbxm88ZmrLtgv7eQjxsq28Afi813NxyHrwB0bD1l1WbAIaoDo5y43w6NNxfw4csfnyTl/OOiyLvVrWgBAqECs7YCRj5TOIQCFqnQ4Xno6UwcAaLohvXGQ6ASN54ux1c+KWhVLogt3g1TFcPLAjzEc31cVQP5p4NC9hPWuR7B8m7bqqEq393i8YCn8xFU/JbcW5er7IDE6EtKU5JaaWxIg0ohwQ=
+  app: soupdujour
+  run:
+    - "rake db:migrate"
+    - restart
