@@ -31,6 +31,7 @@ gem 'pry-rails'
 
 gem 'rails_12factor'
 
+gem 'figaro'
 # Use Unicorn as the app server
 # gem 'unicorn'
 
@@ -47,5 +48,15 @@ group :development, :test do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+
+  gem 'rspec-rails', '~> 3.0.0'
+
+  gem 'shoulda-matchers', require: false
+
+  gem 'capybara'
+
+  gem 'factory_girl_rails'
+
+  gem 'simplecov', :require => false
 end
 
