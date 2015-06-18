@@ -10,6 +10,8 @@ class User < ActiveRecord::Base
 		presence: true,
 		length: {minimum: 6},
 		confirmation: true
+	validates :zip_code,
+		format: {with: /\A(\d{5})?\z/}
 
 
 	# Returns the hash digest of the given string.

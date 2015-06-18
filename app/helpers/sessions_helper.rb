@@ -59,7 +59,7 @@ module SessionsHelper
   # restrict access to some pages if a user is logged in
   def unauthorize
    	if current_user
-     	flash[:alert] = "You must log out to view that page"
+     	flash[:alert] = "You cannot visit that page while you are logged in"
      	redirect_to root_path
    	end
   end
