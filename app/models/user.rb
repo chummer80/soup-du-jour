@@ -2,13 +2,14 @@ class User < ActiveRecord::Base
 	attr_accessor :remember_token
 	has_secure_password
 
-	validates :email, on: create,
+	validates :email, on: :create,
 		presence: true,
 		uniqueness: {case_sensitive: false},
 		format: {with: /\A[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\z/}
 	validates :password, on: :create, 
 		presence: true,
-		length: {minimum: 6}
+		length: {minimum: 6},
+		confirmation: true
 
 
 	# Returns the hash digest of the given string.
