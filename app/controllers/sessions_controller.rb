@@ -12,13 +12,13 @@ class SessionsController < ApplicationController
 
 		if user && user.authenticate(user_params[:password])
 			log_in user
-			redirect_to root_path
+			redirect_to root_path and return
 	    else
 	    	@user = User.new(user_params)
 			
 	    	# use render instead of redirect so user input can persist in the form
 			flash.now[:alert] = "Incorrect username or password"
-			render 'new'
+			render 'sessions/new' and return
 	    end
 	end
 
