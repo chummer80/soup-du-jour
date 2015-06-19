@@ -32,6 +32,8 @@ gem 'pry-rails'
 gem 'rails_12factor'
 
 gem 'figaro'
+
+gem 'httparty', '0.11.0'
 # Use Unicorn as the app server
 # gem 'unicorn'
 
