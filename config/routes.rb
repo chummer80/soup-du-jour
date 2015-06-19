@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     get "reddit", to: "api#reddit", as: :reddit
     get "weather", to: "api#weather", as: :weather
     get "yelp", to: "api#yelp", as: :yelp
+    get "beer", to: "api#beer", as: :beer
 
   end
 

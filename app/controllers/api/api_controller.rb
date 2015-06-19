@@ -51,5 +51,17 @@ module Api
 			render json:food
 		end
 
+		def beer
+			beer_key = Figaro.env.beer_key
+			@beerapi= HTTParty.get"http://api.brewerydb.com/v2/beers/?key=#{beer_key}&order=random&randomCount=1&abv='-10'"
+
+			alco ={
+			'beer' => @beerapi['data'][0]['name'],
+			'description' =>@beerapi['data'][0]['description']
+			}
+
+			render json:alco
+		end
+
 	end
 end
