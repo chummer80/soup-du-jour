@@ -3,6 +3,8 @@ Rails.application.routes.draw do
     get "soup", to: "api#soup", as: :soup
     get "word", to: "api#word", as: :word
     get "reddit", to: "api#reddit", as: :reddit
+    get "weather", to: "api#weather", as: :weather
+    get "yelp", to: "api#yelp", as: :yelp
 
   end
 
