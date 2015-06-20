@@ -137,5 +137,11 @@ soups = Soup.create([
 		image_url: "http://images.media-allrecipes.com/userphotos/250x250/00/21/60/216012.jpg",
 		description: "This is an oh-so-good recipe. Just the right amount of spice to make you take a cold drink but definitely keep coming back for more! This soup is irresistible!",
 		recipe_url: "http://allrecipes.com/recipe/super-delicious-zuppa-toscana/detail.aspx?evt19=1&referringHubId=143069"
+	},
+	{
+		name: "Chicken Broccoli Alfredo Soup",
+		image_url: "http://img.sndimg.com/food/image/upload/w_555,h_416,c_fit,fl_progressive,q_95/v1/img/recipes/15/53/75/VRO93x3gQ1eF2o5W79WD_DSC_0833.JPG",
+		description: "Here's a scrumptious soup served at Dairy Keen (three-time \"Best of State\" winner) of Heber City, Utah. This is a recipe I've not had long, but have made over and over and OVER again. It is that good!",
+		recipe_url: "http://www.food.com/recipe/chicken-broccoli-alfredo-soup-155375?photo=371322"
 	}
 ])
