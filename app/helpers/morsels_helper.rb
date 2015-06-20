@@ -43,6 +43,16 @@ module MorselsHelper
 		}
 	end
 
+	def self.get_beer_morsel_data
+		beer_key = Figaro.env.beer_key
+		beer_api_data = HTTParty.get"http://api.brewerydb.com/v2/beers/?key=#{beer_key}&order=random&randomCount=1&abv='-10'"
+
+		beer_morsel_data = {
+			'beer' => beer_api_data['data'][0]['name'],
+			'description' => beer_api_data['data'][0]['description']
+		}
+	end
+
 
 	# Create an entry in the morsel table for the morsel type and zip code provided
 	# This should only happen if such a morsel doesn't already exist
@@ -58,6 +68,8 @@ module MorselsHelper
 			morsel_data = get_weather_morsel_data(zip_code)
 		when "restaurant"
 			morsel_data = get_restaurant_morsel_data(zip_code)
+		when "beer"
+			morsel_data = get_beer_morsel_data
 		else
 			raise "Unrecognized morsel type: #{morsel_type}"
 		end

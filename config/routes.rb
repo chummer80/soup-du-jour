@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     get "reddit", to: "api#reddit", as: :reddit
     get "weather", to: "api#weather", as: :weather
     get "restaurant", to: "api#restaurant", as: :restaurant
-
+    get "beer", to: "api#beer", as: :beer
   end
 
   root 'application#index'

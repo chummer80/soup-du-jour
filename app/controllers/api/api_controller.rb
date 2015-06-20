@@ -23,5 +23,8 @@ module Api
 			render json: MorselsHelper.get_morsel("restaurant", "90210").data
 		end
 
+		def beer
+			render json: MorselsHelper.get_morsel("beer").data
+		end
 	end
 end
