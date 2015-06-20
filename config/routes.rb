@@ -4,7 +4,7 @@ Rails.application.routes.draw do
     get "word", to: "api#word", as: :word
     get "reddit", to: "api#reddit", as: :reddit
     get "weather", to: "api#weather", as: :weather
-    get "yelp", to: "api#yelp", as: :yelp
+    get "restaurant", to: "api#restaurant", as: :restaurant
 
   end
 
