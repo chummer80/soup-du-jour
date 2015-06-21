@@ -42,19 +42,17 @@ module Api
 			end
 
 			# If we still don't have the zip code then get it using the geocoder gem.
-			# But this only works in production because it needs the user to be at a real IP address.
-			puts "BEFORE IF: zip is #{zip.to_s}"
-			puts "Rails.env.production? is #{Rails.env.production?.to_s}"
+			# But this only works in production because it needs the request to come from a real IP address.
 			if (zip.nil? || zip == "") && Rails.env.production?
-				puts "IF STATEMENT was entered"
+				puts "Detecting zip code."
 				# The location method can sometimes fail because of timeout so put it in this
 				begin
 					zip = request.location.postal_code
+					puts "Detected Zip: #{zip}"
 				rescue
 					puts "Zip code could not be detected."
 				end
 			end
-			puts "AFTER IF: zip is #{zip.to_s}"
 
 			# If we still don't have the zip code then use a default (Beverly Hills)
 			if zip.nil? || zip == ""
