@@ -1,7 +1,12 @@
 module MorselsHelper
 	def self.get_soup_morsel_data
 		soup_morsel = Soup.order("RANDOM()").first
-		soup_morsel_data = soup_morsel.to_json({except: [:created_at, :updated_at]})
+		soup_morsel_data = {
+			name: soup_morsel.name,
+			image_url: soup_morsel.image_url,
+			description: soup_morsel.description,
+			recipe_url: soup_morsel.recipe_url
+		}
 		soup_morsel_data
 	end
 
@@ -17,8 +22,8 @@ module MorselsHelper
 	def self.get_reddit_morsel_data
 		reddit_api_data = HTTParty.get"https://www.reddit.com/top.json"
 		reddit_morsel_data = {
-				'title' => reddit_api_data['data']['children'][0]['data']['title'],
-				'permalink' => "http://www.reddit.com/" + reddit_api_data['data']['children'][0]['data']['permalink']
+			'title' => reddit_api_data['data']['children'][0]['data']['title'],
+			'permalink' => "http://www.reddit.com/" + reddit_api_data['data']['children'][0]['data']['permalink']
 		}
 	end
 
