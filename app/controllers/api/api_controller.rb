@@ -47,10 +47,7 @@ module Api
 			puts "Rails.env.production? is #{Rails.env.production?.to_s}"
 			if (zip.nil? || zip == "") && Rails.env.production?
 				puts "IF STATEMENT was entered"
-				# this could possibly fail if zipcode wasn't in the location data.
-				begin
-					zip = request.location.data["zipcode"]
-				end
+				zip = request.location.postal_code
 			end
 			puts "AFTER IF: zip is #{zip.to_s}"
 
