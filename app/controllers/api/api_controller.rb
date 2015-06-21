@@ -47,7 +47,12 @@ module Api
 			puts "Rails.env.production? is #{Rails.env.production?.to_s}"
 			if (zip.nil? || zip == "") && Rails.env.production?
 				puts "IF STATEMENT was entered"
-				zip = request.location.postal_code
+				# The location method can sometimes fail because of timeout so put it in this
+				begin
+					zip = request.location.postal_code
+				rescue
+					puts "Zip code could not be detected."
+				end
 			end
 			puts "AFTER IF: zip is #{zip.to_s}"
 
