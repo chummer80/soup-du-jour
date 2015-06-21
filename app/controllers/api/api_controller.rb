@@ -43,9 +43,13 @@ module Api
 
 			# If we still don't have the zip code then get it using the geocoder gem.
 			# But this only works in production because it needs the user to be at a real IP address.
+			puts "BEFORE IF: zip is #{zip.to_s}"
+			puts "Rails.env.production? is #{Rails.env.production?.to_s}"
 			if (zip.nil? || zip == "") && Rails.env.production?
+				puts "IF STATEMENT was entered"
 				zip = request.location.data["zipcode"]
 			end
+			puts "AFTER IF: zip is #{zip.to_s}"
 
 			# If we still don't have the zip code then use a default (Beverly Hills)
 			if zip.nil? || zip == ""
