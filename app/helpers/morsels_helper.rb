@@ -38,7 +38,20 @@ module MorselsHelper
 	end
 
 	def self.get_restaurant_morsel_data(zip_code)
-		yelp_api_data = Yelp.client.search(zip_code, {term: 'food', radius_filter: 5, limit: 15})
+		# Pick the yelp business with a "best "match" ranking that corresponds to the current
+		# day of the month. This way a top-31 restaurant will always be suggested, and it will 
+		# never be the same restaurant that was just suggested recently.
+		restaurant_rank = Time.zone.now.mday
+		yelp_api_data = Yelp.client.search(
+			zip_code, 
+			{
+				term: 'food', 
+				radius_filter: 8046, 	# 8046 meters = 5 miles
+				limit: 1, 
+				offset: restaurant_rank - 1
+			}
+		)
+
 		restaurant_morsel_data ={
 			'first_img' => yelp_api_data.raw_data['businesses'][0]['image_url'],
 			'bizname' => yelp_api_data.raw_data['businesses'][0]['name'],
