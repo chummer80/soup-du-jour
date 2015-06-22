@@ -52,8 +52,16 @@ module MorselsHelper
 			}
 		)
 
+		begin
+			restaurant_img = yelp_api_data.raw_data['businesses'][0]['image_url']
+			# if image is named "ms.jpg", then it is the small version. Change it to "o.jpg".
+			restaurant_img.gsub!(/ms\.jpg/, 'o.jpg')
+		rescue
+			restaurant_img = ""
+		end
+
 		restaurant_morsel_data ={
-			'first_img' => yelp_api_data.raw_data['businesses'][0]['image_url'],
+			'first_img' => restaurant_img,
 			'bizname' => yelp_api_data.raw_data['businesses'][0]['name'],
 			'rating' => yelp_api_data.raw_data['businesses'][0]['rating_img_url'],
 			'comment' => yelp_api_data.raw_data['businesses'][0]['snippet_text'],
