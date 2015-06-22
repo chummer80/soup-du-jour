@@ -45,7 +45,7 @@ module MorselsHelper
 		yelp_api_data = Yelp.client.search(
 			zip_code, 
 			{
-				term: 'food', 
+				term: 'restaurants', 
 				radius_filter: 8046, 	# 8046 meters = 5 miles
 				limit: 1, 
 				offset: restaurant_rank - 1
