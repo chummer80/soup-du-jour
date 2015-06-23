@@ -85,10 +85,10 @@ module MorselsHelper
 		event_data = HTTParty.get"https://www.eventbriteapi.com/v3/events/search/?location.address=#{zip_code}&location.within=5mi&start_date.range_start=#{today}T00%3A00%3A35Z&start_date.range_end=#{today}T23%3A50%3A57Z&token=#{events_key}"
 
 		event_morsel_data = {
-				'name' => event_data['events'][0]['name']['text'],
-				'description' => event_data['events'][0]['description']['text'],
-				'event_pic' => event_data['events'][0]['logo']['url'],
-				'event_url' => event_data['events'][0]['url']
+			'name' => event_data['events'][0]['name']['text'],
+			'description' => event_data['events'][0]['description']['text'],
+			'event_pic' => event_data['events'][0]['logo']['url'],
+			'event_url' => event_data['events'][0]['url']
 		}
 	end
 
@@ -97,12 +97,30 @@ module MorselsHelper
 		recipe_data = JSON.parse HTTParty.get"http://food2fork.com/api/search?sort=t&key=#{recipe_key}"
 		recipe_index = rand(30)
 		recipe_morsel_data = {
-
-				'name' => recipe_data['recipes'][recipe_index]['title'],
-				'image' => recipe_data['recipes'][recipe_index]['image_url'],
-				'source' => recipe_data['recipes'][recipe_index]['source_url']
+			'name' => recipe_data['recipes'][recipe_index]['title'],
+			'image' => recipe_data['recipes'][recipe_index]['image_url'],
+			'source' => recipe_data['recipes'][recipe_index]['source_url']
 		}
 	end
+	
+	def self.get_video_morsel_data
+		# Youtube channel "#PopularOnYoutube" has a playlist called "Popular Right Now".
+		# Grab the first video on that playlist as our video morsel.
+		playlist = Yt::Playlist.new(id: 'PLrEnWoR732-BHrPp_Pm8_VleD68f9s14-')
+		video = playlist.playlist_items.first
+
+		# this method gives the default-sized image. change it to the max-res image.
+		thumbnail_url = video.thumbnail_url
+		thumbnail_url.gsub!(/default\.jpg/, "maxresdefault.jpg")
+
+		video_morsel_data = {
+			title: video.title,
+			description: video.description,
+			image_url: thumbnail_url,
+			video_url: "https://www.youtube.com/watch?v=#{video.video_id}"
+		}
+	end
+
 
 
 
@@ -124,6 +142,8 @@ module MorselsHelper
 			morsel_data = get_beer_morsel_data
 		when "event"
 			morsel_data = get_event_morsel_data(zip_code)
+		when "video"
+			morsel_data = get_video_morsel_data
 		when "recipe"
 			morsel_data = get_recipe_morsel_data
 		else
