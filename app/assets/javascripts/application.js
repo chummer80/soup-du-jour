@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require isotope.pkgd.min
+//= require imagesloaded.pkgd.min.js
 //= require tiles
 //= require turbolinks
 //= require_tree .
@@ -23,21 +24,3 @@ var ready = function(){
             $("#wrapper").toggleClass("active");
     });
 };
-
-$(document).ready(ready);
-$(document).on('page:load', ready);
-
-$('selector').isotope()
-
-$('.grid').isotope({
-  // options
-  itemSelector: '.grid-item',
-  layoutMode: 'fitRows'
-});
-
-var elem = document.querySelector('.grid');
-var iso = new Isotope( elem, {
-  // options
-  itemSelector: '.grid-item',
-  layoutMode: 'fitRows'
-});

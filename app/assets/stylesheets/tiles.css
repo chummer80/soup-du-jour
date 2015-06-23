@@ -8,6 +8,10 @@ body {
   font-family: sans-serif;
 }
 
+div.is-loading {
+  background-color: black;
+  background-image: url('http://desandro.github.io/imagesloaded/assets/loading.gif');
+}
 
 /* clear fix */
 .isotope:after {
@@ -18,7 +22,7 @@ body {
 
 /* ---- .element-item ---- */
 
-.tile-item {
+.element-item {
   position: relative;
   float: left;
   margin: 5px;
@@ -27,12 +31,12 @@ body {
   color: #262524;
 }
 
-.tile-item > * {
+.element-item > * {
   margin: 0;
   padding: 0;
 }
 
-.tile-item .name {
+.element-item .name {
   position: absolute;
   left: 10px;
   top: 60px;
@@ -44,27 +48,27 @@ body {
 
 .soup {
   width: 250px;
-  height: 350px;
+  /*min-height: 300px;*/
 }
 
 .weather {
   width: 175px;
-  height: 175px;
+  /*min-height: 100px;*/
 
 }
 
 .word {
   width: 175px;
-  height: 175px;
+  /*min-height: 100px;*/
 }
 
 .reddit {
   width: 300px;
-  height: 400px;
+  /*min-height: 100px;*/
   overflow: scroll;
 }
 
 .yelp {
-  width: 500px;
-  height: 300px;
+  width: 250px;
+  /*min-height: 200px;*/
 }
