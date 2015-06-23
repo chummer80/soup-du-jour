@@ -11,10 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150617222546) do
+ActiveRecord::Schema.define(version: 20150620002515) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "morsels", force: :cascade do |t|
+    t.string   "morsel_type"
+    t.string   "zip_code",    default: ""
+    t.text     "data"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
 
   create_table "soups", force: :cascade do |t|
     t.string   "name"

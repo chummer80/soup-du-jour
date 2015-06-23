@@ -1,8 +1,8 @@
 require 'yelp'
 
 Yelp.client.configure do |config|
-  config.consumer_key = "E61IhLVdNqbpYYuwKdVn-A"
-  config.consumer_secret = "uYm1l5eqxORSK48LYrv3iezLwxQ"
-  config.token = "lrEoFFYIMZ8SXHI8vzMvn5I5pPVQrK_0"
-  config.token_secret = "iXByjrwW8wUbqlmJu9FgKONiYIc"
+	config.consumer_key = Figaro.env.yelp_consumer_key
+	config.consumer_secret = Figaro.env.yelp_consumer_secret
+	config.token = Figaro.env.yelp_token
+	config.token_secret = Figaro.env.yelp_token_secret
 end

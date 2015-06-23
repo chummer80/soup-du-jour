@@ -1,55 +1,82 @@
 module Api
 	class ApiController < ApplicationController
+		include MorselsHelper
 		protect_from_forgery with: :null_session
 
 		def soup
-			render json: Soup.order("RANDOM()").first, except: [:created_at, :updated_at]
+			render json: MorselsHelper.get_morsel("soup").data
 		end
 
 		def word
-			word_key = Figaro.env.word_key
-			@wordapi = HTTParty.get"http://api.wordnik.com:80/v4/words.json/wordOfTheDay?api_key=#{word_key}"
-			dictionary = {
-					'word' => @wordapi['word'].capitalize,
-					'definition' => @wordapi["note"]
-			}
-
-			render json: dictionary
+			render json: MorselsHelper.get_morsel("word").data
 		end
 
 		def reddit
-			@redditapi=HTTParty.get"https://www.reddit.com/top.json"
-			top_post = {
-					'title' => @redditapi['data']['children'][0]['data']['title'],
-					'permalink' => @redditapi['data']['children'][0]['data']['permalink']
-			}
-			render json:top_post
+			render json: MorselsHelper.get_morsel("reddit").data
 		end
 
 		def weather
-			weather_key = Figaro.env.weather_key
-			# zip=params[:search].present? ? params[:search].to_i : 90210
-			#can't add link_to or image_tags on json data, will have to add on the call
-			@weatherapi = HTTParty.get"http://api.wunderground.com/api/#{weather_key}/conditions/q/90210.json"
-			forecast = {
-			'location' => @weatherapi["current_observation"]["display_location"]['full'],
-			'current_temp' => @weatherapi["current_observation"]["temperature_string"],
-			'icon' =>  @weatherapi["current_observation"]["icon_url"]
-			}
-			render json:forecast
+			# If zip code was supplied as a query parameter, then use it.
+			zip = params[:zip_code] || get_zip(request)
+			render json: MorselsHelper.get_morsel("weather", zip).data
 		end
 
-		def yelp
-			@yelpapi = Yelp.client.search("90210", {term: 'food', radius_filter: 5, limit: 15})
-			food ={
-			'first_img' => @yelpapi.raw_data['businesses'][0]['image_url'],
-			'bizname' => @yelpapi.raw_data['businesses'][0]['name'],
-			'rating' => @yelpapi.raw_data['businesses'][0]['rating_img_url'],
-			'comment' => @yelpapi.raw_data['businesses'][0]['snippet_text'],
-			'yelp_link' => @yelpapi.raw_data['businesses'][0]['url']
-			}
-			render json:food
+		def restaurant
+			zip = params[:zip_code] || get_zip(request)
+			render json: MorselsHelper.get_morsel("restaurant", zip).data
 		end
 
+		def beer
+			render json: MorselsHelper.get_morsel("beer").data
+		end
+
+		def event
+			zip = params[:zip_code] || get_zip(request)
+			render json: MorselsHelper.get_morsel("event", zip).data
+		end
+		
+		def video
+			render json: MorselsHelper.get_morsel("video").data
+		end
+
+		def recipe
+			render json: MorselsHelper.get_morsel("recipe").data
+		end
+
+		def news
+			render json: MorselsHelper.get_morsel("news").data
+		end
+
+
+		# Try to detect the correct zip code from either the user profile 
+		# or geocoder (IP address detection).
+		def get_zip(request)
+			zip = nil
+
+			# Try to get zip code from logged-in user's profile
+			if logged_in?
+				zip = current_user.zip_code
+			end
+
+			# If we still don't have the zip code then get it using the geocoder gem.
+			# But this only works in production because it needs the request to come from a real IP address.
+			if (zip.nil? || zip == "") && Rails.env.production?
+				puts "Detecting zip code."
+				# The location method can sometimes fail because of timeout so put it in this
+				begin
+					zip = request.location.postal_code
+					puts "Detected Zip: #{zip}"
+				rescue
+					puts "Zip code could not be detected."
+				end
+			end
+
+			# If we still don't have the zip code then use a default (Beverly Hills)
+			if zip.nil? || zip == ""
+				zip = "90210"
+			end	
+
+			zip
+		end
 	end
 end

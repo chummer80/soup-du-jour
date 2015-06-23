@@ -4,8 +4,12 @@ Rails.application.routes.draw do
     get "word", to: "api#word", as: :word
     get "reddit", to: "api#reddit", as: :reddit
     get "weather", to: "api#weather", as: :weather
-    get "yelp", to: "api#yelp", as: :yelp
-
+    get "restaurant", to: "api#restaurant", as: :restaurant
+    get "beer", to: "api#beer", as: :beer
+    get "event", to: "api#event", as: :event
+    get "video", to: "api#video", as: :video
+    get "recipe", to: "api#recipe", as: :recipe
+    get "news", to: "api#news", as: :news
   end
 
   root 'application#index'
