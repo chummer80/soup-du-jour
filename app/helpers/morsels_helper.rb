@@ -90,9 +90,20 @@ module MorselsHelper
 				'event_pic' => event_data['events'][0]['logo']['url'],
 				'event_url' => event_data['events'][0]['url']
 		}
-
-
 	end
+
+	def self.get_recipe_morsel_data
+		recipe_key = Figaro.env.recipe_key
+		recipe_data = JSON.parse HTTParty.get"http://food2fork.com/api/search?sort=t&key=#{recipe_key}"
+		recipe_index = rand(30)
+		recipe_morsel_data = {
+
+				'name' => recipe_data['recipes'][recipe_index]['title'],
+				'image' => recipe_data['recipes'][recipe_index]['image_url'],
+				'source' => recipe_data['recipes'][recipe_index]['source_url']
+		}
+	end
+
 
 
 	# Create an entry in the morsel table for the morsel type and zip code provided
@@ -113,6 +124,8 @@ module MorselsHelper
 			morsel_data = get_beer_morsel_data
 		when "event"
 			morsel_data = get_event_morsel_data(zip_code)
+		when "recipe"
+			morsel_data = get_recipe_morsel_data
 		else
 			raise "Unrecognized morsel type: #{morsel_type}"
 		end

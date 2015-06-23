@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     get "restaurant", to: "api#restaurant", as: :restaurant
     get "beer", to: "api#beer", as: :beer
     get "event", to: "api#event", as: :event
+    get "recipe", to: "api#recipe", as: :recipe
   end
 
   root 'application#index'
