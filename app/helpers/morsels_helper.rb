@@ -79,6 +79,24 @@ module MorselsHelper
 		}
 	end
 
+	def self.get_video_morsel_data
+		# Youtube channel "#PopularOnYoutube" has a playlist called "Popular Right Now".
+		# Grab the first video on that playlist as our video morsel.
+		playlist = Yt::Playlist.new(id: 'PLrEnWoR732-BHrPp_Pm8_VleD68f9s14-')
+		video = playlist.playlist_items.first
+
+		# this method gives the default-sized image. change it to the max-res image.
+		thumbnail_url = video.thumbnail_url
+		thumbnail_url.gsub!(/default\.jpg/, "maxresdefault.jpg")
+
+		video_morsel_data = {
+			title: video.title,
+			description: video.description,
+			image_url: thumbnail_url,
+			video_url: "https://www.youtube.com/watch?v=#{video.video_id}"
+		}
+	end
+
 
 	# Create an entry in the morsel table for the morsel type and zip code provided
 	# This should only happen if such a morsel doesn't already exist
@@ -96,6 +114,8 @@ module MorselsHelper
 			morsel_data = get_restaurant_morsel_data(zip_code)
 		when "beer"
 			morsel_data = get_beer_morsel_data
+		when "video"
+			morsel_data = get_video_morsel_data
 		else
 			raise "Unrecognized morsel type: #{morsel_type}"
 		end

@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     get "weather", to: "api#weather", as: :weather
     get "restaurant", to: "api#restaurant", as: :restaurant
     get "beer", to: "api#beer", as: :beer
+    get "video", to: "api#video", as: :video
   end
 
   root 'application#index'

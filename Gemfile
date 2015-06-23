@@ -33,7 +33,7 @@ gem 'httparty', '0.11.0'
 
 
 gem 'yelp', require: 'yelp'
-
+gem 'yt', '~> 0.24.9'
 gem "geocoder"
 
 group :development, :test do

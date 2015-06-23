@@ -30,6 +30,10 @@ module Api
 			render json: MorselsHelper.get_morsel("beer").data
 		end
 
+		def video
+			render json: MorselsHelper.get_morsel("video").data
+		end
+
 
 		# Try to detect the correct zip code from either the user profile 
 		# or geocoder (IP address detection).
