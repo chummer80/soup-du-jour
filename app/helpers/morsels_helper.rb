@@ -121,6 +121,18 @@ module MorselsHelper
 		}
 	end
 
+	def self.get_news_morsel_data
+		news_key = Figaro.env.news_key
+		news_data = HTTParty.get("http://api.nytimes.com/svc/topstories/v1/home.json?api-key=#{news_key}")
+
+		news_morsel_data = {
+				'title' => news_data['results'][0]['title'],
+				'abstract' => news_data['results'][0]['abstract'],
+				'image' => news_data['results'][0]['multimedia'][0]['url'],
+				'source' => news_data['results'][0]['url']
+		}
+	end
+
 
 
 
@@ -146,6 +158,8 @@ module MorselsHelper
 			morsel_data = get_video_morsel_data
 		when "recipe"
 			morsel_data = get_recipe_morsel_data
+		when "news"
+			morsel_data = get_news_morsel_data
 		else
 			raise "Unrecognized morsel type: #{morsel_type}"
 		end

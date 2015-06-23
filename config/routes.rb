@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     get "event", to: "api#event", as: :event
     get "video", to: "api#video", as: :video
     get "recipe", to: "api#recipe", as: :recipe
+    get "news", to: "api#news", as: :news
   end
 
   root 'application#index'

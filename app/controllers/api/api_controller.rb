@@ -43,6 +43,11 @@ module Api
 			render json: MorselsHelper.get_morsel("recipe").data
 		end
 
+		def news
+			render json: MorselsHelper.get_morsel("news").data
+		end
+
+
 		# Try to detect the correct zip code from either the user profile 
 		# or geocoder (IP address detection).
 		def get_zip(request)
