@@ -79,6 +79,32 @@ module MorselsHelper
 		}
 	end
 
+	def self.get_event_morsel_data(zip_code)
+		events_key = Figaro.env.events_key
+		today = Time.now.in_time_zone("America/Los_Angeles").strftime("%F")
+		event_data = HTTParty.get"https://www.eventbriteapi.com/v3/events/search/?location.address=#{zip_code}&location.within=5mi&start_date.range_start=#{today}T00%3A00%3A35Z&start_date.range_end=#{today}T23%3A50%3A57Z&token=#{events_key}"
+
+		event_morsel_data = {
+				'name' => event_data['events'][0]['name']['text'],
+				'description' => event_data['events'][0]['description']['text'],
+				'event_pic' => event_data['events'][0]['logo']['url'],
+				'event_url' => event_data['events'][0]['url']
+		}
+	end
+
+	def self.get_recipe_morsel_data
+		recipe_key = Figaro.env.recipe_key
+		recipe_data = JSON.parse HTTParty.get"http://food2fork.com/api/search?sort=t&key=#{recipe_key}"
+		recipe_index = rand(30)
+		recipe_morsel_data = {
+
+				'name' => recipe_data['recipes'][recipe_index]['title'],
+				'image' => recipe_data['recipes'][recipe_index]['image_url'],
+				'source' => recipe_data['recipes'][recipe_index]['source_url']
+		}
+	end
+
+
 
 	# Create an entry in the morsel table for the morsel type and zip code provided
 	# This should only happen if such a morsel doesn't already exist
@@ -96,6 +122,10 @@ module MorselsHelper
 			morsel_data = get_restaurant_morsel_data(zip_code)
 		when "beer"
 			morsel_data = get_beer_morsel_data
+		when "event"
+			morsel_data = get_event_morsel_data(zip_code)
+		when "recipe"
+			morsel_data = get_recipe_morsel_data
 		else
 			raise "Unrecognized morsel type: #{morsel_type}"
 		end
