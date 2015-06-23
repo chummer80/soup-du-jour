@@ -30,7 +30,10 @@ module Api
 			render json: MorselsHelper.get_morsel("beer").data
 		end
 
-
+		def event
+			zip = params[:zip_code] || get_zip(request)
+			render json: MorselsHelper.get_morsel("event", zip).data
+		end
 		# Try to detect the correct zip code from either the user profile 
 		# or geocoder (IP address detection).
 		def get_zip(request)
