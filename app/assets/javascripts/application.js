@@ -12,14 +12,32 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require isotope.pkgd.min
+//= require tiles
 //= require turbolinks
 //= require_tree .
 
-$(document).ready(function(){
+var ready = function(){ 
+    $("#menu-toggle").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("active");
+    });
+};
 
-	$("#menu-toggle").click(function(e) {
-	        e.preventDefault();
-	        $("#wrapper").toggleClass("active");
-	});
+$(document).ready(ready);
+$(document).on('page:load', ready);
 
+$('selector').isotope()
+
+$('.grid').isotope({
+  // options
+  itemSelector: '.grid-item',
+  layoutMode: 'fitRows'
+});
+
+var elem = document.querySelector('.grid');
+var iso = new Isotope( elem, {
+  // options
+  itemSelector: '.grid-item',
+  layoutMode: 'fitRows'
 });

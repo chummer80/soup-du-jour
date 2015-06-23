@@ -1,0 +1,70 @@
+* {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+body {
+  font-family: sans-serif;
+}
+
+
+/* clear fix */
+.isotope:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+/* ---- .element-item ---- */
+
+.tile-item {
+  position: relative;
+  float: left;
+  margin: 5px;
+  padding: 10px;
+  background: #888;
+  color: #262524;
+}
+
+.tile-item > * {
+  margin: 0;
+  padding: 0;
+}
+
+.tile-item .name {
+  position: absolute;
+  left: 10px;
+  top: 60px;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 12px;
+  font-weight: normal;
+}
+
+.soup {
+  width: 250px;
+  height: 350px;
+}
+
+.weather {
+  width: 175px;
+  height: 175px;
+
+}
+
+.word {
+  width: 175px;
+  height: 175px;
+}
+
+.reddit {
+  width: 300px;
+  height: 400px;
+  overflow: scroll;
+}
+
+.yelp {
+  width: 500px;
+  height: 300px;
+}
