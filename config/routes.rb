@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     get "beer", to: "api#beer", as: :beer
     get "event", to: "api#event", as: :event
     get "recipe", to: "api#recipe", as: :recipe
+    get "news", to: "api#news", as: :news
   end
 
   root 'application#index'
