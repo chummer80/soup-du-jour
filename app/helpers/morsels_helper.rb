@@ -60,9 +60,9 @@ module MorselsHelper
 			restaurant_img = ""
 		end
 		restaurant_img = ""
-
+		binding.pry
 		if restaurant_img == ""
-			restaurant_img = root_url + ActionController::Base.new.view_context.image_url("yelp-restaurant.jpg") 
+			restaurant_img = Rails.application.routes.url_helpers.root_url + ActionController::Base.new.view_context.image_url("yelp-restaurant.jpg") 
 		end
 
 		restaurant_morsel_data ={
