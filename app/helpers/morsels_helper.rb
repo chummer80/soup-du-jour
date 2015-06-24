@@ -60,8 +60,13 @@ module MorselsHelper
 			restaurant_img = ""
 		end
 		restaurant_img = ""
+
+		if restaurant_img == ""
+			restaurant_img = root_url + ActionController::Base.new.view_context.image_url("yelp-restaurant.jpg") 
+		end
+
 		restaurant_morsel_data ={
-			'first_img' => restaurant_img == '' ? ActionController::Base.new.view_context.image_url("yelp-restaurant.jpg") : restaurant_img,
+			'first_img' => restaurant_img
 			'bizname' => yelp_api_data.raw_data['businesses'][0]['name'],
 			'rating' => yelp_api_data.raw_data['businesses'][0]['rating_img_url'],
 			'comment' => yelp_api_data.raw_data['businesses'][0]['snippet_text'],
