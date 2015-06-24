@@ -57,10 +57,11 @@ module MorselsHelper
 			# if image is named "ms.jpg", then it is the small version. Change it to "o.jpg".
 			restaurant_img.gsub!(/ms\.jpg/, 'o.jpg')
 		rescue
-			restaurant_img = ""
+			restaurant_img = "http://www.bonappetit.com/wp-content/uploads/2011/03/empty-restaurant-table-reviews-critis_484.jpg"
 		end
+
 		restaurant_morsel_data ={
-			'first_img' => restaurant_img == '' ? ActionController::Base.new.view_context.image_url("yelp-restaurant.jpg") : restaurant_img,
+			'first_img' => restaurant_img,
 			'bizname' => yelp_api_data.raw_data['businesses'][0]['name'],
 			'rating' => yelp_api_data.raw_data['businesses'][0]['rating_img_url'],
 			'comment' => yelp_api_data.raw_data['businesses'][0]['snippet_text'],
@@ -117,6 +118,24 @@ module MorselsHelper
 			description: video.description,
 			image_url: thumbnail_url,
 			video_url: "https://www.youtube.com/watch?v=#{video.video_id}"
+		}
+	end
+	
+	def self.get_musicvideo_morsel_data
+		# Youtube channel "#PopularOnYoutube" has a playlist called "Popular Right Now".
+		# Grab the first musicvideo on that playlist as our musicvideo morsel.
+		playlist = Yt::Playlist.new(id: 'PLFgquLnL59alCl_2TQvOiD5Vgm1hCaGSI')
+		musicvideo = playlist.playlist_items.first
+
+		# this method gives the default-sized image. change it to the max-res image.
+		thumbnail_url = musicvideo.thumbnail_url
+		thumbnail_url.gsub!(/default\.jpg/, "maxresdefault.jpg")
+
+		musicvideo_morsel_data = {
+			title: musicvideo.title,
+			description: musicvideo.description,
+			image_url: thumbnail_url,
+			video_url: "https://www.youtube.com/watch?v=#{musicvideo.video_id}"
 		}
 	end
 
@@ -183,6 +202,8 @@ module MorselsHelper
 			morsel_data = get_event_morsel_data(zip_code)
 		when "video"
 			morsel_data = get_video_morsel_data
+		when "musicvideo"
+			morsel_data = get_musicvideo_morsel_data
 		when "recipe"
 			morsel_data = get_recipe_morsel_data
 		when "news"
