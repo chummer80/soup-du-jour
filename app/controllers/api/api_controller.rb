@@ -51,8 +51,8 @@ module Api
 			render json: MorselsHelper.get_morsel("trivia").data
 		end
 
-		def sqoot
-			render json: MorselsHelper.get_morsel("sqoot").data
+		def deal
+			render json: MorselsHelper.get_morsel("deal").data
 		end
 
 

@@ -11,7 +11,7 @@ Rails.application.routes.draw do
     get "recipe", to: "api#recipe", as: :recipe
     get "news", to: "api#news", as: :news
     get "trivia", to: "api#trivia", as: :trivia
-    get "sqoot", to: "api#sqoot", as: :sqoot
+    get "deal", to: "api#deal", as: :deal
   end
 
   root 'application#index'

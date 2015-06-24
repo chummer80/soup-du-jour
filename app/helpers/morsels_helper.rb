@@ -148,12 +148,12 @@ module MorselsHelper
 		}
 	end
 
-	def self.get_sqoot_morsel_data
+	def self.get_deal_morsel_data
 		# sanitizer = Rails::Html::FullSanitizer.new
 		sqoot_key = Figaro.env.sqoot_key
 		sqoot_data = HTTParty.get("http://api.sqoot.com/v2/deals?api_key=A9_RDnUAJB4ln46zJU8f&online=true")
 
-		sqoot_morsel_data={
+		deal_morsel_data={
 				'title' => sqoot_data['deals'][0]['deal']['short_title'],
 				'image' => sqoot_data['deals'][0]['deal']['image_url'],
 				'description' => sqoot_data['deals'][0]['deal']['title'],
@@ -189,8 +189,8 @@ module MorselsHelper
 			morsel_data = get_news_morsel_data
 		when "trivia"
 			morsel_data = get_trivia_morsel_data
-		when "sqoot"
-			morsel_data = get_sqoot_morsel_data
+		when "deal"
+			morsel_data = get_deal_morsel_data
 		else
 			raise "Unrecognized morsel type: #{morsel_type}"
 		end
