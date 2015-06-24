@@ -57,11 +57,7 @@ module MorselsHelper
 			# if image is named "ms.jpg", then it is the small version. Change it to "o.jpg".
 			restaurant_img.gsub!(/ms\.jpg/, 'o.jpg')
 		rescue
-			restaurant_img = ""
-		end
-		restaurant_img = ""
-		if restaurant_img == ""
-			restaurant_img = Rails.application.routes.url_helpers.root_url(host: "") + ActionController::Base.new.view_context.image_url("yelp-restaurant.jpg") 
+			restaurant_img = "http://www.bonappetit.com/wp-content/uploads/2011/03/empty-restaurant-table-reviews-critis_484.jpg"
 		end
 
 		restaurant_morsel_data ={
