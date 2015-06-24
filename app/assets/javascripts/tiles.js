@@ -8,7 +8,7 @@ $.getJSON("http://localhost:3000/api/soup", function(response, status, jqXHR){
 $.getJSON("http://localhost:3000/api/weather", function(response, status, jqXHR){
 	$(".weather").find('p').eq(0).html(response.location);
 	$(".weather").find('p').eq(1).html(response.current_temp);
-	$('<img>', {src: response['icon'], class: 'img-responsive'}).appendTo("#weather");
+	$('<img>', {src: response['icon'], class: 'img-responsive'}).appendTo(".weather");
 
 
 });
