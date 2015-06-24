@@ -66,7 +66,7 @@ module MorselsHelper
 		end
 
 		restaurant_morsel_data ={
-			'first_img' => restaurant_img
+			'first_img' => restaurant_img,
 			'bizname' => yelp_api_data.raw_data['businesses'][0]['name'],
 			'rating' => yelp_api_data.raw_data['businesses'][0]['rating_img_url'],
 			'comment' => yelp_api_data.raw_data['businesses'][0]['snippet_text'],
