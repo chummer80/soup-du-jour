@@ -120,6 +120,24 @@ module MorselsHelper
 			video_url: "https://www.youtube.com/watch?v=#{video.video_id}"
 		}
 	end
+	
+	def self.get_musicvideo_morsel_data
+		# Youtube channel "#PopularOnYoutube" has a playlist called "Popular Right Now".
+		# Grab the first musicvideo on that playlist as our musicvideo morsel.
+		playlist = Yt::Playlist.new(id: 'PLFgquLnL59alCl_2TQvOiD5Vgm1hCaGSI')
+		musicvideo = playlist.playlist_items.first
+
+		# this method gives the default-sized image. change it to the max-res image.
+		thumbnail_url = musicvideo.thumbnail_url
+		thumbnail_url.gsub!(/default\.jpg/, "maxresdefault.jpg")
+
+		musicvideo_morsel_data = {
+			title: musicvideo.title,
+			description: musicvideo.description,
+			image_url: thumbnail_url,
+			video_url: "https://www.youtube.com/watch?v=#{musicvideo.video_id}"
+		}
+	end
 
 	def self.get_news_morsel_data
 		news_key = Figaro.env.news_key
@@ -149,6 +167,19 @@ module MorselsHelper
 		}
 	end
 
+	def self.get_deal_morsel_data
+		# sanitizer = Rails::Html::FullSanitizer.new
+		sqoot_key = Figaro.env.sqoot_key
+		sqoot_data = HTTParty.get("http://api.sqoot.com/v2/deals?api_key=A9_RDnUAJB4ln46zJU8f&online=true")
+
+		deal_morsel_data={
+				'title' => sqoot_data['deals'][0]['deal']['short_title'],
+				'image' => sqoot_data['deals'][0]['deal']['image_url'],
+				'description' => sqoot_data['deals'][0]['deal']['title'],
+				'source' => sqoot_data['deals'][0]['deal']['url']
+		}
+	end
+
 
 
 	# Create an entry in the morsel table for the morsel type and zip code provided
@@ -171,13 +202,16 @@ module MorselsHelper
 			morsel_data = get_event_morsel_data(zip_code)
 		when "video"
 			morsel_data = get_video_morsel_data
+		when "musicvideo"
+			morsel_data = get_musicvideo_morsel_data
 		when "recipe"
 			morsel_data = get_recipe_morsel_data
 		when "news"
 			morsel_data = get_news_morsel_data
 		when "trivia"
 			morsel_data = get_trivia_morsel_data
-
+		when "deal"
+			morsel_data = get_deal_morsel_data
 		else
 			raise "Unrecognized morsel type: #{morsel_type}"
 		end

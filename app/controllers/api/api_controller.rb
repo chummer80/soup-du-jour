@@ -38,6 +38,10 @@ module Api
 		def video
 			render json: MorselsHelper.get_morsel("video").data
 		end
+		
+		def musicvideo
+			render json: MorselsHelper.get_morsel("musicvideo").data
+		end
 
 		def recipe
 			render json: MorselsHelper.get_morsel("recipe").data
@@ -49,6 +53,10 @@ module Api
 
 		def trivia
 			render json: MorselsHelper.get_morsel("trivia").data
+		end
+
+		def deal
+			render json: MorselsHelper.get_morsel("deal").data
 		end
 
 
