@@ -51,6 +51,10 @@ module Api
 			render json: MorselsHelper.get_morsel("trivia").data
 		end
 
+		def sqoot
+			render json: MorselsHelper.get_morsel("sqoot").data
+		end
+
 
 		# Try to detect the correct zip code from either the user profile 
 		# or geocoder (IP address detection).
