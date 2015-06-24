@@ -17,6 +17,8 @@ Rails.application.routes.draw do
 
   get 'signup', to: 'users#new', as: :new_user
   post 'signup', to: 'users#create', as: :create_user
+  get 'settings', to: 'users#edit_settings', as: :edit_user_settings
+  patch 'settings', to: 'users#update_settings', as: :update_user_settings
 
   get 'login', to: 'sessions#new', as: :new_session
   post 'login', to: 'sessions#create', as: :create_session

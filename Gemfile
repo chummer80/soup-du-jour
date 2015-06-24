@@ -31,6 +31,8 @@ gem 'figaro'
 
 gem 'httparty', '0.11.0'
 
+gem 'simple_form'
+
 
 gem 'yelp', require: 'yelp'
 gem 'yt', '~> 0.24.9'

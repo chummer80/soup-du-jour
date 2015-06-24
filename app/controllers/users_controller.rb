@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 	before_action :unauthorize, only: [:new, :create]
-
+	before_action :authorize, only: [:edit_settings, :update_settings]
 	def new
 		@user = User.new
 	end
@@ -37,5 +37,23 @@ class UsersController < ApplicationController
 			flash.now[:alert] = error_msg
 			render 'new'
 		end
+	end
+
+
+	def edit_settings
+		@user = current_user
+	end
+
+	def update_settings
+		user = current_user
+		user_params = params.require(:user).permit(:zip_code, interests: [])
+		
+		if user.update_attributes(user_params)
+			redirect_to root_path
+		else
+			@user = User.new(user_params)
+			render 'edit_settings'
+		end
+
 	end
 end
