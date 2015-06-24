@@ -57,11 +57,11 @@ module MorselsHelper
 			# if image is named "ms.jpg", then it is the small version. Change it to "o.jpg".
 			restaurant_img.gsub!(/ms\.jpg/, 'o.jpg')
 		rescue
-			restaurant_img = ""
+			restaurant_img = "http://www.bonappetit.com/wp-content/uploads/2011/03/empty-restaurant-table-reviews-critis_484.jpg"
 		end
-	
+
 		restaurant_morsel_data ={
-			'first_img' => restaurant_img == '' ? ActionController::Base.new.view_context.image_url("yelp-restaurant.jpg") : restaurant_img,
+			'first_img' => restaurant_img,
 			'bizname' => yelp_api_data.raw_data['businesses'][0]['name'],
 			'rating' => yelp_api_data.raw_data['businesses'][0]['rating_img_url'],
 			'comment' => yelp_api_data.raw_data['businesses'][0]['snippet_text'],
