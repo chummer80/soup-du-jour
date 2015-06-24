@@ -133,6 +133,21 @@ module MorselsHelper
 		}
 	end
 
+	def self.get_trivia_morsel_data
+		trivia_data = HTTParty.get("https://doubleordonate.herokuapp.com/api/questions")
+		index = rand(trivia_data.length)
+		trivia_morsel_data = {
+
+
+				'id' => trivia_data[index]['id'],
+				'question' => trivia_data[index]['text'],
+				'answer1' => trivia_data[index]['answer_1'],
+				'answer2' => trivia_data[index]['answer_2'],
+				'answer3' => trivia_data[index]['answer_3'],
+				'answer4' => trivia_data[index]['answer_4'],
+				'correct' => trivia_data[index]['correct_answer']
+		}
+	end
 
 
 
@@ -160,6 +175,9 @@ module MorselsHelper
 			morsel_data = get_recipe_morsel_data
 		when "news"
 			morsel_data = get_news_morsel_data
+		when "trivia"
+			morsel_data = get_trivia_morsel_data
+
 		else
 			raise "Unrecognized morsel type: #{morsel_type}"
 		end

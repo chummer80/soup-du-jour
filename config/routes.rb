@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     get "video", to: "api#video", as: :video
     get "recipe", to: "api#recipe", as: :recipe
     get "news", to: "api#news", as: :news
+    get "trivia", to: "api#trivia", as: :trivia
   end
 
   root 'application#index'
