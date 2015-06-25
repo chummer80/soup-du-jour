@@ -13,6 +13,8 @@ Rails.application.routes.draw do
     get "news", to: "api#news", as: :news
     get "trivia", to: "api#trivia", as: :trivia
     get "deal", to: "api#deal", as: :deal
+    get "photo", to: "api#photo", as: :photo
+    get "view", to: "api#view", as: :view
   end
 
   root 'application#index'
