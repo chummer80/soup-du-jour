@@ -21,8 +21,16 @@ module MorselsHelper
 
 	def self.get_reddit_morsel_data
 		reddit_api_data = HTTParty.get"https://www.reddit.com/top.json"
+
+		begin
+			reddit_pic = reddit_api_data['data']['children'][0]['data']['media']['oembed']['thumbnail_url']
+		rescue
+			reddit_pic = "https://www.redditstatic.com/about/assets/reddit-alien.png"
+		end
+
 		reddit_morsel_data = {
 			'title' => reddit_api_data['data']['children'][0]['data']['title'],
+			'image' => reddit_pic,
 			'permalink' => "http://www.reddit.com/" + reddit_api_data['data']['children'][0]['data']['permalink']
 		}
 	end
@@ -33,7 +41,8 @@ module MorselsHelper
 		weather_morsel_data = {
 			'location' => weather_api_data["current_observation"]["display_location"]['full'],
 			'current_temp' => weather_api_data["current_observation"]["temperature_string"],
-			'icon' =>  weather_api_data["current_observation"]["icon_url"]
+			'icon' =>  weather_api_data["current_observation"]["icon_url"],
+			'url' => weather_api_data["current_observation"]["forecast_url"]
 		}
 	end
 
@@ -72,8 +81,14 @@ module MorselsHelper
 	def self.get_beer_morsel_data
 		beer_key = Figaro.env.beer_key
 		beer_api_data = HTTParty.get"http://api.brewerydb.com/v2/beers/?key=#{beer_key}&order=random&randomCount=1&abv='-10'"
+		begin
+				beer_pic = beer_api_data['data'][0]['labels']['large']
+		rescue
+				beer_pic = "http://lexingtonbeerworks.com/site/wp-content/uploads/2014/05/Craft-Beer.jpg"
+		end
 
 		beer_morsel_data = {
+			'image' => beer_pic,
 			'beer' => beer_api_data['data'][0]['name'],
 			'description' => beer_api_data['data'][0]['description']
 		}
@@ -144,10 +159,10 @@ module MorselsHelper
 		news_data = HTTParty.get("http://api.nytimes.com/svc/topstories/v1/home.json?api-key=#{news_key}")
 
 		news_morsel_data = {
-				'title' => news_data['results'][0]['title'],
-				'abstract' => news_data['results'][0]['abstract'],
-				'image' => news_data['results'][0]['multimedia'][0]['url'],
-				'source' => news_data['results'][0]['url']
+			'title' => news_data['results'][0]['title'],
+			'abstract' => news_data['results'][0]['abstract'],
+			'image' => news_data['results'][0]['multimedia'][0]['url'],
+			'source' => news_data['results'][0]['url']
 		}
 	end
 
