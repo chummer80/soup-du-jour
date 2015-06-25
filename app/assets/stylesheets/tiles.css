@@ -8,11 +8,6 @@ body {
   font-family: sans-serif;
 }
 
-div.is-loading {
-  background-color: black;
-  background-image: url('http://desandro.github.io/imagesloaded/assets/loading.gif');
-}
-
 /* clear fix */
 .grid:after {
   content: '';

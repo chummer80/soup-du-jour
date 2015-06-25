@@ -5,51 +5,104 @@
 		</p>
 	</div>
 
-	<div class="grid-item soup hvr-grow">
+	<div class="grid-item soup hvr-grow soup" a data-toggle="modal" href="#soup-modal">
 		<h4 class="header" id="soup">Soup du Jour</h4>
 		<p class="tile-title"></p>
-
 	</div>
 
-	<div class="grid-item weather hvr-grow">
+	<div class="modal fade" id="soup-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog">
+		</div>
+	</div>
+
+	<div class="grid-item weather">
 		<h4 class="header" id="weather">Weather</h4>
 		<p class="tile-title"></p>
 		<p class="tile-body"></p>
 
 	</div>
 
-	<div class="grid-item restaurant hvr-grow">
+	<div class="grid-item restaurant hvr-grow" a data-toggle="modal" href="#restaurant-modal">
 		<h4 class="header" id="restaurant">Restaurant</h4>
 		<p class="tile-title"></p>
 	</div>
 
-	<div class="grid-item reddit hvr-grow">
+	<div class="modal fade" id="restaurant-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog">
+		</div>
+	</div>
+
+	<div class="grid-item reddit hvr-grow" a data-toggle="modal" href="#reddit-modal">
 		<h4 class="header" id="reddit">Reddit</h4>
 		<p class="tile-title"></p>
 	</div>
+
+	<div class="modal fade" id="reddit-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog">
+		</div>
+	</div>
 	
-	<div class="grid-item word hvr-grow">
+	<div class="grid-item word hvr-grow" a data-toggle="modal" href="#word-modal">
 		<h4 class="header" id="word">Word of the Day</h4>
 		<p class="tile-title"></p>
 	</div>
 
-	<div class="grid-item beer hvr-grow">
+	<div class="modal fade" id="word-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog">
+		</div>
+	</div>
+
+	<div class="grid-item beer hvr-grow" a data-toggle="modal" href="#beer-modal">
 		<h4 class="header" id="beer">Beer</h4>
 		<p class="tile-title"></p>
 	</div>
 
-	<div class="grid-item event hvr-grow">
+	<div class="grid-item event hvr-grow" a data-toggle="modal" href="#event-modal">
 		<h4 class="header" id="event">Event</h4>
 		<p class="tile-title"></p>
 	</div>
 
-	<div class="grid-item recipe hvr-grow">
+	<div class="modal fade" id="event-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog">
+		</div>
+	</div>
+
+	<div class="grid-item recipe hvr-grow" a data-toggle="modal" href="#recipe-modal">
 		<h4 class="header" id="recipe">Recipe</h4>
 		<p class="tile-title"></p>
 	</div>
 
-	<div class="grid-item news hvr-grow">
+	<div class="modal fade" id="recipe-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog">
+		</div>
+	</div>
+
+	<div class="grid-item news hvr-grow" a data-toggle="modal" href="#news-modal">
 		<h4 class="header" id="news">News</h4>
 		<p class="tile-title"></p>
 	</div>
+
+	<div class="modal fade" id="news-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog">
+		</div>
+	</div>
+</div>
+
+<div id="templates" class="hidden">
+	<div class="soup-content modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">
+
+        </h4>
+      </div>
+      <img src="" alt="" class="img-responsive">
+      <div class="modal-body">
+		<p></p>
+      </div>
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
 </div>

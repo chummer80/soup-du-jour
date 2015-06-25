@@ -3,6 +3,19 @@ $.getJSON("http://localhost:3000/api/soup", function(response, status, jqXHR){
 	$('<img>', {src: response['image_url'], class: 'img-responsive'}).appendTo("#soup");
 	$(".soup").find('p').eq(1).html(response.description);
 
+	$('.soup').click(function(){
+		var modalContent = $("#templates .soup-content").clone();
+		var modal = $('#soup-modal .modal-dialog');
+
+		modal.empty();
+
+		modalContent.find('.modal-title').html(response.name);
+		modalContent.find('img').attr("src", response['image_url']);
+		modalContent.find('.modal-body').html(response.description);
+
+		modalContent.appendTo(modal);
+	});
+
 });
 
 $.getJSON("http://localhost:3000/api/weather", function(response, status, jqXHR){
@@ -17,11 +30,35 @@ $.getJSON("http://localhost:3000/api/word", function(response, status, jqXHR){
 	$(".word").find('p').eq(0).html(response.word);
 	$(".word").find('p').eq(1).html(response.definition);
 
+	$('.word').click(function(){
+		var modalContent = $("#templates .soup-content").clone();
+		var modal = $('#word-modal .modal-dialog');
+
+		modal.empty();
+
+		modalContent.find('.modal-title').html(response.word);
+		modalContent.find('.modal-body').html(response.definition);
+
+		modalContent.appendTo(modal);
+	});
+
 });
 
 $.getJSON("http://localhost:3000/api/reddit", function(response, status, jqXHR){
 	$(".reddit").find('p').eq(0).html(response.title);
 	$(".reddit").find('p').eq(1).html(response.permalink);
+
+	$('.reddit').click(function(){
+		var modalContent = $("#templates .soup-content").clone();
+		var modal = $('#reddit-modal .modal-dialog');
+
+		modal.empty();
+
+		modalContent.find('.modal-title').html("Reddit");
+		modalContent.find('.modal-body').html(response.title);
+
+		modalContent.appendTo(modal);
+	});
 
 });
 
@@ -31,7 +68,22 @@ $.getJSON("http://localhost:3000/api/restaurant", function(response, status, jqX
 	$('<img>', {src: response['first_img'], class: 'img-responsive'}).appendTo("#restaurant");
 	$(".restaurant").find('p').eq(1).html(response.comment);
 
+	$('.restaurant').click(function(){
+		var modalContent = $("#templates .soup-content").clone();
+		var modal = $('#restaurant-modal .modal-dialog');
+
+		modal.empty();
+
+		modalContent.find('.modal-title').html(response.bizname);
+		modalContent.find('img').attr("src", response['first_img']);
+		modalContent.find('.modal-body').html(response.comment);
+
+		modalContent.appendTo(modal);
+	});
 });
+
+
+
 
 $.getJSON("http://localhost:3000/api/beer", function(response, status, jqXHR){
 	$(".beer").find('p').eq(0).html(response.beer);
@@ -43,17 +95,56 @@ $.getJSON("http://localhost:3000/api/event", function(response, status, jqXHR){
 	$('<img>', {src: response['event_pic'], class: 'img-responsive'}).appendTo("#event");
 	$(".event").find('p').eq(0).html(response.name);
 
+	$('.event').click(function(){
+		var modalContent = $("#templates .soup-content").clone();
+		var modal = $('#event-modal .modal-dialog');
+
+		modal.empty();
+
+		modalContent.find('.modal-title').html(response.name);
+		modalContent.find('img').attr("src", response['event_pic']);
+		modalContent.find('.modal-body').html(response.description);
+
+		modalContent.appendTo(modal);
+	});
+
 });
 
 $.getJSON("http://localhost:3000/api/recipe", function(response, status, jqXHR){
 	$('<img>', {src: response['image'], class: 'img-responsive'}).appendTo("#recipe");
 	$(".recipe").find('p').eq(0).html(response.name);
 
+	$('.recipe').click(function(){
+		var modalContent = $("#templates .soup-content").clone();
+		var modal = $('#recipe-modal .modal-dialog');
+
+		modal.empty();
+
+		modalContent.find('.modal-title').html(response.name);
+		modalContent.find('img').attr("src", response['image']);
+		modalContent.find('.modal-body').html(response.source);
+
+		modalContent.appendTo(modal);
+	});
+
 });
 
 $.getJSON("http://localhost:3000/api/news", function(response, status, jqXHR){
 	$('<img>', {src: response['image'], class: 'img-responsive'}).appendTo("#news");
 	$(".news").find('p').eq(0).html(response.title);
+
+	$('.news').click(function(){
+		var modalContent = $("#templates .soup-content").clone();
+		var modal = $('#news-modal .modal-dialog');
+
+		modal.empty();
+
+		modalContent.find('.modal-title').html(response.title);
+		modalContent.find('img').attr("src", response['image']);
+		modalContent.find('.modal-body').html(response.abstract);
+
+		modalContent.appendTo(modal);
+	});
 
 });
 // external js: isotope.pkgd.js
@@ -70,17 +161,14 @@ $(window).load(function() {
 	    }
 
 	});
+
+	$grid.isotope('layout');
   });
 
-  $grid.on( 'click', '.grid-item', function() {
-    // change size of item by toggling gigante class
-    $( this ).toggleClass('gigante');
-    $grid.isotope('layout');
-  });
 
   $('.shuffle-div').on( 'click', function() {
-  $grid.isotope('shuffle');
-});
+    $grid.isotope('shuffle');
+  });
 
  });
   
