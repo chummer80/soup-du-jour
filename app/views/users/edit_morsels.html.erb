@@ -1,0 +1,18 @@
+<%= simple_form_for @user, url: update_user_morsels_path, method: :patch do |f| %>
+
+	<div>
+		<%= f.input_field :morsels, collection: @user.morsels, multiple: true, selected: false %>
+
+		<%= hidden_field_tag('final_user_morsels', "") %>
+
+		<button id="morsel-up" type="button">Up</button>
+		<button id="morsel-down" type="button">Down</button>
+		<button id="toggle-morsel" type="button">Toggle Morsel</button>
+
+		<%= select_tag "Available Morsels", options_for_select(@unselected_morsels), {id: "available_morsels", multiple: true} %>
+	</div>
+
+	<%= f.button :submit, "Update Morsels", {id: "morsels-submit-btn"} %>
+<% end %>
+
+

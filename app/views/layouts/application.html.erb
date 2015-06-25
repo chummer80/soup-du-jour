@@ -28,20 +28,26 @@
            </li>
       </ul>
         <ul class="sidebar-nav" id="sidebar">
-	      <%if current_user %>
-	      <li><%= "Logged in w/ " + current_user[:email] %></li>
-	      <li><%= link_to "Logout", destroy_session_path %></li>
-	      <% else %>
-	      <li><%= link_to "Login", new_session_path %></li>
-	      <li><%= link_to "Register", new_user_path %></li>
-	      <% end -%>  
+	      <%if logged_in? %>
+  	      <li><%= "Logged in w/ " + current_user[:email] %></li>
+  	      <li><%= link_to "Logout", destroy_session_path %></li>
           <li>
             <%= link_to edit_user_settings_path do %>
               <span>Settings</span>
               <span class="sub_icon glyphicon glyphicon-cog"></span>
             <% end %>
           </li>
-          <li><a>Tiles<span class="sub_icon glyphicon glyphicon-th"></span></a></li>
+          <li>
+            <%= link_to edit_user_morsels_path do %>
+              <span>Morsels</span>
+              <span class="sub_icon glyphicon glyphicon-th"></span>
+            <% end %>
+          </li>
+	      <% else %>
+  	      <li><%= link_to "Login", new_session_path %></li>
+  	      <li><%= link_to "Register", new_user_path %></li>
+	      <% end -%>  
+          
         </ul>
       </div>
           
