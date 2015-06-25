@@ -30,10 +30,48 @@ module MorselsHelper
 	def self.get_weather_morsel_data(zip_code)
 		weather_key = Figaro.env.weather_key
 		weather_api_data = HTTParty.get"http://api.wunderground.com/api/#{weather_key}/conditions/q/#{zip_code}.json"
+		
+		rain_words = %w(Drizzle Rain Thunderstorm Precipitation Spray Squall)
+		rain_regex = Regexp.union(*rain_words)
+		snow_words = %w(Snow Ice Hail)
+		snow_regex = Regexp.union(*snow_words)
+		fog_words = %w(Fog Mist Haze)
+		fog_regex = Regexp.union(*fog_words)
+		dust_words = %w(Dust Smoke Sand Ash)
+		dust_regex = Regexp.union(*dust_words)
+		clear_words = %w(Clear)
+		clear_regex = Regexp.union(*clear_words)
+		cloud_words = %w(Cloud Overcast)
+		cloud_regex = Regexp.union(*cloud_words)
+
+		begin
+			weather_type = weather_api_data["current_observation"]["weather"]
+		rescue
+			weather_type = "Unknown"
+		end
+
+		if rain_regex === weather_type
+			weather_img = "http://headsup.boyslife.org/files/2012/12/rain.jpg"
+		elsif snow_regex === weather_type
+			weather_img = "http://i.ytimg.com/vi/ea1GMrjjJ1A/maxresdefault.jpg"
+		elsif fog_regex === weather_type
+			weather_img = "http://www.sarahannrogers.com/wp-content/uploads/2013/01/fog.jpg"
+		elsif dust_regex === weather_type
+			weather_img = "http://i.imwx.com/common/articles/images/orangecitystreet_650x366.jpg"
+		elsif clear_regex === weather_type
+			weather_img = "http://www.pardaphash.com/uploads/images/660/bright-future-74300.jpg"
+		elsif cloud_regex === weather_type
+			weather_img = "http://www.sitkanature.org/wordpress/wp-content/gallery/20100923/20100923-overcast-2.jpg"
+		else
+			# default pic if weather type is something else
+			weather_img = "http://anewscafe.com/wp-content/uploads/2011/03/rainbow-weather.jpg"
+		end
+
 		weather_morsel_data = {
 			'location' => weather_api_data["current_observation"]["display_location"]['full'],
 			'current_temp' => weather_api_data["current_observation"]["temperature_string"],
-			'icon' =>  weather_api_data["current_observation"]["icon_url"]
+			'image_url' => weather_img,
+			'description' => weather_type
 		}
 	end
 
