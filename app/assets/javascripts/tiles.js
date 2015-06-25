@@ -11,7 +11,7 @@ $.getJSON("http://localhost:3000/api/soup", function(response, status, jqXHR){
 
 		modalContent.find('.modal-title').html(response.name);
 		modalContent.find('img').attr("src", response['image_url']);
-		modalContent.find('.modal-body').html(response.description);
+		modalContent.find('.modal-body p').html(response.description);
 
 		modalContent.appendTo(modal);
 	});
@@ -37,7 +37,7 @@ $.getJSON("http://localhost:3000/api/word", function(response, status, jqXHR){
 		modal.empty();
 
 		modalContent.find('.modal-title').html(response.word);
-		modalContent.find('.modal-body').html(response.definition);
+		modalContent.find('.modal-body p').html(response.definition);
 
 		modalContent.appendTo(modal);
 	});
@@ -55,7 +55,7 @@ $.getJSON("http://localhost:3000/api/reddit", function(response, status, jqXHR){
 		modal.empty();
 
 		modalContent.find('.modal-title').html("Reddit");
-		modalContent.find('.modal-body').html(response.title);
+		modalContent.find('.modal-body p').html(response.title);
 
 		modalContent.appendTo(modal);
 	});
@@ -76,18 +76,27 @@ $.getJSON("http://localhost:3000/api/restaurant", function(response, status, jqX
 
 		modalContent.find('.modal-title').html(response.bizname);
 		modalContent.find('img').attr("src", response['first_img']);
-		modalContent.find('.modal-body').html(response.comment);
+		modalContent.find('.modal-body p').html(response.comment);
 
 		modalContent.appendTo(modal);
 	});
 });
 
-
-
-
 $.getJSON("http://localhost:3000/api/beer", function(response, status, jqXHR){
 	$(".beer").find('p').eq(0).html(response.beer);
 	$(".beer").find('p').eq(1).html(response.description);
+
+	$('.beer').click(function(){
+		var modalContent = $("#templates .soup-content").clone();
+		var modal = $('#beer-modal .modal-dialog');
+
+		modal.empty();
+
+		modalContent.find('.modal-title').html(response.beer);
+		modalContent.find('.modal-body p').html(response.description);
+
+		modalContent.appendTo(modal);
+	});
 
 });
 
@@ -103,7 +112,7 @@ $.getJSON("http://localhost:3000/api/event", function(response, status, jqXHR){
 
 		modalContent.find('.modal-title').html(response.name);
 		modalContent.find('img').attr("src", response['event_pic']);
-		modalContent.find('.modal-body').html(response.description);
+		modalContent.find('.modal-body p').html(response.description);
 
 		modalContent.appendTo(modal);
 	});
@@ -122,7 +131,7 @@ $.getJSON("http://localhost:3000/api/recipe", function(response, status, jqXHR){
 
 		modalContent.find('.modal-title').html(response.name);
 		modalContent.find('img').attr("src", response['image']);
-		modalContent.find('.modal-body').html(response.source);
+		modalContent.find('.modal-body p').html(response.source);
 
 		modalContent.appendTo(modal);
 	});
@@ -141,7 +150,8 @@ $.getJSON("http://localhost:3000/api/news", function(response, status, jqXHR){
 
 		modalContent.find('.modal-title').html(response.title);
 		modalContent.find('img').attr("src", response['image']);
-		modalContent.find('.modal-body').html(response.abstract);
+		modalContent.find('.modal-body p').html(response.abstract)
+		modalContent.find('.modal-body a').attr("href", response['source']);
 
 		modalContent.appendTo(modal);
 	});
