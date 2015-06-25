@@ -59,6 +59,14 @@ module Api
 			render json: MorselsHelper.get_morsel("deal").data
 		end
 
+		def photo
+			render json: MorselsHelper.get_morsel("photo").data
+		end
+
+		def view
+			render json: MorselsHelper.get_morsel("view").data
+		end
+
 
 		# Try to detect the correct zip code from either the user profile 
 		# or geocoder (IP address detection).

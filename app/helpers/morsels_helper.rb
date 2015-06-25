@@ -238,6 +238,48 @@ module MorselsHelper
 		}
 	end
 
+	def self.get_photo_morsel_data
+		instagram_key = Figaro.env.instagram_key
+
+		instagram_data = HTTParty.get("https://api.instagram.com/v1/media/popular?client_id=#{instagram_key}")
+		photo_index = nil
+		# make sure we use a photo, not a video
+		instagram_data['data'].each_index do |index|
+			media_item = instagram_data['data'][index]
+			if media_item['type'] == "image"
+				photo_index = index
+				break
+			end
+		end
+
+		photo_morsel_data = {
+			url: instagram_data['data'][photo_index]['link'],
+			username: instagram_data['data'][photo_index]['user']['username'],
+			image_url: instagram_data['data'][photo_index]['images']['standard_resolution']['url'],
+			caption: instagram_data['data'][photo_index]['caption']['text']
+		}
+	end
+
+	def self.get_view_morsel_data
+		instagram_key = Figaro.env.instagram_key
+
+		instagram_data = HTTParty.get("https://api.instagram.com/v1/users/1988768/media/recent?client_id=#{instagram_key}")
+		photo_index = nil
+		# make sure we use a photo, not a video
+		instagram_data['data'].each_index do |index|
+			media_item = instagram_data['data'][index]
+			if media_item['type'] == "image"
+				photo_index = index
+				break
+			end
+		end
+
+		view_morsel_data = {
+			url: instagram_data['data'][photo_index]['link'],
+			image_url: instagram_data['data'][photo_index]['images']['standard_resolution']['url'],
+			caption: instagram_data['data'][photo_index]['caption']['text']
+		}
+	end
 
 
 	# Create an entry in the morsel table for the morsel type and zip code provided
@@ -270,6 +312,10 @@ module MorselsHelper
 			morsel_data = get_trivia_morsel_data
 		when "deal"
 			morsel_data = get_deal_morsel_data
+		when "photo"
+			morsel_data = get_photo_morsel_data
+		when "view"
+			morsel_data = get_view_morsel_data
 		else
 			raise "Unrecognized morsel type: #{morsel_type}"
 		end
