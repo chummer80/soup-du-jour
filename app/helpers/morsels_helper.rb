@@ -224,6 +224,10 @@ module MorselsHelper
 
 		morsel = Morsel.create(morsel_params)
 
+		# use this line instead of the 'create' line for testing.
+		# this one won't save morsels in the database, so api calls will happen every time.
+		# morsel = Morsel.new(morsel_params)  
+
 		if morsel.valid?
 			morsel
 		else
