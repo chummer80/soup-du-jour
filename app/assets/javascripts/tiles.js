@@ -1,6 +1,6 @@
 $.getJSON("http://localhost:3000/api/soup", function(response, status, jqXHR){
 	$(".soup").find('p').eq(0).html(response.name);
-	$('<img>', {src: response['image_url'], class: 'img-responsive'}).appendTo("#soup");
+	$(".soup img").attr("src", response['image_url']);
 	$(".soup").find('p').eq(1).html(response.description);
 
 	$('.soup').click(function(){

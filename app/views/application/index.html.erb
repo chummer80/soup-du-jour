@@ -1,5 +1,16 @@
 <div class="grid">
 
+	<div class="grid-item test">
+	<ul class="photo-grid">
+	<li>
+	<figure>
+		<%= image_tag("yelp-restaurant.jpg", :alt => "restaurant", :height => "180", :width => "320") %>
+		<figcaption><p>Restaurant</p></figcaption>
+	</figure>
+	</li>
+	</ul>
+	</div>
+
 	<div class="grid-item shuffle-div date hvr-grow">
 		<p class="well lead">Soup du Jour for <%= Date.today.strftime("%A, %B %d") %>
 		</p>
@@ -7,6 +18,7 @@
 
 	<div class="grid-item soup hvr-grow soup" a data-toggle="modal" href="#soup-modal">
 		<h4 class="header" id="soup">Soup du Jour</h4>
+		<img src="" alt="" class="img-responsive">
 		<p class="tile-title"></p>
 	</div>
 
