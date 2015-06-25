@@ -170,7 +170,7 @@ module MorselsHelper
 	def self.get_deal_morsel_data
 		# sanitizer = Rails::Html::FullSanitizer.new
 		sqoot_key = Figaro.env.sqoot_key
-		sqoot_data = HTTParty.get("http://api.sqoot.com/v2/deals?api_key=A9_RDnUAJB4ln46zJU8f&online=true")
+		sqoot_data = HTTParty.get("http://api.sqoot.com/v2/deals?api_key=#{sqoot_key}&online=true")
 
 		deal_morsel_data={
 				'title' => sqoot_data['deals'][0]['deal']['short_title'],
