@@ -1,7 +1,6 @@
 $.getJSON("http://localhost:3000/api/soup", function(response, status, jqXHR){
 	$(".soup").find('p').eq(0).html(response.name);
 	$(".soup img").attr("src", response['image_url']);
-	$(".soup").find('p').eq(1).html(response.description);
 
 	$('.soup').click(function(){
 		var modalContent = $("#templates .soup-content").clone();
@@ -63,10 +62,9 @@ $.getJSON("http://localhost:3000/api/reddit", function(response, status, jqXHR){
 });
 
 $.getJSON("http://localhost:3000/api/restaurant", function(response, status, jqXHR){
+
 	$(".restaurant").find('p').eq(0).html(response.bizname);
-	$('<img>', {src: response['rating'], class: 'img-responsive'}).appendTo(".restaurant");
-	$('<img>', {src: response['first_img'], class: 'img-responsive'}).appendTo("#restaurant");
-	$(".restaurant").find('p').eq(1).html(response.comment);
+	$(".restaurant img").eq(0).attr("src", response['first_img']);
 
 	$('.restaurant').click(function(){
 		var modalContent = $("#templates .soup-content").clone();
@@ -101,8 +99,10 @@ $.getJSON("http://localhost:3000/api/beer", function(response, status, jqXHR){
 });
 
 $.getJSON("http://localhost:3000/api/event", function(response, status, jqXHR){
-	$('<img>', {src: response['event_pic'], class: 'img-responsive'}).appendTo("#event");
+
 	$(".event").find('p').eq(0).html(response.name);
+	$(".event img").eq(0).attr("src", response['event_pic']);
+
 
 	$('.event').click(function(){
 		var modalContent = $("#templates .soup-content").clone();
@@ -120,8 +120,9 @@ $.getJSON("http://localhost:3000/api/event", function(response, status, jqXHR){
 });
 
 $.getJSON("http://localhost:3000/api/recipe", function(response, status, jqXHR){
-	$('<img>', {src: response['image'], class: 'img-responsive'}).appendTo("#recipe");
+
 	$(".recipe").find('p').eq(0).html(response.name);
+	$(".recipe img").eq(0).attr("src", response['image']);
 
 	$('.recipe').click(function(){
 		var modalContent = $("#templates .soup-content").clone();
@@ -139,8 +140,9 @@ $.getJSON("http://localhost:3000/api/recipe", function(response, status, jqXHR){
 });
 
 $.getJSON("http://localhost:3000/api/news", function(response, status, jqXHR){
-	$('<img>', {src: response['image'], class: 'img-responsive'}).appendTo("#news");
+
 	$(".news").find('p').eq(0).html(response.title);
+	$(".news img").eq(0).attr("src", response['image']);
 
 	$('.news').click(function(){
 		var modalContent = $("#templates .soup-content").clone();

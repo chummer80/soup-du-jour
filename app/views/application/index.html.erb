@@ -1,33 +1,22 @@
 <div class="grid">
 
-	<div class="grid-item test">
-	<ul class="photo-grid">
-	<li>
-	<figure>
-		<%= image_tag("yelp-restaurant.jpg", :alt => "restaurant", :height => "180", :width => "320") %>
-		<figcaption><p>Restaurant</p></figcaption>
-	</figure>
-	</li>
-	</ul>
-	</div>
-
-	<div class="grid-item shuffle-div date hvr-grow">
+	<div class="grid-item shuffle-div date">
 		<p class="well lead">Soup du Jour for <%= Date.today.strftime("%A, %B %d") %>
 		</p>
 	</div>
 
 	<div class="grid-item soup" a data-toggle="modal" href="#soup-modal">
-	<ul class="photo-grid">
-	<li>
-	<figure>
-		<img src="" alt="" class="img-responsive">
-		<figcaption><p class="tile-title"></p></figcaption>
-	</figure>
-	</li>
-	</ul>
+		<div id="hoverzoomfade"></div>
+		<ul class="photo-grid">
+		<li>
+		<figure>
+			<img src="" alt="" class="img-responsive">
+			<figcaption><p></p></figcaption>
+		</figure>
+		</li>
+		</ul>
+		</div>
 	</div>
-
-
 
 	<div class="modal fade" id="soup-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog">
@@ -41,9 +30,17 @@
 
 	</div>
 
-	<div class="grid-item restaurant hvr-grow" a data-toggle="modal" href="#restaurant-modal">
-		<h4 class="header" id="restaurant">Restaurant</h4>
-		<p class="tile-title"></p>
+	<div class="grid-item restaurant" a data-toggle="modal" href="#restaurant-modal">
+		<div id="hoverzoomfade"></div>
+		<ul class="photo-grid">
+		<li>
+		<figure>
+			<img src="" alt="" class="img-responsive">
+			<figcaption><p></p></figcaption>
+		</figure>
+		</li>
+		</ul>
+		</div>
 	</div>
 
 	<div class="modal fade" id="restaurant-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -51,7 +48,7 @@
 		</div>
 	</div>
 
-	<div class="grid-item reddit hvr-grow" a data-toggle="modal" href="#reddit-modal">
+	<div class="grid-item reddit" a data-toggle="modal" href="#reddit-modal">
 		<h4 class="header" id="reddit">Reddit</h4>
 		<p class="tile-title"></p>
 	</div>
@@ -61,7 +58,7 @@
 		</div>
 	</div>
 	
-	<div class="grid-item word hvr-grow" a data-toggle="modal" href="#word-modal">
+	<div class="grid-item word" a data-toggle="modal" href="#word-modal">
 		<h4 class="header" id="word">Word of the Day</h4>
 		<p class="tile-title"></p>
 	</div>
@@ -71,7 +68,7 @@
 		</div>
 	</div>
 
-	<div class="grid-item beer hvr-grow" a data-toggle="modal" href="#beer-modal">
+	<div class="grid-item beer" a data-toggle="modal" href="#beer-modal">
 		<h4 class="header" id="beer">Beer</h4>
 		<p class="tile-title"></p>
 	</div>
@@ -81,9 +78,17 @@
 		</div>
 	</div>
 
-	<div class="grid-item event hvr-grow" a data-toggle="modal" href="#event-modal">
-		<h4 class="header" id="event">Event</h4>
-		<p class="tile-title"></p>
+	<div class="grid-item event" a data-toggle="modal" href="#event-modal">
+		<div id="hoverzoomfade"></div>
+		<ul class="photo-grid">
+		<li>
+		<figure>
+			<img src="" alt="" class="img-responsive">
+			<figcaption><p></p></figcaption>
+		</figure>
+		</li>
+		</ul>
+		</div>
 	</div>
 
 	<div class="modal fade" id="event-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -91,9 +96,17 @@
 		</div>
 	</div>
 
-	<div class="grid-item recipe hvr-grow" a data-toggle="modal" href="#recipe-modal">
-		<h4 class="header" id="recipe">Recipe</h4>
-		<p class="tile-title"></p>
+	<div class="grid-item recipe" a data-toggle="modal" href="#recipe-modal">
+		<div id="hoverzoomfade"></div>
+		<ul class="photo-grid">
+		<li>
+		<figure>
+			<img src="" alt="" class="img-responsive">
+			<figcaption><p></p></figcaption>
+		</figure>
+		</li>
+		</ul>
+		</div>
 	</div>
 
 	<div class="modal fade" id="recipe-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -101,9 +114,17 @@
 		</div>
 	</div>
 
-	<div class="grid-item news hvr-grow" a data-toggle="modal" href="#news-modal">
-		<h4 class="header" id="news">News</h4>
-		<p class="tile-title"></p>
+	<div class="grid-item news" a data-toggle="modal" href="#news-modal">
+		<div id="hoverzoomfade"></div>
+		<ul class="photo-grid">
+		<li>
+		<figure>
+			<img src="" alt="" class="img-responsive">
+			<figcaption><p></p></figcaption>
+		</figure>
+		</li>
+		</ul>
+		</div>
 	</div>
 
 	<div class="modal fade" id="news-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
