@@ -30,10 +30,48 @@ module MorselsHelper
 	def self.get_weather_morsel_data(zip_code)
 		weather_key = Figaro.env.weather_key
 		weather_api_data = HTTParty.get"http://api.wunderground.com/api/#{weather_key}/conditions/q/#{zip_code}.json"
+		
+		rain_words = %w(Drizzle Rain Thunderstorm Precipitation Spray Squall)
+		rain_regex = Regexp.union(*rain_words)
+		snow_words = %w(Snow Ice Hail)
+		snow_regex = Regexp.union(*snow_words)
+		fog_words = %w(Fog Mist Haze)
+		fog_regex = Regexp.union(*fog_words)
+		dust_words = %w(Dust Smoke Sand Ash)
+		dust_regex = Regexp.union(*dust_words)
+		clear_words = %w(Clear)
+		clear_regex = Regexp.union(*clear_words)
+		cloud_words = %w(Cloud Overcast)
+		cloud_regex = Regexp.union(*cloud_words)
+
+		begin
+			weather_type = weather_api_data["current_observation"]["weather"]
+		rescue
+			weather_type = "Unknown"
+		end
+
+		if rain_regex === weather_type
+			weather_img = "http://headsup.boyslife.org/files/2012/12/rain.jpg"
+		elsif snow_regex === weather_type
+			weather_img = "http://i.ytimg.com/vi/ea1GMrjjJ1A/maxresdefault.jpg"
+		elsif fog_regex === weather_type
+			weather_img = "http://www.sarahannrogers.com/wp-content/uploads/2013/01/fog.jpg"
+		elsif dust_regex === weather_type
+			weather_img = "http://i.imwx.com/common/articles/images/orangecitystreet_650x366.jpg"
+		elsif clear_regex === weather_type
+			weather_img = "http://www.pardaphash.com/uploads/images/660/bright-future-74300.jpg"
+		elsif cloud_regex === weather_type
+			weather_img = "http://www.sitkanature.org/wordpress/wp-content/gallery/20100923/20100923-overcast-2.jpg"
+		else
+			# default pic if weather type is something else
+			weather_img = "http://anewscafe.com/wp-content/uploads/2011/03/rainbow-weather.jpg"
+		end
+
 		weather_morsel_data = {
 			'location' => weather_api_data["current_observation"]["display_location"]['full'],
 			'current_temp' => weather_api_data["current_observation"]["temperature_string"],
-			'icon' =>  weather_api_data["current_observation"]["icon_url"]
+			'image_url' => weather_img,
+			'description' => weather_type
 		}
 	end
 
@@ -163,28 +201,25 @@ module MorselsHelper
 		trivia_data = HTTParty.get("https://doubleordonate.herokuapp.com/api/questions")
 		index = rand(trivia_data.length)
 		trivia_morsel_data = {
-
-
-				'id' => trivia_data[index]['id'],
-				'question' => trivia_data[index]['text'],
-				'answer1' => trivia_data[index]['answer_1'],
-				'answer2' => trivia_data[index]['answer_2'],
-				'answer3' => trivia_data[index]['answer_3'],
-				'answer4' => trivia_data[index]['answer_4'],
-				'correct' => trivia_data[index]['correct_answer']
+			'id' => trivia_data[index]['id'],
+			'question' => trivia_data[index]['text'],
+			'answer1' => trivia_data[index]['answer_1'],
+			'answer2' => trivia_data[index]['answer_2'],
+			'answer3' => trivia_data[index]['answer_3'],
+			'answer4' => trivia_data[index]['answer_4'],
+			'correct' => trivia_data[index]['correct_answer']
 		}
 	end
 
 	def self.get_deal_morsel_data
 		# sanitizer = Rails::Html::FullSanitizer.new
 		sqoot_key = Figaro.env.sqoot_key
-		sqoot_data = HTTParty.get("http://api.sqoot.com/v2/deals?api_key=A9_RDnUAJB4ln46zJU8f&online=true")
-
+		sqoot_data = HTTParty.get("http://api.sqoot.com/v2/deals?api_key=#{sqoot_key}&online=true")
 		deal_morsel_data={
-				'title' => sqoot_data['deals'][0]['deal']['short_title'],
-				'image' => sqoot_data['deals'][0]['deal']['image_url'],
-				'description' => sqoot_data['deals'][0]['deal']['title'],
-				'source' => sqoot_data['deals'][0]['deal']['url']
+			'title' => sqoot_data['deals'][0]['deal']['short_title'],
+			'image' => sqoot_data['deals'][0]['deal']['image_url'],
+			'description' => sqoot_data['deals'][0]['deal']['title'],
+			'source' => sqoot_data['deals'][0]['deal']['untracked_url']
 		}
 	end
 
@@ -231,6 +266,11 @@ module MorselsHelper
 		}
 
 		morsel = Morsel.create(morsel_params)
+
+		# use this line instead of the 'create' line for testing.
+		# this one won't save morsels in the database, so api calls will happen every time.
+		# Remember to delete or reset all morsels after uncommenting this line.
+		# morsel = Morsel.new(morsel_params)  
 
 		if morsel.valid?
 			morsel
