@@ -155,15 +155,13 @@ module MorselsHelper
 		trivia_data = HTTParty.get("https://doubleordonate.herokuapp.com/api/questions")
 		index = rand(trivia_data.length)
 		trivia_morsel_data = {
-
-
-				'id' => trivia_data[index]['id'],
-				'question' => trivia_data[index]['text'],
-				'answer1' => trivia_data[index]['answer_1'],
-				'answer2' => trivia_data[index]['answer_2'],
-				'answer3' => trivia_data[index]['answer_3'],
-				'answer4' => trivia_data[index]['answer_4'],
-				'correct' => trivia_data[index]['correct_answer']
+			'id' => trivia_data[index]['id'],
+			'question' => trivia_data[index]['text'],
+			'answer1' => trivia_data[index]['answer_1'],
+			'answer2' => trivia_data[index]['answer_2'],
+			'answer3' => trivia_data[index]['answer_3'],
+			'answer4' => trivia_data[index]['answer_4'],
+			'correct' => trivia_data[index]['correct_answer']
 		}
 	end
 
@@ -171,12 +169,11 @@ module MorselsHelper
 		# sanitizer = Rails::Html::FullSanitizer.new
 		sqoot_key = Figaro.env.sqoot_key
 		sqoot_data = HTTParty.get("http://api.sqoot.com/v2/deals?api_key=#{sqoot_key}&online=true")
-
 		deal_morsel_data={
-				'title' => sqoot_data['deals'][0]['deal']['short_title'],
-				'image' => sqoot_data['deals'][0]['deal']['image_url'],
-				'description' => sqoot_data['deals'][0]['deal']['title'],
-				'source' => sqoot_data['deals'][0]['deal']['url']
+			'title' => sqoot_data['deals'][0]['deal']['short_title'],
+			'image' => sqoot_data['deals'][0]['deal']['image_url'],
+			'description' => sqoot_data['deals'][0]['deal']['title'],
+			'source' => sqoot_data['deals'][0]['deal']['untracked_url']
 		}
 	end
 
@@ -226,6 +223,7 @@ module MorselsHelper
 
 		# use this line instead of the 'create' line for testing.
 		# this one won't save morsels in the database, so api calls will happen every time.
+		# Remember to delete or reset all morsels after uncommenting this line.
 		# morsel = Morsel.new(morsel_params)  
 
 		if morsel.valid?
