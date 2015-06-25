@@ -142,11 +142,19 @@ module MorselsHelper
 	def self.get_news_morsel_data
 		news_key = Figaro.env.news_key
 		news_data = HTTParty.get("http://api.nytimes.com/svc/topstories/v1/home.json?api-key=#{news_key}")
+		
+		begin
+			news_img = news_data['results'][0]['multimedia'][0]['url']
+			# if image is named "ms.jpg", then it is the small version. Change it to "o.jpg".
+			news_img.gsub!(/thumbStandard.*/, 'master675.jpg')
+		rescue
+			news_img = "http://a1.nyt.com/assets/homepage/20150615-165652/images/foundation/logos/nyt-logo-379x64.png"
+		end
 
 		news_morsel_data = {
 				'title' => news_data['results'][0]['title'],
 				'abstract' => news_data['results'][0]['abstract'],
-				'image' => news_data['results'][0]['multimedia'][0]['url'],
+				'image' => news_img,
 				'source' => news_data['results'][0]['url']
 		}
 	end
