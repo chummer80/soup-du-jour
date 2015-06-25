@@ -7,3 +7,9 @@
 	<%= link_to "Log In", new_session_path %>
 	<%= link_to "Sign Up", new_user_path %>
 <% end %>
+
+<select id="morsel-list" class="hidden" multiple>
+	<% @morsel_list.each do |morsel| %>
+		<option selected="true" value="<%= morsel %>"></option>
+	<% end %>
+</select>

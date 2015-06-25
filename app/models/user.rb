@@ -12,7 +12,34 @@ class User < ActiveRecord::Base
 		confirmation: true
 	validates :zip_code,
 		format: {with: /\A(\d{5})?\z/}
+	validate :remove_blank_interests
+	validate :remove_blank_morsels
 
+	def remove_blank_interests
+		interests.each do |interest|
+			if interest.class != String
+				errors.add(:interests, "must be strings") 
+			else
+				interest.strip!
+				if interest.length == 0
+					interests.delete(interest)
+				end
+			end
+		end
+	end
+
+	def remove_blank_morsels
+		morsels.each do |morsel|
+			if morsel.class != String
+				errors.add(:morsels, "must be strings") 
+			else
+				morsel.strip!
+				if morsel.length == 0
+					morsels.delete(morsel)
+				end
+			end
+		end
+	end
 
 	# Returns the hash digest of the given string.
 	def self.digest(string)

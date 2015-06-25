@@ -1,0 +1,10 @@
+<h1>User Settings</h1>
+
+<%= simple_form_for @user, url: update_user_settings_path, method: :patch do |f| %>
+	<%= f.input :zip_code %>
+	
+	<%= f.input :interests, as: :array %>
+	<button id="add-interest" type="button">Add Another Interest</button>
+	<br><br>
+	<%= f.button :submit, "Save Settings" %>
+<% end %>
