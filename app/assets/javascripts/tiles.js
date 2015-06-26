@@ -138,6 +138,24 @@ $.getJSON("http://localhost:3000/api/beer", function(response, status, jqXHR){
 
 });
 
+$.getJSON("http://localhost:3000/api/charity", function(response, status, jqXHR){
+	$(".charity").find('p').eq(0).html(response.name);
+	$(".charity img").attr("src", response['image_url']);
+
+	$('.charity').click(function(){
+		var modalContent = $("#templates .soup-content").clone();
+		var modal = $('#charity-modal .modal-dialog');
+
+		modal.empty();
+
+		modalContent.find('.modal-title').html(response.name);
+		modalContent.find('.modal-body p').html(response.description);
+
+		modalContent.appendTo(modal);
+	});
+
+});
+
 $.getJSON("http://localhost:3000/api/event", function(response, status, jqXHR){
 
 	$(".event").find('p').eq(0).html(response.name);
