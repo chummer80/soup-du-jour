@@ -20,14 +20,14 @@ $.getJSON("http://localhost:3000/api/soup", function(response, status, jqXHR){
 $.getJSON("http://localhost:3000/api/weather", function(response, status, jqXHR){
 	$(".weather").find('p').eq(0).html(response.location);
 	$(".weather").find('p').eq(1).html(response.current_temp);
-	$('<img>', {src: response['icon'], class: 'img-responsive'}).appendTo(".weather");
+	$(".weather img").attr("src", response['image_url']);
 
 
 });
 
 $.getJSON("http://localhost:3000/api/word", function(response, status, jqXHR){
-	$(".word").find('p').eq(0).html(response.word);
-	$(".word").find('p').eq(1).html(response.definition);
+	$(".word").find('h4').eq(0).html(response.word);
+	$(".word").find('p').eq(0).html(response.definition);
 
 	$('.word').click(function(){
 		var modalContent = $("#templates .soup-content").clone();
@@ -45,7 +45,7 @@ $.getJSON("http://localhost:3000/api/word", function(response, status, jqXHR){
 
 $.getJSON("http://localhost:3000/api/reddit", function(response, status, jqXHR){
 	$(".reddit").find('p').eq(0).html(response.title);
-	$(".reddit").find('p').eq(1).html(response.permalink);
+	$(".reddit img").attr("src", response['image']);
 
 	$('.reddit').click(function(){
 		var modalContent = $("#templates .soup-content").clone();
@@ -82,7 +82,7 @@ $.getJSON("http://localhost:3000/api/restaurant", function(response, status, jqX
 
 $.getJSON("http://localhost:3000/api/beer", function(response, status, jqXHR){
 	$(".beer").find('p').eq(0).html(response.beer);
-	$(".beer").find('p').eq(1).html(response.description);
+	$(".beer img").attr("src", response['image']);
 
 	$('.beer').click(function(){
 		var modalContent = $("#templates .soup-content").clone();
@@ -158,9 +158,9 @@ $.getJSON("http://localhost:3000/api/news", function(response, status, jqXHR){
 		modalContent.appendTo(modal);
 	});
 
-	$.getJSON("http://localhost:3000/api/video",function(response, status, jqXHR){
-		$("video").eq(0).attr("src", response['video_url']);
-	});
+	// $.getJSON("http://localhost:3000/api/video",function(response, status, jqXHR){
+	// 	$("video").eq(0).attr("src", response['video_url']);
+	// });
 
 });
 // external js: isotope.pkgd.js
