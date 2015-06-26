@@ -112,77 +112,89 @@ private
 
 	def self.get_word_morsel_data
 		word_key = Figaro.env.word_key
-		word_api_data = HTTParty.get"http://api.wordnik.com:80/v4/words.json/wordOfTheDay?api_key=#{word_key}"
+		begin
+		word_api_data = HTTParty.get("http://api.wordnik.com:80/v4/words.json/wordOfTheDay?api_key=#{word_key}", timeout:15)
 		word_morsel_data = {
 			'word' => word_api_data['word'].capitalize,
 			'definition' => word_api_data["note"]
 		}
+		rescue
+			nil
+		end
 	end
 
 	def self.get_reddit_morsel_data
-		reddit_api_data = HTTParty.get"https://www.reddit.com/hot.json"
-
 		begin
-			reddit_pic = reddit_api_data['data']['children'][0]['data']['preview']['images'][0]['source']['url']
+				reddit_api_data = HTTParty.get("https://www.reddit.com/hot.json", timeout: 15)
+
+				begin
+					reddit_pic = reddit_api_data['data']['children'][0]['data']['preview']['images'][0]['source']['url']
+				rescue
+					reddit_pic = "https://www.redditstatic.com/about/assets/reddit-alien.png"
+				end
+
+				reddit_morsel_data = {
+					'title' => reddit_api_data['data']['children'][0]['data']['title'],
+					'image' => reddit_pic,
+					'permalink' => "http://www.reddit.com/" + reddit_api_data['data']['children'][0]['data']['permalink']
+				}
+			rescue
+				return nil
+			end
+		end
+
+		def self.get_weather_morsel_data(zip_code)
+			weather_key = Figaro.env.weather_key
+			begin
+			weather_api_data = HTTParty.get("http://api.wunderground.com/api/#{weather_key}/conditions/q/#{zip_code}.json", timeout: 15)
+
+			rain_words = %w(Drizzle Rain Thunderstorm Precipitation Spray Squall)
+			rain_regex = Regexp.union(*rain_words)
+			snow_words = %w(Snow Ice Hail)
+			snow_regex = Regexp.union(*snow_words)
+			fog_words = %w(Fog Mist Haze)
+			fog_regex = Regexp.union(*fog_words)
+			dust_words = %w(Dust Smoke Sand Ash)
+			dust_regex = Regexp.union(*dust_words)
+			clear_words = %w(Clear)
+			clear_regex = Regexp.union(*clear_words)
+			cloud_words = %w(Cloud Overcast)
+			cloud_regex = Regexp.union(*cloud_words)
+
+			begin
+				weather_type = weather_api_data["current_observation"]["weather"]
+			rescue
+				weather_type = "Unknown"
+			end
+
+			if rain_regex === weather_type
+				weather_img = "http://headsup.boyslife.org/files/2012/12/rain.jpg"
+			elsif snow_regex === weather_type
+				weather_img = "http://i.ytimg.com/vi/ea1GMrjjJ1A/maxresdefault.jpg"
+			elsif fog_regex === weather_type
+				weather_img = "http://www.sarahannrogers.com/wp-content/uploads/2013/01/fog.jpg"
+			elsif dust_regex === weather_type
+				weather_img = "http://i.imwx.com/common/articles/images/orangecitystreet_650x366.jpg"
+			elsif clear_regex === weather_type
+				weather_img = "http://www.pardaphash.com/uploads/images/660/bright-future-74300.jpg"
+			elsif cloud_regex === weather_type
+				weather_img = "http://www.sitkanature.org/wordpress/wp-content/gallery/20100923/20100923-overcast-2.jpg"
+			else
+				# default pic if weather type is something else
+				weather_img = "http://anewscafe.com/wp-content/uploads/2011/03/rainbow-weather.jpg"
+			end
+
+			weather_morsel_data = {
+				'location' => weather_api_data["current_observation"]["display_location"]['full'],
+				'current_temp' => weather_api_data["current_observation"]["temperature_string"],
+				'image_url' => weather_img,
+				'description' => weather_type,
+				'url' => weather_api_data["current_observation"]["forecast_url"]
+			}
 		rescue
-			reddit_pic = "https://www.redditstatic.com/about/assets/reddit-alien.png"
-		end
-
-		reddit_morsel_data = {
-			'title' => reddit_api_data['data']['children'][0]['data']['title'],
-			'image' => reddit_pic,
-			'permalink' => "http://www.reddit.com/" + reddit_api_data['data']['children'][0]['data']['permalink']
-		}
+			return nil
 	end
-
-	def self.get_weather_morsel_data(zip_code)
-		weather_key = Figaro.env.weather_key
-		weather_api_data = HTTParty.get"http://api.wunderground.com/api/#{weather_key}/conditions/q/#{zip_code}.json"
-		
-		rain_words = %w(Drizzle Rain Thunderstorm Precipitation Spray Squall)
-		rain_regex = Regexp.union(*rain_words)
-		snow_words = %w(Snow Ice Hail)
-		snow_regex = Regexp.union(*snow_words)
-		fog_words = %w(Fog Mist Haze)
-		fog_regex = Regexp.union(*fog_words)
-		dust_words = %w(Dust Smoke Sand Ash)
-		dust_regex = Regexp.union(*dust_words)
-		clear_words = %w(Clear)
-		clear_regex = Regexp.union(*clear_words)
-		cloud_words = %w(Cloud Overcast)
-		cloud_regex = Regexp.union(*cloud_words)
-
-		begin
-			weather_type = weather_api_data["current_observation"]["weather"]
-		rescue
-			weather_type = "Unknown"
-		end
-
-		if rain_regex === weather_type
-			weather_img = "http://headsup.boyslife.org/files/2012/12/rain.jpg"
-		elsif snow_regex === weather_type
-			weather_img = "http://i.ytimg.com/vi/ea1GMrjjJ1A/maxresdefault.jpg"
-		elsif fog_regex === weather_type
-			weather_img = "http://www.sarahannrogers.com/wp-content/uploads/2013/01/fog.jpg"
-		elsif dust_regex === weather_type
-			weather_img = "http://i.imwx.com/common/articles/images/orangecitystreet_650x366.jpg"
-		elsif clear_regex === weather_type
-			weather_img = "http://www.pardaphash.com/uploads/images/660/bright-future-74300.jpg"
-		elsif cloud_regex === weather_type
-			weather_img = "http://www.sitkanature.org/wordpress/wp-content/gallery/20100923/20100923-overcast-2.jpg"
-		else
-			# default pic if weather type is something else
-			weather_img = "http://anewscafe.com/wp-content/uploads/2011/03/rainbow-weather.jpg"
-		end
-
-		weather_morsel_data = {
-			'location' => weather_api_data["current_observation"]["display_location"]['full'],
-			'current_temp' => weather_api_data["current_observation"]["temperature_string"],
-			'image_url' => weather_img,
-			'description' => weather_type,
-			'url' => weather_api_data["current_observation"]["forecast_url"]
-		}
-	end
+ end
 
 	def self.get_restaurant_morsel_data(zip_code)
 		# Pick the yelp business with a "best "match" ranking that corresponds to the current
@@ -203,10 +215,16 @@ private
 			restaurant_img = yelp_api_data.raw_data['businesses'][0]['image_url']
 			# if image is named "ms.jpg", then it is the small version. Change it to "o.jpg".
 			restaurant_img.gsub!(/ms\.jpg/, 'o.jpg')
+			yelp_rating = yelp_api_data.raw_data['businesses'][0]['rating_img_url']
+			yelp_comment = yelp_api_data.raw_data['businesses'][0]['snippet_text']
+
 		rescue
+			yelp_rating = ""
 			restaurant_img = "http://www.bonappetit.com/wp-content/uploads/2011/03/empty-restaurant-table-reviews-critis_484.jpg"
+			yelp_comment = ""
 		end
 
+		begin
 		restaurant_morsel_data ={
 			'first_img' => restaurant_img,
 			'bizname' => yelp_api_data.raw_data['businesses'][0]['name'],
@@ -214,51 +232,71 @@ private
 			'comment' => yelp_api_data.raw_data['businesses'][0]['snippet_text'],
 			'yelp_link' => yelp_api_data.raw_data['businesses'][0]['url']
 		}
+		rescue
+			return nil
+		end
 	end
-
 	def self.get_beer_morsel_data
 		beer_key = Figaro.env.beer_key
-		beer_api_data = HTTParty.get"http://api.brewerydb.com/v2/beers/?key=#{beer_key}&order=random&randomCount=1&abv='-10'"
 		begin
-			beer_pic = beer_api_data['data'][0]['labels']['large']
-		rescue
-			beer_pic = "http://lexingtonbeerworks.com/site/wp-content/uploads/2014/05/Craft-Beer.jpg"
-		end
+			beer_api_data = HTTParty.get("http://api.brewerydb.com/v2/beers/?key=#{beer_key}&order=random&randomCount=1&abv='-10'", timeout: 15)
+			begin
+				beer_pic = beer_api_data['data'][0]['labels']['large']
+				beer_desc = beer_api_data['data'][0]['description']
+			rescue
+				beer_pic = "http://lexingtonbeerworks.com/site/wp-content/uploads/2014/05/Craft-Beer.jpg"
+				beer_desc = ""
+			end
 
-		beer_morsel_data = {
-			'image' => beer_pic,
-			'beer' => beer_api_data['data'][0]['name'],
-			'description' => beer_api_data['data'][0]['description']
-		}
+			beer_morsel_data = {
+				'image' => beer_pic,
+				'beer' => beer_api_data['data'][0]['name'],
+				'description' => beer_desc
+			}
+		rescue
+			return nil
+		end
 	end
 
 	def self.get_event_morsel_data(zip_code)
 		events_key = Figaro.env.events_key
 		today = Time.now.in_time_zone("America/Los_Angeles").strftime("%F")
-		event_data = HTTParty.get"https://www.eventbriteapi.com/v3/events/search/?location.address=#{zip_code}&location.within=5mi&start_date.range_start=#{today}T00%3A00%3A35Z&start_date.range_end=#{today}T23%3A50%3A57Z&token=#{events_key}"
 		begin
-			event_img = event_data['events'][0]['logo']['url']
+			event_data = HTTParty.get("https://www.eventbriteapi.com/v3/events/search/?location.address=#{zip_code}&location.within=5mi&start_date.range_start=#{today}T00%3A00%3A35Z&start_date.range_end=#{today}T23%3A50%3A57Z&token=#{events_key}", timeout:15)
+			begin
+				event_img = event_data['events'][0]['logo']['url']
+			rescue
+				event_img = "http://files.itproportal.com/wp-content/uploads/2014/07/Eventbrite_logo_640_400_contentfullwidth.png"
+			end
+			event_morsel_data = {
+				'name' => event_data['events'][0]['name']['text'],
+				'description' => event_data['events'][0]['description']['text'],
+				'event_pic' => event_img,
+				'event_url' => event_data['events'][0]['url']
+			}
 		rescue
-			event_img = "http://files.itproportal.com/wp-content/uploads/2014/07/Eventbrite_logo_640_400_contentfullwidth.png"
+			return nil
 		end
-		
-		event_morsel_data = {
-			'name' => event_data['events'][0]['name']['text'],
-			'description' => event_data['events'][0]['description']['text'],
-			'event_pic' => event_img,
-			'event_url' => event_data['events'][0]['url']
-		}
 	end
 
 	def self.get_recipe_morsel_data
 		recipe_key = Figaro.env.recipe_key
-		recipe_data = JSON.parse HTTParty.get"http://food2fork.com/api/search?sort=t&key=#{recipe_key}"
-		recipe_index = rand(30)
-		recipe_morsel_data = {
-			'name' => recipe_data['recipes'][recipe_index]['title'],
-			'image' => recipe_data['recipes'][recipe_index]['image_url'],
-			'source' => recipe_data['recipes'][recipe_index]['source_url']
-		}
+		begin
+			recipe_data = JSON.parse HTTParty.get("http://food2fork.com/api/search?sort=t&key=#{recipe_key}", timeout:15)
+			recipe_index = rand(30)
+			begin
+				recipe_image = recipe_data['recipes'][recipe_index]['source_url']
+			rescue
+				recipe_image = ""
+			end
+			recipe_morsel_data = {
+				'name' => recipe_data['recipes'][recipe_index]['title'],
+				'image' => recipe_data['recipes'][recipe_index]['image_url'],
+				'source' => recipe_data['recipes'][recipe_index]['source_url']
+			}
+		rescue
+			return nil
+		end
 	end
 	
 	def self.get_video_morsel_data
@@ -299,22 +337,25 @@ private
 
 	def self.get_news_morsel_data
 		news_key = Figaro.env.news_key
-		news_data = HTTParty.get("http://api.nytimes.com/svc/topstories/v1/home.json?api-key=#{news_key}")
-		
 		begin
-			news_img = news_data['results'][0]['multimedia'][0]['url']
-			# if image is named "ms.jpg", then it is the small version. Change it to "o.jpg".
-			news_img.gsub!(/thumbStandard.*/, 'master675.jpg')
-		rescue
-			news_img = "http://static1.squarespace.com/static/5399cc0ae4b0705199b37aa3/5399e8a2e4b0f44ec1b1e21e/545a0216e4b05115df2de008/1429793622682"
-		end
+			news_data = HTTParty.get("http://api.nytimes.com/svc/topstories/v1/home.json?api-key=#{news_key}", timeout: 15)
 
-		news_morsel_data = {
-			'title' => news_data['results'][0]['title'],
-			'abstract' => news_data['results'][0]['abstract'],
-			'image' => news_img,
-			'source' => news_data['results'][0]['url']
-		}
+			begin
+				news_img = news_data['results'][0]['multimedia'][0]['url']
+				# if image is named "ms.jpg", then it is the small version. Change it to "o.jpg".
+				news_img.gsub!(/thumbStandard.*/, 'master675.jpg')
+			rescue
+				news_img = "http://static1.squarespace.com/static/5399cc0ae4b0705199b37aa3/5399e8a2e4b0f44ec1b1e21e/545a0216e4b05115df2de008/1429793622682"
+			end
+			news_morsel_data = {
+				'title' => news_data['results'][0]['title'],
+				'abstract' => news_data['results'][0]['abstract'],
+				'image' => news_img,
+				'source' => news_data['results'][0]['url']
+			}
+		rescue
+			return nil
+		end
 	end
 
 	def self.get_trivia_morsel_data
@@ -334,75 +375,85 @@ private
 	def self.get_deal_morsel_data
 		# sanitizer = Rails::Html::FullSanitizer.new
 		sqoot_key = Figaro.env.sqoot_key
-		sqoot_data = HTTParty.get("http://api.sqoot.com/v2/deals?api_key=#{sqoot_key}&online=true&order=updated_at_desc")
-		deal_morsel_data={
-			'title' => sqoot_data['deals'][0]['deal']['short_title'],
-			'image' => sqoot_data['deals'][0]['deal']['image_url'],
-			'description' => sqoot_data['deals'][0]['deal']['title'],
-			'source' => sqoot_data['deals'][0]['deal']['untracked_url']
-		}
+		begin
+			sqoot_data = HTTParty.get("http://api.sqoot.com/v2/deals?api_key=#{sqoot_key}&online=true&order=updated_at_desc", timeout:15)
+			deal_morsel_data={
+				'title' => sqoot_data['deals'][0]['deal']['short_title'],
+				'image' => sqoot_data['deals'][0]['deal']['image_url'],
+				'description' => sqoot_data['deals'][0]['deal']['title'],
+				'source' => sqoot_data['deals'][0]['deal']['untracked_url']
+			}
+		rescue
+			return nil
+		end
 	end
 
 	def self.get_photo_morsel_data
 		instagram_key = Figaro.env.instagram_key
-
-		instagram_data = HTTParty.get("https://api.instagram.com/v1/media/popular?client_id=#{instagram_key}")
-		photo_index = nil
-		# make sure we use a photo, not a video
-		instagram_data['data'].each_index do |index|
-			media_item = instagram_data['data'][index]
-			if media_item['type'] == "image"
-				photo_index = index
-				break
+		begin
+			instagram_data = HTTParty.get("https://api.instagram.com/v1/media/popular?client_id=#{instagram_key}", timeout:15)
+			photo_index = nil
+			# make sure we use a photo, not a video
+			instagram_data['data'].each_index do |index|
+				media_item = instagram_data['data'][index]
+				if media_item['type'] == "image"
+					photo_index = index
+					break
+				end
 			end
+			photo_morsel_data = {
+				url: instagram_data['data'][photo_index]['link'],
+				username: instagram_data['data'][photo_index]['user']['username'],
+				image_url: instagram_data['data'][photo_index]['images']['standard_resolution']['url'],
+				caption: instagram_data['data'][photo_index]['caption']['text']
+			}
+		rescue
+			return nil
 		end
-
-		photo_morsel_data = {
-			url: instagram_data['data'][photo_index]['link'],
-			username: instagram_data['data'][photo_index]['user']['username'],
-			image_url: instagram_data['data'][photo_index]['images']['standard_resolution']['url'],
-			caption: instagram_data['data'][photo_index]['caption']['text']
-		}
 	end
 
 	def self.get_view_morsel_data
 		instagram_key = Figaro.env.instagram_key
-
-		instagram_data = HTTParty.get("https://api.instagram.com/v1/users/1988768/media/recent?client_id=#{instagram_key}")
-		photo_index = nil
-		# make sure we use a photo, not a video
-		instagram_data['data'].each_index do |index|
-			media_item = instagram_data['data'][index]
-			if media_item['type'] == "image"
-				photo_index = index
-				break
+		begin
+			instagram_data = HTTParty.get("https://api.instagram.com/v1/users/1988768/media/recent?client_id=#{instagram_key}", timeout:15)
+			photo_index = nil
+			# make sure we use a photo, not a video
+			instagram_data['data'].each_index do |index|
+				media_item = instagram_data['data'][index]
+				if media_item['type'] == "image"
+					photo_index = index
+					break
+				end
 			end
+			view_morsel_data = {
+				url: instagram_data['data'][photo_index]['link'],
+				image_url: instagram_data['data'][photo_index]['images']['standard_resolution']['url'],
+				caption: instagram_data['data'][photo_index]['caption']['text']
+			}
+		rescue
+			return nil
 		end
-
-		view_morsel_data = {
-			url: instagram_data['data'][photo_index]['link'],
-			image_url: instagram_data['data'][photo_index]['images']['standard_resolution']['url'],
-			caption: instagram_data['data'][photo_index]['caption']['text']
-		}
 	end
 
 
 	def self.get_charity_morsel_data
 		just_giving_key = Figaro.env.just_giving_key
+		begin
+			charity_list_data = HTTParty.get("https://api-sandbox.justgiving.com/#{just_giving_key}/v1/charity/search?format=json", timeout: 15)
+			# get a different charity each day of the month
+			charity_index = Time.zone.now.mday % 15
+			charity_id = charity_list_data['charitySearchResults'][charity_index]['charityId']
 
-		charity_list_data = HTTParty.get("https://api-sandbox.justgiving.com/#{just_giving_key}/v1/charity/search?format=json")
-		# get a different charity each day of the month
-		charity_index = Time.zone.now.mday % 15
-		charity_id = charity_list_data['charitySearchResults'][charity_index]['charityId']
-		
-		# using the id number taken out of the charity list, get more info on that charity
-		charity_api_data = HTTParty.get("https://api-sandbox.justgiving.com/#{just_giving_key}/v1/charity/#{charity_id}?format=json")
-
-		charity_morsel_data = {
-			name: charity_api_data['name'],
-			description: charity_api_data['description'],
-			image_url: charity_api_data['logoAbsoluteUrl'],
-			url: charity_api_data['websiteUrl']
-		}
+			# using the id number taken out of the charity list, get more info on that charity
+			charity_api_data = HTTParty.get("https://api-sandbox.justgiving.com/#{just_giving_key}/v1/charity/#{charity_id}?format=json")
+			charity_morsel_data = {
+				name: charity_api_data['name'],
+				description: charity_api_data['description'],
+				image_url: charity_api_data['logoAbsoluteUrl'],
+				url: charity_api_data['websiteUrl']
+			}
+		rescue
+			return nil
+		end
 	end
 end
