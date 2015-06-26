@@ -58,16 +58,10 @@ class UsersController < ApplicationController
 	def edit_morsels
 		@user = current_user
 
-		# build an array of morsels that are not currently in the user's morsel preferences
-		# our route names are the same as our action names
-		@unselected_morsels = []
-		Rails.application.routes.routes.each do |route|
-			controller = route.defaults[:controller]
-			action = route.defaults[:action]
-			if controller == 'api/api' && !@user.morsels.include?(action)
-				@unselected_morsels << action
-			end
-		end
+		# Create an array of morsels that are not currently in 
+		# the user's morsel preferences. This list will be on the right
+		all_morsels = MorselsHelper.get_morsel_list("all")
+		@unselected_morsels = all_morsels - @user.morsels
 	end
 
 	def update_morsels

@@ -2,6 +2,96 @@ module MorselsHelper
 	include HTTParty
 	default_timeout 8
 
+	
+	# This is the central list of all morsels available in our API.
+	# A list can be retrieved by passing in a filter: "all", "localized", or "general"
+	def self.get_morsel_list(filter = "all")
+		general_morsels = %w(
+			soup
+			word
+			reddit
+			beer
+			video
+			musicvideo
+			recipe
+			news
+			trivia
+			deal
+			photo
+			view
+			charity
+		)
+
+		localized_morsels = %w(				
+			weather
+			restaurant				
+			event
+		)
+
+		case filter
+		when "all"
+			return general_morsels + localized_morsels
+		when "localized"
+			return localized_morsels
+		when "general"
+			return general_morsels
+		else
+			raise "unrecognized morsel list filter: #{filter.to_s}"
+		end
+	end
+
+	# Create an entry in the morsel table for the morsel type and zip code provided
+	# This should only happen if such a morsel doesn't already exist
+	def self.create_morsel(morsel_type, zip_code)
+		localized_morsel_list = get_morsel_list("localized")
+		general_morsel_list = get_morsel_list("general")
+
+		if localized_morsel_list.include?(morsel_type)
+			morsel_data = send("get_#{morsel_type}_morsel_data", zip_code)
+		elsif general_morsel_list.include?(morsel_type)
+			morsel_data = send("get_#{morsel_type}_morsel_data")
+		else
+			raise "Unrecognized morsel type: #{morsel_type}"
+		end
+
+		morsel_params = {
+			morsel_type: morsel_type,
+			zip_code: zip_code,
+			data: morsel_data.to_json
+		}
+
+		morsel = Morsel.create(morsel_params)
+
+		# use this line instead of the 'create' line for testing.
+		# this one won't save morsels in the database, so api calls will happen every time.
+		# Remember to delete or reset all morsels after uncommenting this line.
+		# morsel = Morsel.new(morsel_params)  
+
+		if morsel.valid?
+			morsel
+		else
+			raise "#{morsel_type} morsel could not be created!"
+		end
+
+		morsel
+	end
+
+	# This either retrieves the existing morsel that fits the search criteria,
+	# or creates it if it doesn't exist yet.
+	def self.get_morsel(morsel_type, zip_code)
+		morsel = Morsel.find_by(morsel_type: morsel_type, zip_code: zip_code)
+
+		if morsel.nil?
+			morsel = create_morsel(morsel_type, zip_code)
+		end
+
+		morsel
+	end
+
+
+
+private	
+
 	def self.get_soup_morsel_data
 		soup_index = Time.zone.now.mday - 1
 		soup_morsel = Soup.all[soup_index]
@@ -309,78 +399,4 @@ module MorselsHelper
 			url: charity_api_data['websiteUrl']
 		}
 	end
-
-
-
-
-
-
-	# Create an entry in the morsel table for the morsel type and zip code provided
-	# This should only happen if such a morsel doesn't already exist
-	def self.create_morsel(morsel_type, zip_code)
-		localized_morsel_list = %w(				
-			weather
-			restaurant				
-			event
-		)
-
-		general_morsel_list = %w(
-			soup
-			word
-			reddit
-			beer
-			video
-			musicvideo
-			recipe
-			news
-			trivia
-			deal
-			photo
-			view
-			charity
-		)
-
-		if localized_morsel_list.include?(morsel_type)
-			morsel_data = send("get_#{morsel_type}_morsel_data", zip_code)
-		elsif general_morsel_list.include?(morsel_type)
-			morsel_data = send("get_#{morsel_type}_morsel_data")
-		else
-			raise "Unrecognized morsel type: #{morsel_type}"
-		end
-
-		morsel_params = {
-			morsel_type: morsel_type,
-			zip_code: zip_code,
-			data: morsel_data.to_json
-		}
-
-		morsel = Morsel.create(morsel_params)
-
-		# use this line instead of the 'create' line for testing.
-		# this one won't save morsels in the database, so api calls will happen every time.
-		# Remember to delete or reset all morsels after uncommenting this line.
-		# morsel = Morsel.new(morsel_params)  
-
-		if morsel.valid?
-			morsel
-		else
-			raise "#{morsel_type} morsel could not be created!"
-		end
-
-		morsel
-	end
-
-	# This either retrieves the existing morsel that fits the search criteria,
-	# or creates it if it doesn't exist yet.
-	def self.get_morsel(morsel_type, zip_code)
-		morsel = Morsel.find_by(morsel_type: morsel_type, zip_code: zip_code)
-
-		if morsel.nil?
-			morsel = create_morsel(morsel_type, zip_code)
-		end
-
-		morsel
-	end
-
-
 end

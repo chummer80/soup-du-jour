@@ -3,35 +3,13 @@ module Api
 		include MorselsHelper
 		protect_from_forgery with: :null_session
 
-		def morsel
-			morsel_list = %w(
-				soup
-				word
-				reddit
-				weather
-				restaurant
-				beer
-				event
-				video
-				musicvideo
-				recipe
-				news
-				trivia
-				deal
-				photo
-				view
-				charity
-			)
-			
-			localized_morsel_list = %w(				
-				weather
-				restaurant				
-				event
-			)
+		def morsel			
+			all_morsel_list = MorselsHelper.get_morsel_list("all")
+			localized_morsel_list = MorselsHelper.get_morsel_list("localized")
 
 			morsel_type = params[:morsel_type]
 
-			if morsel_list.include?(morsel_type)
+			if all_morsel_list.include?(morsel_type)
 				zip_code = localized_morsel_list.include?(morsel_type) ? get_zip() : ""
 				morsel = MorselsHelper.get_morsel(morsel_type, zip_code)
 				render json: morsel.data
