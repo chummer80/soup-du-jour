@@ -1,4 +1,4 @@
-$.getJSON("http://localhost:3000/api/soup", function(response, status, jqXHR){
+$.getJSON(baseUrl + "/api/soup", function(response, status, jqXHR){
 	$(".soup").find('p').eq(0).html(response.name);
 	$(".soup img").attr("src", response['image_url']);
 
@@ -17,7 +17,7 @@ $.getJSON("http://localhost:3000/api/soup", function(response, status, jqXHR){
 
 });
 
-$.getJSON("http://localhost:3000/api/weather", function(response, status, jqXHR){
+$.getJSON(baseUrl + "/api/weather", function(response, status, jqXHR){
 	$(".weather").find('p').eq(0).html(response.location);
 	$(".weather").find('p').eq(1).html(response.current_temp);
 	$('<img>', {src: response['icon'], class: 'img-responsive'}).appendTo(".weather");
@@ -25,7 +25,7 @@ $.getJSON("http://localhost:3000/api/weather", function(response, status, jqXHR)
 
 });
 
-$.getJSON("http://localhost:3000/api/word", function(response, status, jqXHR){
+$.getJSON(baseUrl + "/api/word", function(response, status, jqXHR){
 	$(".word").find('p').eq(0).html(response.word);
 	$(".word").find('p').eq(1).html(response.definition);
 
@@ -43,7 +43,7 @@ $.getJSON("http://localhost:3000/api/word", function(response, status, jqXHR){
 
 });
 
-$.getJSON("http://localhost:3000/api/reddit", function(response, status, jqXHR){
+$.getJSON(baseUrl + "/api/reddit", function(response, status, jqXHR){
 	$(".reddit").find('p').eq(0).html(response.title);
 	$(".reddit").find('p').eq(1).html(response.permalink);
 
@@ -61,7 +61,7 @@ $.getJSON("http://localhost:3000/api/reddit", function(response, status, jqXHR){
 
 });
 
-$.getJSON("http://localhost:3000/api/restaurant", function(response, status, jqXHR){
+$.getJSON(baseUrl + "/api/restaurant", function(response, status, jqXHR){
 
 	$(".restaurant").find('p').eq(0).html(response.bizname);
 	$(".restaurant img").eq(0).attr("src", response['first_img']);
@@ -80,7 +80,7 @@ $.getJSON("http://localhost:3000/api/restaurant", function(response, status, jqX
 	});
 });
 
-$.getJSON("http://localhost:3000/api/beer", function(response, status, jqXHR){
+$.getJSON(baseUrl + "/api/beer", function(response, status, jqXHR){
 	$(".beer").find('p').eq(0).html(response.beer);
 	$(".beer").find('p').eq(1).html(response.description);
 
@@ -98,7 +98,7 @@ $.getJSON("http://localhost:3000/api/beer", function(response, status, jqXHR){
 
 });
 
-$.getJSON("http://localhost:3000/api/event", function(response, status, jqXHR){
+$.getJSON(baseUrl + "/api/event", function(response, status, jqXHR){
 
 	$(".event").find('p').eq(0).html(response.name);
 	$(".event img").eq(0).attr("src", response['event_pic']);
@@ -119,7 +119,7 @@ $.getJSON("http://localhost:3000/api/event", function(response, status, jqXHR){
 
 });
 
-$.getJSON("http://localhost:3000/api/recipe", function(response, status, jqXHR){
+$.getJSON(baseUrl + "/api/recipe", function(response, status, jqXHR){
 
 	$(".recipe").find('p').eq(0).html(response.name);
 	$(".recipe img").eq(0).attr("src", response['image']);
@@ -139,7 +139,7 @@ $.getJSON("http://localhost:3000/api/recipe", function(response, status, jqXHR){
 
 });
 
-$.getJSON("http://localhost:3000/api/news", function(response, status, jqXHR){
+$.getJSON(baseUrl + "/api/news", function(response, status, jqXHR){
 
 	$(".news").find('p').eq(0).html(response.title);
 	$(".news img").eq(0).attr("src", response['image']);
@@ -158,7 +158,7 @@ $.getJSON("http://localhost:3000/api/news", function(response, status, jqXHR){
 		modalContent.appendTo(modal);
 	});
 
-	$.getJSON("http://localhost:3000/api/video",function(response, status, jqXHR){
+	$.getJSON(baseUrl + "/api/video",function(response, status, jqXHR){
 		$("video").eq(0).attr("src", response['video_url']);
 	});
 
