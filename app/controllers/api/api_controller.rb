@@ -12,9 +12,14 @@ module Api
 			if all_morsel_list.include?(morsel_type)
 				zip_code = localized_morsel_list.include?(morsel_type) ? get_zip() : ""
 				morsel = MorselsHelper.get_morsel(morsel_type, zip_code)
-				render json: morsel.data
+				
+				if morsel
+					render json: morsel.data, status: 200
+				else
+					render json: {error: "#{morsel_type} morsel could not be created. Try again."}, status: 420
+				end
 			else
-				render json: {error: "#{morsel_type} is not a valid endpoint"}
+				render json: {error: "#{morsel_type} is not a valid endpoint"}, status: 404
 			end
 		end
 

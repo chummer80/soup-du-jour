@@ -40,41 +40,6 @@ module MorselsHelper
 		end
 	end
 
-	# Create an entry in the morsel table for the morsel type and zip code provided
-	# This should only happen if such a morsel doesn't already exist
-	def self.create_morsel(morsel_type, zip_code)
-		localized_morsel_list = get_morsel_list("localized")
-		general_morsel_list = get_morsel_list("general")
-
-		if localized_morsel_list.include?(morsel_type)
-			morsel_data = send("get_#{morsel_type}_morsel_data", zip_code)
-		elsif general_morsel_list.include?(morsel_type)
-			morsel_data = send("get_#{morsel_type}_morsel_data")
-		else
-			raise "Unrecognized morsel type: #{morsel_type}"
-		end
-
-		morsel_params = {
-			morsel_type: morsel_type,
-			zip_code: zip_code,
-			data: morsel_data.to_json
-		}
-
-		morsel = Morsel.create(morsel_params)
-
-		# use this line instead of the 'create' line for testing.
-		# this one won't save morsels in the database, so api calls will happen every time.
-		# Remember to delete or reset all morsels after uncommenting this line.
-		# morsel = Morsel.new(morsel_params)  
-
-		if morsel.valid?
-			morsel
-		else
-			raise "#{morsel_type} morsel could not be created!"
-		end
-
-		morsel
-	end
 
 	# This either retrieves the existing morsel that fits the search criteria,
 	# or creates it if it doesn't exist yet.
@@ -89,8 +54,49 @@ module MorselsHelper
 	end
 
 
-
 private	
+
+	
+	# Create an entry in the morsel table for the morsel type and zip code provided
+	# This should only happen if such a morsel doesn't already exist
+	def self.create_morsel(morsel_type, zip_code)
+		localized_morsel_list = get_morsel_list("localized")
+		general_morsel_list = get_morsel_list("general")
+
+		if localized_morsel_list.include?(morsel_type)
+			morsel_data = send("get_#{morsel_type}_morsel_data", zip_code)
+		elsif general_morsel_list.include?(morsel_type)
+			morsel_data = send("get_#{morsel_type}_morsel_data")
+		else
+			raise "Unrecognized morsel type: #{morsel_type}"
+		end
+
+		if morsel_data.nil?
+			return nil
+		else			
+			morsel_params = {
+				morsel_type: morsel_type,
+				zip_code: zip_code,
+				data: morsel_data.to_json
+			}
+
+			morsel = Morsel.create(morsel_params)
+
+			# use this line instead of the 'create' line for testing.
+			# this one won't save morsels in the database, so api calls will happen every time.
+			# Remember to delete or reset all morsels after uncommenting this line.
+			# morsel = Morsel.new(morsel_params)  
+
+			if morsel.valid?
+				return morsel
+			else
+				raise "#{morsel_type} morsel could not be created!"
+				return nil
+			end
+
+			return morsel
+		end
+	end
 
 	def self.get_soup_morsel_data
 		soup_index = Time.zone.now.mday - 1
