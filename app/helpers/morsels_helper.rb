@@ -300,7 +300,7 @@ private
 			# if image is named "ms.jpg", then it is the small version. Change it to "o.jpg".
 			news_img.gsub!(/thumbStandard.*/, 'master675.jpg')
 		rescue
-			news_img = "http://a1.nyt.com/assets/homepage/20150615-165652/images/foundation/logos/nyt-logo-379x64.png"
+			news_img = "http://static1.squarespace.com/static/5399cc0ae4b0705199b37aa3/5399e8a2e4b0f44ec1b1e21e/545a0216e4b05115df2de008/1429793622682"
 		end
 
 		news_morsel_data = {
@@ -328,7 +328,7 @@ private
 	def self.get_deal_morsel_data
 		# sanitizer = Rails::Html::FullSanitizer.new
 		sqoot_key = Figaro.env.sqoot_key
-		sqoot_data = HTTParty.get("http://api.sqoot.com/v2/deals?api_key=#{sqoot_key}&online=true")
+		sqoot_data = HTTParty.get("http://api.sqoot.com/v2/deals?api_key=#{sqoot_key}&online=true&order=updated_at_desc")
 		deal_morsel_data={
 			'title' => sqoot_data['deals'][0]['deal']['short_title'],
 			'image' => sqoot_data['deals'][0]['deal']['image_url'],
