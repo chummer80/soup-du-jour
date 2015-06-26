@@ -82,6 +82,11 @@ module Api
 				zip = current_user.zip_code
 			end
 
+			# Try to get zip code from temporary session storage
+			if (zip.nil? || zip == "")
+				zip = session[:detected_zip_code]
+			end
+
 			# If we still don't have the zip code then get it using the geocoder gem.
 			# But this only works in production because it needs the request to come from a real IP address.
 			if (zip.nil? || zip == "") && Rails.env.production?
@@ -90,13 +95,17 @@ module Api
 				begin
 					zip = request.location.postal_code
 					puts "Detected Zip: #{zip}"
+
+					# Store detected zip code in session storage so it doesn't
+					# have to be detected for each morsel API call.
+					session[:detected_zip_code] = zip unless (zip.nil? || zip == "") 
 				rescue
 					puts "Zip code could not be detected."
 				end
 			end
 
 			# If we still don't have the zip code then use a default (Beverly Hills)
-			if zip.nil? || zip == ""
+			if (zip.nil? || zip == "")
 				zip = "90210"
 			end	
 

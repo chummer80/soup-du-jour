@@ -1,4 +1,7 @@
 module MorselsHelper
+	include HTTParty
+	default_timeout 8
+
 	def self.get_soup_morsel_data
 		soup_index = Time.zone.now.mday - 1
 		soup_morsel = Soup.all[soup_index]
@@ -303,6 +306,10 @@ module MorselsHelper
 	end
 
 
+
+
+
+
 	# Create an entry in the morsel table for the morsel type and zip code provided
 	# This should only happen if such a morsel doesn't already exist
 	def self.create_morsel(morsel_type, zip_code = "")
@@ -364,8 +371,6 @@ module MorselsHelper
 
 		morsel
 	end
-
-
 
 	# This either retrieves the existing morsel that fits the search criteria,
 	# or creates it if it doesn't exist yet.
