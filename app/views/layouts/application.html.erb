@@ -3,6 +3,10 @@
 <head>
   <title>SoupDuJour</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+
+  <script type="text/javascript">
+    var baseUrl = "<%= Rails.env.production? ? 'http://soupdujour.herokuapp.com' : 'http://localhost:3000' %>";
+  </script>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 
