@@ -114,10 +114,10 @@ private
 	end
 
 	def self.get_reddit_morsel_data
-		reddit_api_data = HTTParty.get"https://www.reddit.com/top.json"
+		reddit_api_data = HTTParty.get"https://www.reddit.com/hot.json"
 
 		begin
-			reddit_pic = reddit_api_data['data']['children'][0]['data']['media']['oembed']['thumbnail_url']
+			reddit_pic = reddit_api_data['data']['children'][0]['data']['preview']['images'][0]['source']['url']
 		rescue
 			reddit_pic = "https://www.redditstatic.com/about/assets/reddit-alien.png"
 		end
