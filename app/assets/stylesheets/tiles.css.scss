@@ -6,6 +6,9 @@
 
 body {
   font-family: sans-serif;
+  background-image: image-url('chicksoup.jpeg');
+  background-size: cover;
+  background-position: fixed;
 }
 
 /* clear fix */
@@ -22,8 +25,6 @@ body {
   float: left;
   margin: 5px;
   padding: 5px;
-  border: 2px solid #b6b5b4;
-  color: #262524;
 }
 
 .grid-item > * {
