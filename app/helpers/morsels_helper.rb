@@ -282,6 +282,26 @@ module MorselsHelper
 	end
 
 
+	def self.get_charity_morsel_data
+		just_giving_key = Figaro.env.just_giving_key
+
+		charity_list_data = HTTParty.get("https://api-sandbox.justgiving.com/#{just_giving_key}/v1/charity/search?format=json")
+		# get a different charity each day of the month
+		charity_index = Time.zone.now.mday % 15
+		charity_id = charity_list_data['charitySearchResults'][charity_index]['charityId']
+		
+		# using the id number taken out of the charity list, get more info on that charity
+		charity_api_data = HTTParty.get("https://api-sandbox.justgiving.com/#{just_giving_key}/v1/charity/#{charity_id}?format=json")
+
+		charity_morsel_data = {
+			name: charity_api_data['name'],
+			description: charity_api_data['description'],
+			image_url: charity_api_data['logoAbsoluteUrl'],
+			url: charity_api_data['websiteUrl']
+		}
+	end
+
+
 	# Create an entry in the morsel table for the morsel type and zip code provided
 	# This should only happen if such a morsel doesn't already exist
 	def self.create_morsel(morsel_type, zip_code = "")
@@ -316,6 +336,8 @@ module MorselsHelper
 			morsel_data = get_photo_morsel_data
 		when "view"
 			morsel_data = get_view_morsel_data
+		when "charity"
+			morsel_data = get_charity_morsel_data
 		else
 			raise "Unrecognized morsel type: #{morsel_type}"
 		end

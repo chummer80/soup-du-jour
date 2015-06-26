@@ -67,6 +67,10 @@ module Api
 			render json: MorselsHelper.get_morsel("view").data
 		end
 
+		def charity
+			render json: MorselsHelper.get_morsel("charity").data
+		end
+
 
 		# Try to detect the correct zip code from either the user profile 
 		# or geocoder (IP address detection).

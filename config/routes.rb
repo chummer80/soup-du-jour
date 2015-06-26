@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     get "deal", to: "api#deal", as: :deal
     get "photo", to: "api#photo", as: :photo
     get "view", to: "api#view", as: :view
+    get "charity", to: "api#charity", as: :charity
   end
 
   root 'application#index'
