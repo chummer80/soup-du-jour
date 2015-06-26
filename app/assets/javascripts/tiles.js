@@ -80,6 +80,46 @@ $.getJSON("http://localhost:3000/api/restaurant", function(response, status, jqX
 	});
 });
 
+$.getJSON("http://localhost:3000/api/photo", function(response, status, jqXHR){
+
+	$(".photo").find('p').eq(0).html(response.username);
+	$(".photo img").eq(0).attr("src", response['image_url']);
+
+	$('.photo').click(function(){
+		var modalContent = $("#templates .soup-content").clone();
+		var modal = $('#photo-modal .modal-dialog');
+
+		modal.empty();
+
+		modalContent.find('.modal-title').html(response.username);
+		modalContent.find('img').attr("src", response['image_url']);
+		modalContent.find('.modal-body p').html(response.caption);
+
+		modalContent.appendTo(modal);
+	});
+
+});
+
+$.getJSON("http://localhost:3000/api/view", function(response, status, jqXHR){
+
+	$(".view").find('p').eq(0).html("Instagram");
+	$(".view img").eq(0).attr("src", response['image_url']);
+
+	$('.view').click(function(){
+		var modalContent = $("#templates .soup-content").clone();
+		var modal = $('#view-modal .modal-dialog');
+
+		modal.empty();
+
+		modalContent.find('.modal-title').html("Instagram");
+		modalContent.find('img').attr("src", response['image_url']);
+		modalContent.find('.modal-body p').html(response.caption);
+
+		modalContent.appendTo(modal);
+	});
+
+});
+
 $.getJSON("http://localhost:3000/api/beer", function(response, status, jqXHR){
 	$(".beer").find('p').eq(0).html(response.beer);
 	$(".beer img").attr("src", response['image']);
@@ -139,6 +179,26 @@ $.getJSON("http://localhost:3000/api/recipe", function(response, status, jqXHR){
 
 });
 
+$.getJSON("http://localhost:3000/api/deal", function(response, status, jqXHR){
+
+	$(".deal").find('p').eq(0).html(response.title);
+	$(".deal img").eq(0).attr("src", response['image']);
+
+	$('.deal').click(function(){
+		var modalContent = $("#templates .soup-content").clone();
+		var modal = $('#deal-modal .modal-dialog');
+
+		modal.empty();
+
+		modalContent.find('.modal-title').html(response.title);
+		modalContent.find('img').attr("src", response['image']);
+		modalContent.find('.modal-body p').html(response.description);
+
+		modalContent.appendTo(modal);
+	});
+
+});
+
 $.getJSON("http://localhost:3000/api/news", function(response, status, jqXHR){
 
 	$(".news").find('p').eq(0).html(response.title);
@@ -160,6 +220,10 @@ $.getJSON("http://localhost:3000/api/news", function(response, status, jqXHR){
 
 	$.getJSON("http://localhost:3000/api/video",function(response, status, jqXHR){
 		$(".video iframe").eq(0).attr("src", response['video_url']);
+	});
+
+	$.getJSON("http://localhost:3000/api/musicvideo",function(response, status, jqXHR){
+		$(".musicvideo iframe").eq(0).attr("src", response['video_url']);
 	});
 
 });

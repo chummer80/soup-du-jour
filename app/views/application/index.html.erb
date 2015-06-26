@@ -1,7 +1,7 @@
 <div class="grid">
 
 	<div class="grid-item shuffle-div date">
-		<p class="well lead">Soup du Jour for <%= Date.today.strftime("%A, %B %d") %>
+		<p class="well lead"><%= Date.today.strftime("%A, %B %d") %>
 		</p>
 	</div>
 
@@ -31,6 +31,19 @@
 		</div>
 	</div>
 
+	<div class="view grid-item photo-grid" a data-toggle="modal" href="#view-modal">
+		<figure class="image-wrapper">
+			<img src="" alt="" class="img-responsive">
+			<h2>View</h2>
+			<figcaption><p></p></figcaption>
+		</figure>
+	</div>
+
+	<div class="modal fade" id="view-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog">
+		</div>
+	</div>
+
 	<div class="restaurant grid-item photo-grid" a data-toggle="modal" href="#restaurant-modal">
 		<figure class="image-wrapper">
 			<img src="" alt="" class="img-responsive">
@@ -40,6 +53,19 @@
 	</div>
 
 	<div class="modal fade" id="restaurant-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog">
+		</div>
+	</div>
+
+	<div class="photo grid-item photo-grid" a data-toggle="modal" href="#photo-modal">
+		<figure class="image-wrapper">
+			<img src="" alt="" class="img-responsive">
+			<h2>Photo</h2>
+			<figcaption><p></p><p></p></figcaption>
+		</figure>
+	</div>
+
+	<div class="modal fade" id="photo-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog">
 		</div>
 	</div>
@@ -55,6 +81,10 @@
 	<div class="modal fade" id="reddit-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog">
 		</div>
+	</div>
+
+	<div class="musicvideo grid-item">
+		<iframe width="448" height="252" src="" frameborder="0" allowfullscreen></iframe>
 	</div>
 	
 	<div class="grid-item word" a data-toggle="modal" href="#word-modal">
@@ -99,6 +129,19 @@
 			<h2>Recipe</h2>
 			<figcaption><p></p></figcaption>
 		</figure>
+	</div>
+
+	<div class="deal grid-item photo-grid" a data-toggle="modal" href="#deal-modal">
+		<figure class="image-wrapper">
+			<img src="" alt="" class="img-responsive">
+			<h2>Deal</h2>
+			<figcaption><p></p></figcaption>
+		</figure>
+	</div>
+
+	<div class="modal fade" id="deal-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog">
+		</div>
 	</div>
 
 	<div class="modal fade" id="recipe-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
