@@ -1,18 +1,6 @@
 Rails.application.routes.draw do
   namespace :api do
-    get "soup", to: "api#soup", as: :soup
-    get "word", to: "api#word", as: :word
-    get "reddit", to: "api#reddit", as: :reddit
-    get "weather", to: "api#weather", as: :weather
-    get "restaurant", to: "api#restaurant", as: :restaurant
-    get "beer", to: "api#beer", as: :beer
-    get "event", to: "api#event", as: :event
-    get "video", to: "api#video", as: :video
-    get "musicvideo", to: "api#musicvideo", as: :musicvideo
-    get "recipe", to: "api#recipe", as: :recipe
-    get "news", to: "api#news", as: :news
-    get "trivia", to: "api#trivia", as: :trivia
-    get "deal", to: "api#deal", as: :deal
+    get ":morsel_type", to: "api#morsel", as: :morsel
   end
 
   root 'application#index'

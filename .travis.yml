@@ -18,6 +18,7 @@ deploy:
   app: soupdujour
   run:
   - rake db:migrate
+  - rake db:seed
   - restart
 env:
   global:

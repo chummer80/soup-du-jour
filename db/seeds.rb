@@ -5,12 +5,19 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+Soup.delete_all
 soups = Soup.create([
 	{
 		name: "Absolutely Ultimate Potato Soup",
 		image_url: "http://images.media-allrecipes.com/userphotos/250x250/00/16/85/168555.jpg",
 		description: "I have made this for many whom have given it the title. This takes a bit of effort but is well worth it. Please note: for those who do not wish to use bacon, substitute 1/4 cup melted butter for the bacon grease and continue with the recipe. (I generally serve this soup as a special treat as it is not recommended for people counting calories.)",
 		recipe_url: "http://allrecipes.com/Recipe/Absolutely-Ultimate-Potato-Soup/Detail.aspx?evt19=1&referringHubId=16369"
+	},
+	{
+		name: "French Onion Soup (Soupe à l'Oignon Gratinée)",
+		image_url: "http://www.seriouseats.com/recipes/assets_c/2015/01/20150116-french-onion-soup-vicky-wasik-20-thumb-625xauto-418068.jpg",
+		description: "For such a simple dish, French onion soup should be easy to make great. And yet so many versions taste like a cup of burnt-onion tea with melted cheese trying its best to cover up the flaws. This recipe develops great flavor with a long, slow caramelization of the onions, then punches it up with cider vinegar, fresh chives, and a surprise ingredient: fish sauce.",
+		recipe_url: "http://www.seriouseats.com/recipes/2015/01/french-onion-soup-recipe.html"
 	},
 	{
 		name: "Asparagus Soup",
@@ -35,6 +42,12 @@ soups = Soup.create([
 		image_url: "http://images.media-allrecipes.com/userphotos/250x250/00/96/43/964341.jpg",
 		description: "This is a thick, rich soup with tons of flavor. Something I whipped up off the top of my head, with things I had on hand. Super easy, quick, and a great way to use squash. An instant hit at my house.",
 		recipe_url: "http://allrecipes.com/Recipe/Butternut-Squash-Soup-II/Detail.aspx?evt19=1&referringHubId=16369"
+	},
+	{
+		name: "Creamy Chanterelle Mushroom Soup",
+		image_url: "http://www.seriouseats.com/images/2014/01/20140130-chanterelle-soup-27.jpg",
+		description: "The final soup tastes like rich, velvety, liquid mushrooms, which is really precisely what it is, but I have no better way to describe it. It's satisfying, creamy, and delicious.",
+		recipe_url: "http://www.seriouseats.com/recipes/2014/01/creamy-chanterelle-soup-recipe.html"
 	},
 	{
 		name: "Split Pea Soup",
@@ -67,6 +80,12 @@ soups = Soup.create([
 		recipe_url: "http://www.foodnetwork.com/recipes/giada-de-laurentiis/lentil-soup-recipe.html"
 	},
 	{
+		name: "Hearty Escarole, Barley, and Parmesan Soup",
+		image_url: "http://www.seriouseats.com/recipes/assets_c/2013/10/20131024-escarole-parmesan-vegetable-soup-09-thumb-625xauto-362276.jpg",
+		description: "Served with a drizzle of really good extra virgin olive oil and a grating of cheese and you've got a fall soup so comforting and filling that you'll never question its meatless status.",
+		recipe_url: "http://www.seriouseats.com/2013/11/food-lab-hearty-escarole-barley-parmesan-soup-recipe.html"
+	},
+	{
 		name: "Cauliflower Soup",
 		image_url: "http://foodnetwork.sndimg.com/content/dam/images/food/fullset/2013/4/10/0/WU0413H_cauliflower-soup-recipe_s4x3.jpg.rend.sni12col.landscape.jpeg",
 		description: "this soup was AMAZING!! my family and I enjoyed it so much we made extra sure it made it into our family favoret meals : The only thing i did diferant was I vegitable broth instead, so I hade to add alittle more seasoning then the recipie asked for. Thanks so much for this great family favoret!",
@@ -77,6 +96,18 @@ soups = Soup.create([
 		image_url: "http://foodnetwork.sndimg.com/content/dam/images/food/fullset/2008/6/11/0/RB0112_Chicken-Tortilla-Soup.jpg.rend.sni12col.landscape.jpeg",
 		description: "This soup is amazing!!!!! I didn't add the beans because I'm don't like them but everything else worked together amazingly. And the avocado MADE the soup. It added this creaminess and amazing flavor. I'll be saving this recipe and making it again.",
 		recipe_url: "http://www.foodnetwork.com/recipes/chicken-tortilla-soup-recipe.html"
+	},
+	{
+		name: "Fully Loaded Vegan Baked Potato Soup",
+		image_url: "http://www.seriouseats.com/recipes/assets_c/2015/02/20150202-potato-bacon-cheese-broccoli-cauliflower-soup-vegan-8-thumb-625xauto-418826.jpg",
+		description: "Creamy, rich, and packed with nutty, sharp, tangy, cheesy flavor, this 100% vegan loaded potato soup relies on a few secret ingredients and techniques to satisfy even the hungriest eater. Vegan mushroom bacon bits, broccoli, and scallions load it up.",
+		recipe_url: "http://www.seriouseats.com/recipes/2015/02/fully-loaded-baked-potato-soup-vegan-recipe.html"
+	},
+	{
+		name: "Homemade Shin Cup-Style Spicy Korean Ramyun Beef Noodle Soup",
+		image_url: "http://www.seriouseats.com/recipes/assets_c/2014/01/20140120-beef-ramyun-homemade-recipe-15-thumb-625xauto-378645.jpg",
+		description: "A homemade version of Korean-style spicy beef instant noodles made with short ribs, Korean chili paste, and kimchi.",
+		recipe_url: "http://www.seriouseats.com/recipes/2014/01/homemade-shin-cup-style-spicy-korean-beef-noo.html"
 	},
 	{
 		name: "Best Tomato Soup Ever",
@@ -95,6 +126,12 @@ soups = Soup.create([
 		image_url: "http://foodnetwork.sndimg.com/content/dam/images/food/fullset/2015/5/1/0/YW0604H_Kale-and-Chorizo-Soup_s4x3.jpg.rend.sni12col.landscape.jpeg",
 		description: "I really liked the soup and added the red pepper flakes that another reviewer recommended.  I might add a bit of cornstarch to the broth to thicken it a little next time.  Otherwise a fantastic recipe. Thanks Trisha!",
 		recipe_url: "http://www.foodnetwork.com/recipes/trisha-yearwood/kale-soup.html"
+	},
+	{
+		name: "Hot and Sour Soup",
+		image_url: "http://www.seriouseats.com/recipes/assets_c/2014/01/20140113-hot-and-sour-soup-15-thumb-625xauto-377518.jpg",
+		description: "That fresh white pepper and vinegar hit? That's the difference between the hot and sour soup that's good enough to keep you satisfied in your own company at home, and the hot and sour soup that's so good you absolutely must take it home to meet the parents. It's the hot and sour soup I fell in love with, but I'm not so selfish I wouldn't share it with you all.",
+		recipe_url: "http://www.seriouseats.com/recipes/2014/01/hot-and-sour-soup-food-lab.html"
 	},
 	{
 		name: "Vietnamese Noodle Soup",
@@ -143,5 +180,23 @@ soups = Soup.create([
 		image_url: "http://img.sndimg.com/food/image/upload/w_555,h_416,c_fit,fl_progressive,q_95/v1/img/recipes/15/53/75/VRO93x3gQ1eF2o5W79WD_DSC_0833.JPG",
 		description: "Here's a scrumptious soup served at Dairy Keen (three-time \"Best of State\" winner) of Heber City, Utah. This is a recipe I've not had long, but have made over and over and OVER again. It is that good!",
 		recipe_url: "http://www.food.com/recipe/chicken-broccoli-alfredo-soup-155375?photo=371322"
+	},
+	{
+		name: "The Best Potato-Leek Soup",
+		image_url: "http://www.seriouseats.com/recipes/assets_c/2014/12/20150105-potato-leek-soup-recipe-07-thumb-625xauto-417406.jpg",
+		description: "An easy potato-leek soup that takes no shortcuts to deliver the best flavor and texture possible. A touch of buttermilk and potatoes pressed through a ricer are the secret.",
+		recipe_url: "http://www.seriouseats.com/recipes/2015/01/best-potato-leek-soup-recipe.html"
+	},
+	{
+		name: "Black Bean Soup With Chorizo and Braised Chicken",
+		image_url: "http://www.seriouseats.com/recipes/assets_c/2014/01/20140113-black-bean-chicken-soup-recipe-13-thumb-625xauto-377008.jpg",
+		description: "A hearty bean and chicken stew flavored with chorizo and chipotle chilies. It takes a little time for the flavors to come together, but the process is easy and the results are worth the wait.",
+		recipe_url: "http://www.seriouseats.com/recipes/2014/01/the-food-lab-black-bean-chicken-soup-recipe.html"
+	},
+	{
+		name: "Easy Chicken and Ginger Soup With Rice Cakes, Chives, and Quick-Pickled Garlic",
+		image_url: "http://www.seriouseats.com/recipes/assets_c/2014/01/20131216-chicken-ginger-soup-2-thumb-625xauto-375618.jpg",
+		description: "The final soup has a bit of everything. It's got a Korean soul, amplified by the freshness of cilantro and chives and the heat and vinegar you'd expect in a Thai soup. It's intensely aromatic, warm, soothing, and easy to eat. ",
+		recipe_url: "http://www.seriouseats.com/recipes/2014/01/easy-chicken-ginger-soup-rice-cake-chive-quick-pickled-garlic-recipe.html"
 	}
 ])

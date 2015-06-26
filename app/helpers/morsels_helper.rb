@@ -1,6 +1,100 @@
 module MorselsHelper
+	include HTTParty
+	default_timeout 8
+
+	
+	# This is the central list of all morsels available in our API.
+	# A list can be retrieved by passing in a filter: "all", "localized", or "general"
+	def self.get_morsel_list(filter = "all")
+		general_morsels = %w(
+			soup
+			word
+			reddit
+			beer
+			video
+			musicvideo
+			recipe
+			news
+			trivia
+			deal
+			photo
+			view
+			charity
+		)
+
+		localized_morsels = %w(				
+			weather
+			restaurant				
+			event
+		)
+
+		case filter
+		when "all"
+			return general_morsels + localized_morsels
+		when "localized"
+			return localized_morsels
+		when "general"
+			return general_morsels
+		else
+			raise "unrecognized morsel list filter: #{filter.to_s}"
+		end
+	end
+
+	# Create an entry in the morsel table for the morsel type and zip code provided
+	# This should only happen if such a morsel doesn't already exist
+	def self.create_morsel(morsel_type, zip_code)
+		localized_morsel_list = get_morsel_list("localized")
+		general_morsel_list = get_morsel_list("general")
+
+		if localized_morsel_list.include?(morsel_type)
+			morsel_data = send("get_#{morsel_type}_morsel_data", zip_code)
+		elsif general_morsel_list.include?(morsel_type)
+			morsel_data = send("get_#{morsel_type}_morsel_data")
+		else
+			raise "Unrecognized morsel type: #{morsel_type}"
+		end
+
+		morsel_params = {
+			morsel_type: morsel_type,
+			zip_code: zip_code,
+			data: morsel_data.to_json
+		}
+
+		morsel = Morsel.create(morsel_params)
+
+		# use this line instead of the 'create' line for testing.
+		# this one won't save morsels in the database, so api calls will happen every time.
+		# Remember to delete or reset all morsels after uncommenting this line.
+		# morsel = Morsel.new(morsel_params)  
+
+		if morsel.valid?
+			morsel
+		else
+			raise "#{morsel_type} morsel could not be created!"
+		end
+
+		morsel
+	end
+
+	# This either retrieves the existing morsel that fits the search criteria,
+	# or creates it if it doesn't exist yet.
+	def self.get_morsel(morsel_type, zip_code)
+		morsel = Morsel.find_by(morsel_type: morsel_type, zip_code: zip_code)
+
+		if morsel.nil?
+			morsel = create_morsel(morsel_type, zip_code)
+		end
+
+		morsel
+	end
+
+
+
+private	
+
 	def self.get_soup_morsel_data
-		soup_morsel = Soup.order("RANDOM()").first
+		soup_index = Time.zone.now.mday - 1
+		soup_morsel = Soup.all[soup_index]
 		soup_morsel_data = {
 			name: soup_morsel.name,
 			image_url: soup_morsel.image_url,
@@ -21,8 +115,16 @@ module MorselsHelper
 
 	def self.get_reddit_morsel_data
 		reddit_api_data = HTTParty.get"https://www.reddit.com/top.json"
+
+		begin
+			reddit_pic = reddit_api_data['data']['children'][0]['data']['media']['oembed']['thumbnail_url']
+		rescue
+			reddit_pic = "https://www.redditstatic.com/about/assets/reddit-alien.png"
+		end
+
 		reddit_morsel_data = {
 			'title' => reddit_api_data['data']['children'][0]['data']['title'],
+			'image' => reddit_pic,
 			'permalink' => "http://www.reddit.com/" + reddit_api_data['data']['children'][0]['data']['permalink']
 		}
 	end
@@ -30,10 +132,49 @@ module MorselsHelper
 	def self.get_weather_morsel_data(zip_code)
 		weather_key = Figaro.env.weather_key
 		weather_api_data = HTTParty.get"http://api.wunderground.com/api/#{weather_key}/conditions/q/#{zip_code}.json"
+		
+		rain_words = %w(Drizzle Rain Thunderstorm Precipitation Spray Squall)
+		rain_regex = Regexp.union(*rain_words)
+		snow_words = %w(Snow Ice Hail)
+		snow_regex = Regexp.union(*snow_words)
+		fog_words = %w(Fog Mist Haze)
+		fog_regex = Regexp.union(*fog_words)
+		dust_words = %w(Dust Smoke Sand Ash)
+		dust_regex = Regexp.union(*dust_words)
+		clear_words = %w(Clear)
+		clear_regex = Regexp.union(*clear_words)
+		cloud_words = %w(Cloud Overcast)
+		cloud_regex = Regexp.union(*cloud_words)
+
+		begin
+			weather_type = weather_api_data["current_observation"]["weather"]
+		rescue
+			weather_type = "Unknown"
+		end
+
+		if rain_regex === weather_type
+			weather_img = "http://headsup.boyslife.org/files/2012/12/rain.jpg"
+		elsif snow_regex === weather_type
+			weather_img = "http://i.ytimg.com/vi/ea1GMrjjJ1A/maxresdefault.jpg"
+		elsif fog_regex === weather_type
+			weather_img = "http://www.sarahannrogers.com/wp-content/uploads/2013/01/fog.jpg"
+		elsif dust_regex === weather_type
+			weather_img = "http://i.imwx.com/common/articles/images/orangecitystreet_650x366.jpg"
+		elsif clear_regex === weather_type
+			weather_img = "http://www.pardaphash.com/uploads/images/660/bright-future-74300.jpg"
+		elsif cloud_regex === weather_type
+			weather_img = "http://www.sitkanature.org/wordpress/wp-content/gallery/20100923/20100923-overcast-2.jpg"
+		else
+			# default pic if weather type is something else
+			weather_img = "http://anewscafe.com/wp-content/uploads/2011/03/rainbow-weather.jpg"
+		end
+
 		weather_morsel_data = {
 			'location' => weather_api_data["current_observation"]["display_location"]['full'],
 			'current_temp' => weather_api_data["current_observation"]["temperature_string"],
-			'icon' =>  weather_api_data["current_observation"]["icon_url"]
+			'image_url' => weather_img,
+			'description' => weather_type,
+			'url' => weather_api_data["current_observation"]["forecast_url"]
 		}
 	end
 
@@ -72,8 +213,14 @@ module MorselsHelper
 	def self.get_beer_morsel_data
 		beer_key = Figaro.env.beer_key
 		beer_api_data = HTTParty.get"http://api.brewerydb.com/v2/beers/?key=#{beer_key}&order=random&randomCount=1&abv='-10'"
+		begin
+			beer_pic = beer_api_data['data'][0]['labels']['large']
+		rescue
+			beer_pic = "http://lexingtonbeerworks.com/site/wp-content/uploads/2014/05/Craft-Beer.jpg"
+		end
 
 		beer_morsel_data = {
+			'image' => beer_pic,
 			'beer' => beer_api_data['data'][0]['name'],
 			'description' => beer_api_data['data'][0]['description']
 		}
@@ -83,11 +230,16 @@ module MorselsHelper
 		events_key = Figaro.env.events_key
 		today = Time.now.in_time_zone("America/Los_Angeles").strftime("%F")
 		event_data = HTTParty.get"https://www.eventbriteapi.com/v3/events/search/?location.address=#{zip_code}&location.within=5mi&start_date.range_start=#{today}T00%3A00%3A35Z&start_date.range_end=#{today}T23%3A50%3A57Z&token=#{events_key}"
-
+		begin
+			event_img = event_data['events'][0]['logo']['url']
+		rescue
+			event_img = "http://files.itproportal.com/wp-content/uploads/2014/07/Eventbrite_logo_640_400_contentfullwidth.png"
+		end
+		
 		event_morsel_data = {
 			'name' => event_data['events'][0]['name']['text'],
 			'description' => event_data['events'][0]['description']['text'],
-			'event_pic' => event_data['events'][0]['logo']['url'],
+			'event_pic' => event_img,
 			'event_url' => event_data['events'][0]['url']
 		}
 	end
@@ -152,10 +304,10 @@ module MorselsHelper
 		end
 
 		news_morsel_data = {
-				'title' => news_data['results'][0]['title'],
-				'abstract' => news_data['results'][0]['abstract'],
-				'image' => news_img,
-				'source' => news_data['results'][0]['url']
+			'title' => news_data['results'][0]['title'],
+			'abstract' => news_data['results'][0]['abstract'],
+			'image' => news_img,
+			'source' => news_data['results'][0]['url']
 		}
 	end
 
@@ -163,95 +315,88 @@ module MorselsHelper
 		trivia_data = HTTParty.get("https://doubleordonate.herokuapp.com/api/questions")
 		index = rand(trivia_data.length)
 		trivia_morsel_data = {
-
-
-				'id' => trivia_data[index]['id'],
-				'question' => trivia_data[index]['text'],
-				'answer1' => trivia_data[index]['answer_1'],
-				'answer2' => trivia_data[index]['answer_2'],
-				'answer3' => trivia_data[index]['answer_3'],
-				'answer4' => trivia_data[index]['answer_4'],
-				'correct' => trivia_data[index]['correct_answer']
+			'id' => trivia_data[index]['id'],
+			'question' => trivia_data[index]['text'],
+			'answer1' => trivia_data[index]['answer_1'],
+			'answer2' => trivia_data[index]['answer_2'],
+			'answer3' => trivia_data[index]['answer_3'],
+			'answer4' => trivia_data[index]['answer_4'],
+			'correct' => trivia_data[index]['correct_answer']
 		}
 	end
 
 	def self.get_deal_morsel_data
 		# sanitizer = Rails::Html::FullSanitizer.new
 		sqoot_key = Figaro.env.sqoot_key
-		sqoot_data = HTTParty.get("http://api.sqoot.com/v2/deals?api_key=A9_RDnUAJB4ln46zJU8f&online=true")
-
+		sqoot_data = HTTParty.get("http://api.sqoot.com/v2/deals?api_key=#{sqoot_key}&online=true")
 		deal_morsel_data={
-				'title' => sqoot_data['deals'][0]['deal']['short_title'],
-				'image' => sqoot_data['deals'][0]['deal']['image_url'],
-				'description' => sqoot_data['deals'][0]['deal']['title'],
-				'source' => sqoot_data['deals'][0]['deal']['url']
+			'title' => sqoot_data['deals'][0]['deal']['short_title'],
+			'image' => sqoot_data['deals'][0]['deal']['image_url'],
+			'description' => sqoot_data['deals'][0]['deal']['title'],
+			'source' => sqoot_data['deals'][0]['deal']['untracked_url']
+		}
+	end
+
+	def self.get_photo_morsel_data
+		instagram_key = Figaro.env.instagram_key
+
+		instagram_data = HTTParty.get("https://api.instagram.com/v1/media/popular?client_id=#{instagram_key}")
+		photo_index = nil
+		# make sure we use a photo, not a video
+		instagram_data['data'].each_index do |index|
+			media_item = instagram_data['data'][index]
+			if media_item['type'] == "image"
+				photo_index = index
+				break
+			end
+		end
+
+		photo_morsel_data = {
+			url: instagram_data['data'][photo_index]['link'],
+			username: instagram_data['data'][photo_index]['user']['username'],
+			image_url: instagram_data['data'][photo_index]['images']['standard_resolution']['url'],
+			caption: instagram_data['data'][photo_index]['caption']['text']
+		}
+	end
+
+	def self.get_view_morsel_data
+		instagram_key = Figaro.env.instagram_key
+
+		instagram_data = HTTParty.get("https://api.instagram.com/v1/users/1988768/media/recent?client_id=#{instagram_key}")
+		photo_index = nil
+		# make sure we use a photo, not a video
+		instagram_data['data'].each_index do |index|
+			media_item = instagram_data['data'][index]
+			if media_item['type'] == "image"
+				photo_index = index
+				break
+			end
+		end
+
+		view_morsel_data = {
+			url: instagram_data['data'][photo_index]['link'],
+			image_url: instagram_data['data'][photo_index]['images']['standard_resolution']['url'],
+			caption: instagram_data['data'][photo_index]['caption']['text']
 		}
 	end
 
 
+	def self.get_charity_morsel_data
+		just_giving_key = Figaro.env.just_giving_key
 
-	# Create an entry in the morsel table for the morsel type and zip code provided
-	# This should only happen if such a morsel doesn't already exist
-	def self.create_morsel(morsel_type, zip_code = "")
-		case morsel_type
-		when "soup"
-			morsel_data = get_soup_morsel_data
-		when "word"
-			morsel_data = get_word_morsel_data
-		when "reddit"
-			morsel_data = get_reddit_morsel_data
-		when "weather"
-			morsel_data = get_weather_morsel_data(zip_code)
-		when "restaurant"
-			morsel_data = get_restaurant_morsel_data(zip_code)
-		when "beer"
-			morsel_data = get_beer_morsel_data
-		when "event"
-			morsel_data = get_event_morsel_data(zip_code)
-		when "video"
-			morsel_data = get_video_morsel_data
-		when "musicvideo"
-			morsel_data = get_musicvideo_morsel_data
-		when "recipe"
-			morsel_data = get_recipe_morsel_data
-		when "news"
-			morsel_data = get_news_morsel_data
-		when "trivia"
-			morsel_data = get_trivia_morsel_data
-		when "deal"
-			morsel_data = get_deal_morsel_data
-		else
-			raise "Unrecognized morsel type: #{morsel_type}"
-		end
+		charity_list_data = HTTParty.get("https://api-sandbox.justgiving.com/#{just_giving_key}/v1/charity/search?format=json")
+		# get a different charity each day of the month
+		charity_index = Time.zone.now.mday % 15
+		charity_id = charity_list_data['charitySearchResults'][charity_index]['charityId']
+		
+		# using the id number taken out of the charity list, get more info on that charity
+		charity_api_data = HTTParty.get("https://api-sandbox.justgiving.com/#{just_giving_key}/v1/charity/#{charity_id}?format=json")
 
-		morsel_params = {
-			morsel_type: morsel_type,
-			zip_code: zip_code,
-			data: morsel_data.to_json
+		charity_morsel_data = {
+			name: charity_api_data['name'],
+			description: charity_api_data['description'],
+			image_url: charity_api_data['logoAbsoluteUrl'],
+			url: charity_api_data['websiteUrl']
 		}
-
-		morsel = Morsel.create(morsel_params)
-
-		if morsel.valid?
-			morsel
-		else
-			raise "#{morsel_type} morsel could not be created!"
-		end
-
-		morsel
-	end
-
-
-
-	# This either retrieves the existing morsel that fits the search criteria,
-	# or creates it if it doesn't exist yet.
-	def self.get_morsel(morsel_type, zip_code = "")
-		morsel = Morsel.find_by(morsel_type: morsel_type, zip_code: zip_code)
-
-		if morsel.nil?
-			morsel = create_morsel(morsel_type, zip_code)
-		end
-
-		morsel
 	end
 end
