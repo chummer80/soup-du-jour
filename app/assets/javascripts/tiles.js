@@ -158,6 +158,10 @@ $.getJSON("http://localhost:3000/api/news", function(response, status, jqXHR){
 		modalContent.appendTo(modal);
 	});
 
+	$.getJSON("http://localhost:3000/api/video",function(response, status, jqXHR){
+		$("video").eq(0).attr("src", response['video_url']);
+	});
+
 });
 // external js: isotope.pkgd.js
 $(document).ready( function() {
