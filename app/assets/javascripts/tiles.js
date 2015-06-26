@@ -158,9 +158,9 @@ $.getJSON("http://localhost:3000/api/news", function(response, status, jqXHR){
 		modalContent.appendTo(modal);
 	});
 
-	// $.getJSON("http://localhost:3000/api/video",function(response, status, jqXHR){
-	// 	$("video").eq(0).attr("src", response['video_url']);
-	// });
+	$.getJSON("http://localhost:3000/api/video",function(response, status, jqXHR){
+		$(".video iframe").eq(0).attr("src", response['video_url']);
+	});
 
 });
 // external js: isotope.pkgd.js
