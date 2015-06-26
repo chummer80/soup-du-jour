@@ -1,4 +1,7 @@
 module MorselsHelper
+	include HTTParty
+	default_timeout 8
+
 	def self.get_soup_morsel_data
 		soup_index = Time.zone.now.mday - 1
 		soup_morsel = Soup.all[soup_index]
@@ -121,9 +124,9 @@ module MorselsHelper
 		beer_key = Figaro.env.beer_key
 		beer_api_data = HTTParty.get"http://api.brewerydb.com/v2/beers/?key=#{beer_key}&order=random&randomCount=1&abv='-10'"
 		begin
-				beer_pic = beer_api_data['data'][0]['labels']['large']
+			beer_pic = beer_api_data['data'][0]['labels']['large']
 		rescue
-				beer_pic = "http://lexingtonbeerworks.com/site/wp-content/uploads/2014/05/Craft-Beer.jpg"
+			beer_pic = "http://lexingtonbeerworks.com/site/wp-content/uploads/2014/05/Craft-Beer.jpg"
 		end
 
 		beer_morsel_data = {
@@ -137,11 +140,16 @@ module MorselsHelper
 		events_key = Figaro.env.events_key
 		today = Time.now.in_time_zone("America/Los_Angeles").strftime("%F")
 		event_data = HTTParty.get"https://www.eventbriteapi.com/v3/events/search/?location.address=#{zip_code}&location.within=5mi&start_date.range_start=#{today}T00%3A00%3A35Z&start_date.range_end=#{today}T23%3A50%3A57Z&token=#{events_key}"
-
+		begin
+			event_img = event_data['events'][0]['logo']['url']
+		rescue
+			event_img = "http://files.itproportal.com/wp-content/uploads/2014/07/Eventbrite_logo_640_400_contentfullwidth.png"
+		end
+		
 		event_morsel_data = {
 			'name' => event_data['events'][0]['name']['text'],
 			'description' => event_data['events'][0]['description']['text'],
-			'event_pic' => event_data['events'][0]['logo']['url'],
+			'event_pic' => event_img,
 			'event_url' => event_data['events'][0]['url']
 		}
 	end
@@ -303,42 +311,39 @@ module MorselsHelper
 	end
 
 
+
+
+
+
 	# Create an entry in the morsel table for the morsel type and zip code provided
 	# This should only happen if such a morsel doesn't already exist
-	def self.create_morsel(morsel_type, zip_code = "")
-		case morsel_type
-		when "soup"
-			morsel_data = get_soup_morsel_data
-		when "word"
-			morsel_data = get_word_morsel_data
-		when "reddit"
-			morsel_data = get_reddit_morsel_data
-		when "weather"
-			morsel_data = get_weather_morsel_data(zip_code)
-		when "restaurant"
-			morsel_data = get_restaurant_morsel_data(zip_code)
-		when "beer"
-			morsel_data = get_beer_morsel_data
-		when "event"
-			morsel_data = get_event_morsel_data(zip_code)
-		when "video"
-			morsel_data = get_video_morsel_data
-		when "musicvideo"
-			morsel_data = get_musicvideo_morsel_data
-		when "recipe"
-			morsel_data = get_recipe_morsel_data
-		when "news"
-			morsel_data = get_news_morsel_data
-		when "trivia"
-			morsel_data = get_trivia_morsel_data
-		when "deal"
-			morsel_data = get_deal_morsel_data
-		when "photo"
-			morsel_data = get_photo_morsel_data
-		when "view"
-			morsel_data = get_view_morsel_data
-		when "charity"
-			morsel_data = get_charity_morsel_data
+	def self.create_morsel(morsel_type, zip_code)
+		localized_morsel_list = %w(				
+			weather
+			restaurant				
+			event
+		)
+
+		general_morsel_list = %w(
+			soup
+			word
+			reddit
+			beer
+			video
+			musicvideo
+			recipe
+			news
+			trivia
+			deal
+			photo
+			view
+			charity
+		)
+
+		if localized_morsel_list.include?(morsel_type)
+			morsel_data = send("get_#{morsel_type}_morsel_data", zip_code)
+		elsif general_morsel_list.include?(morsel_type)
+			morsel_data = send("get_#{morsel_type}_morsel_data")
 		else
 			raise "Unrecognized morsel type: #{morsel_type}"
 		end
@@ -365,11 +370,9 @@ module MorselsHelper
 		morsel
 	end
 
-
-
 	# This either retrieves the existing morsel that fits the search criteria,
 	# or creates it if it doesn't exist yet.
-	def self.get_morsel(morsel_type, zip_code = "")
+	def self.get_morsel(morsel_type, zip_code)
 		morsel = Morsel.find_by(morsel_type: morsel_type, zip_code: zip_code)
 
 		if morsel.nil?
@@ -378,4 +381,6 @@ module MorselsHelper
 
 		morsel
 	end
+
+
 end
