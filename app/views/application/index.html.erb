@@ -1,7 +1,7 @@
 <div class="grid">
 
 	<div class="grid-item shuffle-div date">
-		<p class="well lead">Soup du Jour for <%= Date.today.strftime("%A, %B %d") %>
+		<p class="well lead"><%= Date.today.strftime("%A, %B %d") %>
 		</p>
 	</div>
 
@@ -18,11 +18,43 @@
 		</div>
 	</div>
 
-	<div class="grid-item weather">
-		<h4 class="header" id="weather">Weather</h4>
-		<p class="tile-title"></p>
-		<p class="tile-body"></p>
+	<div class="weather grid-item photo-grid" a data-toggle="modal" href="#weather-modal">
+		<figure class="image-wrapper">
+			<img src="" alt="" class="img-responsive">
+			<h2>Weather</h2>
+			<figcaption><p></p><p></p></figcaption>
+		</figure>
+	</div>
 
+	<div class="modal fade" id="weather-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog">
+		</div>
+	</div>
+
+	<div class="charity grid-item photo-grid" a data-toggle="modal" href="#charity-modal">
+		<figure class="image-wrapper">
+			<img src="" alt="" class="img-responsive">
+			<h2>Charity</h2>
+			<figcaption><p></p></figcaption>
+		</figure>
+	</div>
+
+	<div class="modal fade" id="charity-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog">
+		</div>
+	</div>
+
+	<div class="view grid-item photo-grid" a data-toggle="modal" href="#view-modal">
+		<figure class="image-wrapper">
+			<img src="" alt="" class="img-responsive">
+			<h2>View</h2>
+			<figcaption><p></p></figcaption>
+		</figure>
+	</div>
+
+	<div class="modal fade" id="view-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog">
+		</div>
 	</div>
 
 	<div class="restaurant grid-item photo-grid" a data-toggle="modal" href="#restaurant-modal">
@@ -38,19 +70,39 @@
 		</div>
 	</div>
 
-	<div class="grid-item reddit" a data-toggle="modal" href="#reddit-modal">
-		<h4 class="header" id="reddit">Reddit</h4>
-		<p class="tile-title"></p>
+	<div class="photo grid-item photo-grid" a data-toggle="modal" href="#photo-modal">
+		<figure class="image-wrapper">
+			<img src="" alt="" class="img-responsive">
+			<h2>Photo</h2>
+			<figcaption><p></p><p></p></figcaption>
+		</figure>
+	</div>
+
+	<div class="modal fade" id="photo-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog">
+		</div>
+	</div>
+
+	<div class="reddit grid-item photo-grid" a data-toggle="modal" href="#reddit-modal">
+		<figure class="image-wrapper">
+			<img src="" alt="" class="img-responsive">
+			<h2>Reddit</h2>
+			<figcaption><p></p></figcaption>
+		</figure>
 	</div>
 
 	<div class="modal fade" id="reddit-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog">
 		</div>
 	</div>
+
+	<div class="musicvideo grid-item">
+		<iframe width="448" height="252" src="" frameborder="0" allowfullscreen></iframe>
+	</div>
 	
 	<div class="grid-item word" a data-toggle="modal" href="#word-modal">
-		<h4 class="header" id="word">Word of the Day</h4>
-		<p class="tile-title"></p>
+		<span><h4></h4>
+		<p></p></span>
 	</div>
 
 	<div class="modal fade" id="word-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -58,9 +110,12 @@
 		</div>
 	</div>
 
-	<div class="grid-item beer" a data-toggle="modal" href="#beer-modal">
-		<h4 class="header" id="beer">Beer</h4>
-		<p class="tile-title"></p>
+	<div class="beer grid-item photo-grid" a data-toggle="modal" href="#beer-modal">
+		<figure class="image-wrapper">
+			<img src="" alt="" class="img-responsive">
+			<h2>Beer</h2>
+			<figcaption><p></p></figcaption>
+		</figure>
 	</div>
 
 	<div class="modal fade" id="beer-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -89,6 +144,19 @@
 		</figure>
 	</div>
 
+	<div class="deal grid-item photo-grid" a data-toggle="modal" href="#deal-modal">
+		<figure class="image-wrapper">
+			<img src="" alt="" class="img-responsive">
+			<h2>Deal</h2>
+			<figcaption><p></p></figcaption>
+		</figure>
+	</div>
+
+	<div class="modal fade" id="deal-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog">
+		</div>
+	</div>
+
 	<div class="modal fade" id="recipe-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog">
 		</div>
@@ -107,8 +175,8 @@
 		</div>
 	</div>
 
-	<div id="video" class="grid-item">
-		<iframe width="560" height="315" src="" frameborder="0" allowfullscreen></iframe>
+	<div class="video grid-item">
+		<iframe width="448" height="252" src="" frameborder="0" allowfullscreen></iframe>
 	</div>
 </div>
 

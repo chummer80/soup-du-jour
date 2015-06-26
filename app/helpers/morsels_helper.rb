@@ -275,7 +275,7 @@ private
 			title: video.title,
 			description: video.description,
 			image_url: thumbnail_url,
-			video_url: "https://www.youtube.com/watch?v=#{video.video_id}"
+			video_url: "https://www.youtube.com/embed/#{video.video_id}"
 		}
 	end
 	
@@ -293,7 +293,7 @@ private
 			title: musicvideo.title,
 			description: musicvideo.description,
 			image_url: thumbnail_url,
-			video_url: "https://www.youtube.com/watch?v=#{musicvideo.video_id}"
+			video_url: "https://www.youtube.com/embed/#{musicvideo.video_id}"
 		}
 	end
 

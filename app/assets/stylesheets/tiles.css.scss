@@ -23,7 +23,7 @@ body {
 .grid-item {
   position: relative;
   float: left;
-  margin: 5px;
+  /*margin: 5px;*/
   padding: 5px;
 }
 
@@ -48,44 +48,30 @@ body {
 
 .header {
   background-color: #F9AA3A;
-
-}
-
-
-.weather {
-  width: 150px;
-
-}
-
-.beer {
-  width: 150px;
-  min-height: 75px;
 }
 
 .word {
-  width: 150px;
-  min-height: 75px;
+  width: 200px;
+  background-color:blue;
+  border-radius:100%;
+  text-align:center;
+  color: white;
 }
 
-.reddit {
-  width: 250px;
-  overflow: scroll;
+.word span
+{
+    line-height: normal;
+    display:inline-block;
+    vertical-align: middle;
 }
-
-
 
 .photo-grid {
-  margin: 1em auto;
+  /*margin: 1em auto;*/
   max-width: 1106px;
   text-align: center;
 }
  
-.photo-grid figure {
-  border: 5px solid white;
-  display: inline-block;
-  margin: 1em;
-  width: 289px;
-}
+
  
 .photo-grid img {
   display: block;
@@ -97,10 +83,20 @@ body {
 }
  
 .photo-grid figure {
-  height: 163px;
+  border: 5px solid white;
+  display: inline-block;
+  min-height: 150px;
+  max-height: 300px;
   overflow: hidden;
   position: relative;
-  width: 289px;
+  width: 250px;
+}
+
+.event figure, .restaurant figure,  {
+
+  overflow: hidden;
+  position: relative;
+  width: 400px;
 }
  
 .photo-grid figcaption {
@@ -161,8 +157,15 @@ body {
   top: 0;
   padding: 10px;
 /*  width: 218px;*/
-  color: white;
-  margin: 5px;
+  /*margin: 5px;*/
+  -webkit-text-stroke: 1px black;
+   color: white;
+   text-shadow:
+       3px 3px 0 #000,
+     -1px -1px 0 #000,  
+      1px -1px 0 #000,
+      -1px 1px 0 #000,
+       1px 1px 0 #000;
 }
 
 

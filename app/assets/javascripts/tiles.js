@@ -20,14 +20,14 @@ $.getJSON(baseUrl + "/api/soup", function(response, status, jqXHR){
 $.getJSON(baseUrl + "/api/weather", function(response, status, jqXHR){
 	$(".weather").find('p').eq(0).html(response.location);
 	$(".weather").find('p').eq(1).html(response.current_temp);
-	$('<img>', {src: response['icon'], class: 'img-responsive'}).appendTo(".weather");
+	$(".weather img").attr("src", response['image_url']);
 
 
 });
 
 $.getJSON(baseUrl + "/api/word", function(response, status, jqXHR){
-	$(".word").find('p').eq(0).html(response.word);
-	$(".word").find('p').eq(1).html(response.definition);
+	$(".word").find('h4').eq(0).html(response.word);
+	$(".word").find('p').eq(0).html(response.definition);
 
 	$('.word').click(function(){
 		var modalContent = $("#templates .soup-content").clone();
@@ -45,7 +45,7 @@ $.getJSON(baseUrl + "/api/word", function(response, status, jqXHR){
 
 $.getJSON(baseUrl + "/api/reddit", function(response, status, jqXHR){
 	$(".reddit").find('p').eq(0).html(response.title);
-	$(".reddit").find('p').eq(1).html(response.permalink);
+	$(".reddit img").attr("src", response['image']);
 
 	$('.reddit').click(function(){
 		var modalContent = $("#templates .soup-content").clone();
@@ -80,9 +80,49 @@ $.getJSON(baseUrl + "/api/restaurant", function(response, status, jqXHR){
 	});
 });
 
+$.getJSON(baseUrl + "/api/photo", function(response, status, jqXHR){
+
+	$(".photo").find('p').eq(0).html(response.username);
+	$(".photo img").eq(0).attr("src", response['image_url']);
+
+	$('.photo').click(function(){
+		var modalContent = $("#templates .soup-content").clone();
+		var modal = $('#photo-modal .modal-dialog');
+
+		modal.empty();
+
+		modalContent.find('.modal-title').html(response.username);
+		modalContent.find('img').attr("src", response['image_url']);
+		modalContent.find('.modal-body p').html(response.caption);
+
+		modalContent.appendTo(modal);
+	});
+
+});
+
+$.getJSON(baseUrl + "/api/view", function(response, status, jqXHR){
+
+	$(".view").find('p').eq(0).html("Instagram");
+	$(".view img").eq(0).attr("src", response['image_url']);
+
+	$('.view').click(function(){
+		var modalContent = $("#templates .soup-content").clone();
+		var modal = $('#view-modal .modal-dialog');
+
+		modal.empty();
+
+		modalContent.find('.modal-title').html("Instagram");
+		modalContent.find('img').attr("src", response['image_url']);
+		modalContent.find('.modal-body p').html(response.caption);
+
+		modalContent.appendTo(modal);
+	});
+
+});
+
 $.getJSON(baseUrl + "/api/beer", function(response, status, jqXHR){
 	$(".beer").find('p').eq(0).html(response.beer);
-	$(".beer").find('p').eq(1).html(response.description);
+	$(".beer img").attr("src", response['image']);
 
 	$('.beer').click(function(){
 		var modalContent = $("#templates .soup-content").clone();
@@ -91,6 +131,24 @@ $.getJSON(baseUrl + "/api/beer", function(response, status, jqXHR){
 		modal.empty();
 
 		modalContent.find('.modal-title').html(response.beer);
+		modalContent.find('.modal-body p').html(response.description);
+
+		modalContent.appendTo(modal);
+	});
+
+});
+
+$.getJSON(baseUrl + "/api/charity", function(response, status, jqXHR){
+	$(".charity").find('p').eq(0).html(response.name);
+	$(".charity img").attr("src", response['image_url']);
+
+	$('.charity').click(function(){
+		var modalContent = $("#templates .soup-content").clone();
+		var modal = $('#charity-modal .modal-dialog');
+
+		modal.empty();
+
+		modalContent.find('.modal-title').html(response.name);
 		modalContent.find('.modal-body p').html(response.description);
 
 		modalContent.appendTo(modal);
@@ -139,6 +197,26 @@ $.getJSON(baseUrl + "/api/recipe", function(response, status, jqXHR){
 
 });
 
+$.getJSON(baseUrl + "/api/deal", function(response, status, jqXHR){
+
+	$(".deal").find('p').eq(0).html(response.title);
+	$(".deal img").eq(0).attr("src", response['image']);
+
+	$('.deal').click(function(){
+		var modalContent = $("#templates .soup-content").clone();
+		var modal = $('#deal-modal .modal-dialog');
+
+		modal.empty();
+
+		modalContent.find('.modal-title').html(response.title);
+		modalContent.find('img').attr("src", response['image']);
+		modalContent.find('.modal-body p').html(response.description);
+
+		modalContent.appendTo(modal);
+	});
+
+});
+
 $.getJSON(baseUrl + "/api/news", function(response, status, jqXHR){
 
 	$(".news").find('p').eq(0).html(response.title);
@@ -159,7 +237,11 @@ $.getJSON(baseUrl + "/api/news", function(response, status, jqXHR){
 	});
 
 	$.getJSON(baseUrl + "/api/video",function(response, status, jqXHR){
-		$("video").eq(0).attr("src", response['video_url']);
+		$(".video iframe").eq(0).attr("src", response['video_url']);
+	});
+
+	$.getJSON(baseUrl + "/api/musicvideo",function(response, status, jqXHR){
+		$(".musicvideo iframe").eq(0).attr("src", response['video_url']);
 	});
 
 });
