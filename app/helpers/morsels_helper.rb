@@ -1,6 +1,7 @@
 module MorselsHelper
 	def self.get_soup_morsel_data
-		soup_morsel = Soup.order("RANDOM()").first
+		soup_index = Time.zone.now.mday - 1
+		soup_morsel = Soup.all[soup_index]
 		soup_morsel_data = {
 			name: soup_morsel.name,
 			image_url: soup_morsel.image_url,
