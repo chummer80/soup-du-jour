@@ -79,7 +79,7 @@ body {
   text-align: center;
 }
  
-.photo-grid li {
+.photo-grid span {
   border: 5px solid white;
   display: inline-block;
   margin: 1em;
@@ -133,18 +133,18 @@ body {
   vertical-align: middle;
 }
 
-.photo-grid li:hover figcaption {
+.photo-grid span:hover figcaption {
   opacity: 1;
 }
 
 
-.photo-grid li:hover figcaption p {
+.photo-grid span:hover figcaption p {
   -moz-transform: translateY(40px);
   -webkit-transform: translateY(40px);
   transform: translateY(40px);
 }
 
-.photo-grid li:hover img {
+.photo-grid span:hover img {
   -webkit-transform: scale(1.3);
   -moz-transform: scale(1.3);
   transform: scale(1.3);
