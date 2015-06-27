@@ -119,6 +119,50 @@ $(function() {
 		}
 	}
 
+	function showHideToggleButton() {
+		var anyOptionSelected = false;
+
+		$('option').each(function(index, element) {
+			if ($(element).prop('selected')) {
+				anyOptionSelected = true;
+			}
+		});
+
+		if (anyOptionSelected) {
+			// $('#toggle-morsel').show();
+			$('#toggle-morsel').removeClass('disabled');
+		}
+		else {
+			// $('#toggle-morsel').hide();
+			$('#toggle-morsel').addClass('disabled');
+		}
+	}
+
+	function showHideUpDownButtons() {
+		// Check if user morsel list has anything selected. If not, hide both buttons.
+		if (!$userMorselSelect.val()) {
+			$('#morsel-up').hide();
+			$('#morsel-down').hide();
+			return;
+		}
+
+		// check if a selected option is at the top of list. If so, hide up button.
+		if ($userMorselSelect.find($('option')).first().prop('selected')) {
+			$('#morsel-up').hide();
+		}
+		else {
+			$('#morsel-up').show();
+		}
+
+		// check if a selected option is at the top of list. If so, hide up button.
+		if ($userMorselSelect.find($('option')).last().prop('selected')) {
+			$('#morsel-down').hide();
+		}
+		else {
+			$('#morsel-down').show();
+		}
+	}
+
 
 	// Build a comma separated list of the morsel names in the user morsels list
 	// and set it as the value of the hidden field in the form. This passes the
@@ -142,15 +186,21 @@ $(function() {
 		buildFinalMorselList();
 	});
 
-	$('#morsel-up').click(function() {
-		moveMorselsUp();
-		buildFinalMorselList();
-	});
+	// $('#morsel-up').click(function() {
+	// 	moveMorselsUp();
+	// 	showHideUpDownButtons();
+	// 	buildFinalMorselList();
+	// });
 
-	$('#morsel-down').click(function() {
-		moveMorselsDown();
-		buildFinalMorselList();
-	});
+	// $('#morsel-down').click(function() {
+	// 	moveMorselsDown();
+	// 	showHideUpDownButtons();
+	// 	buildFinalMorselList();
+	// });
 
-	$('option').click(deselectOtherList);
+	$('option').mouseup(function() {
+		deselectOtherList.call(this);
+		showHideToggleButton();
+		// showHideUpDownButtons();
+	});
 });
