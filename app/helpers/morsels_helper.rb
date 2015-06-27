@@ -1,7 +1,4 @@
 module MorselsHelper
-	include HTTParty
-	default_timeout 8
-
 	
 	# This is the central list of all morsels available in our API.
 	# A list can be retrieved by passing in a filter: "all", "localized", or "general"
