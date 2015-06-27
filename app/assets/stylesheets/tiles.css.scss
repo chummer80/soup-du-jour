@@ -46,10 +46,6 @@ body {
   border: 0;
 }
 
-.header {
-  background-color: #F9AA3A;
-}
-
 article {
   position: relative;
   width: 275px;
@@ -103,7 +99,7 @@ figure img {
     transition: all 500ms ease;
 }
 
-#box:hover .image img {    
+article:hover .image img {    
   cursor: pointer;
     transform:scale(1.3);
     -ms-transform:scale(1.3);
@@ -125,6 +121,19 @@ figure img {
 
 .text:hover{
     background: rgba(255, 255, 255, 0.5);    
+}
+
+article:hover .tile-header {
+  text-align: left;
+  position: absolute;
+  height: 70px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #F9AA3A;
+  color: white;
+  padding: 0 16px;
+  display: block;
 }
 
 .text span {
