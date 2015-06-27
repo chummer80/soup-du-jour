@@ -5,9 +5,9 @@
 
 		<%= hidden_field_tag('final_user_morsels', "") %>
 
-		<button id="morsel-up" type="button">Up</button>
-		<button id="morsel-down" type="button">Down</button>
-		<button id="toggle-morsel" type="button">Toggle Morsel</button>
+		<button id="morsel-up" type="button" style="display: none;">Up</button>
+		<button id="morsel-down" type="button" style="display: none;">Down</button>
+		<button id="toggle-morsel" type="button" style="display: none;">Toggle Morsel</button>
 
 		<%= select_tag "Available Morsels", options_for_select(@unselected_morsels), {id: "available_morsels", multiple: true} %>
 	</div>
