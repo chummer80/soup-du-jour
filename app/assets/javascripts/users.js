@@ -129,10 +129,12 @@ $(function() {
 		});
 
 		if (anyOptionSelected) {
-			$('#toggle-morsel').show();
+			// $('#toggle-morsel').show();
+			$('#toggle-morsel').removeClass('disabled');
 		}
 		else {
-			$('#toggle-morsel').hide();
+			// $('#toggle-morsel').hide();
+			$('#toggle-morsel').addClass('disabled');
 		}
 	}
 
@@ -184,21 +186,21 @@ $(function() {
 		buildFinalMorselList();
 	});
 
-	$('#morsel-up').click(function() {
-		moveMorselsUp();
-		showHideUpDownButtons();
-		buildFinalMorselList();
-	});
+	// $('#morsel-up').click(function() {
+	// 	moveMorselsUp();
+	// 	showHideUpDownButtons();
+	// 	buildFinalMorselList();
+	// });
 
-	$('#morsel-down').click(function() {
-		moveMorselsDown();
-		showHideUpDownButtons();
-		buildFinalMorselList();
-	});
+	// $('#morsel-down').click(function() {
+	// 	moveMorselsDown();
+	// 	showHideUpDownButtons();
+	// 	buildFinalMorselList();
+	// });
 
 	$('option').mouseup(function() {
 		deselectOtherList.call(this);
 		showHideToggleButton();
-		showHideUpDownButtons();
+		// showHideUpDownButtons();
 	});
 });

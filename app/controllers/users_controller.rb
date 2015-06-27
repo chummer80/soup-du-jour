@@ -65,14 +65,18 @@ class UsersController < ApplicationController
 	end
 
 	def update_morsels
-		user = current_user
-		morsel_params = {morsels: JSON.parse(params[:final_user_morsels])}
-		
-		if user.update_attributes(morsel_params)
+		if params[:cancel]
 			redirect_to root_path
 		else
-			@user = User.new(morsel_params)
-			render 'edit_morsels'
+			user = current_user
+			morsel_params = {morsels: JSON.parse(params[:final_user_morsels])}
+			
+			if user.update_attributes(morsel_params)
+				redirect_to root_path
+			else
+				@user = User.new(morsel_params)
+				render 'edit_morsels'
+			end			
 		end
 	end
 end
