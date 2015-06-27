@@ -1,7 +1,4 @@
 module MorselsHelper
-	include HTTParty
-	default_timeout 8
-
 	
 	# This is the central list of all morsels available in our API.
 	# A list can be retrieved by passing in a filter: "all", "localized", or "general"
@@ -439,13 +436,13 @@ private
 	def self.get_charity_morsel_data
 		just_giving_key = Figaro.env.just_giving_key
 		begin
-			charity_list_data = HTTParty.get("https://api-sandbox.justgiving.com/#{just_giving_key}/v1/charity/search?format=json", timeout: 15)
+			charity_list_data = HTTParty.get("https://api.justgiving.com/#{just_giving_key}/v1/charity/search?format=json", timeout: 15)
 			# get a different charity each day of the month
 			charity_index = Time.zone.now.mday % 15
 			charity_id = charity_list_data['charitySearchResults'][charity_index]['charityId']
 
 			# using the id number taken out of the charity list, get more info on that charity
-			charity_api_data = HTTParty.get("https://api-sandbox.justgiving.com/#{just_giving_key}/v1/charity/#{charity_id}?format=json")
+			charity_api_data = HTTParty.get("https://api.justgiving.com/#{just_giving_key}/v1/charity/#{charity_id}?format=json")
 			charity_morsel_data = {
 				name: charity_api_data['name'],
 				description: charity_api_data['description'],
