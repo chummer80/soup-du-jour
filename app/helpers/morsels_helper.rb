@@ -122,27 +122,26 @@ private
 
 	def self.get_reddit_morsel_data
 		begin
-				reddit_api_data = HTTParty.get("https://www.reddit.com/hot.json", timeout: 15)
-
-				begin
-					reddit_pic = reddit_api_data['data']['children'][0]['data']['preview']['images'][0]['source']['url']
-				rescue
-					reddit_pic = "https://www.redditstatic.com/about/assets/reddit-alien.png"
-				end
-
-				reddit_morsel_data = {
-					'title' => reddit_api_data['data']['children'][0]['data']['title'],
-					'image' => reddit_pic,
-					'permalink' => "http://www.reddit.com/" + reddit_api_data['data']['children'][0]['data']['permalink']
-				}
-			rescue
-				return nil
-			end
-		end
-
-		def self.get_weather_morsel_data(zip_code)
-			weather_key = Figaro.env.weather_key
+			reddit_api_data = HTTParty.get("https://www.reddit.com/hot.json", timeout: 15)
 			begin
+				reddit_pic = reddit_api_data['data']['children'][0]['data']['preview']['images'][0]['source']['url']
+			rescue
+				reddit_pic = "https://www.redditstatic.com/about/assets/reddit-alien.png"
+			end
+
+			reddit_morsel_data = {
+				'title' => reddit_api_data['data']['children'][0]['data']['title'],
+				'image' => reddit_pic,
+				'permalink' => "http://www.reddit.com/" + reddit_api_data['data']['children'][0]['data']['permalink']
+			}
+		rescue
+			return nil
+		end
+	end
+
+	def self.get_weather_morsel_data(zip_code)
+		weather_key = Figaro.env.weather_key
+		begin
 			weather_api_data = HTTParty.get("http://api.wunderground.com/api/#{weather_key}/conditions/q/#{zip_code}.json", timeout: 15)
 
 			rain_words = %w(Drizzle Rain Thunderstorm Precipitation Spray Squall)
@@ -190,8 +189,8 @@ private
 			}
 		rescue
 			return nil
-	end
- end
+		end
+	 end
 
 	def self.get_restaurant_morsel_data(zip_code)
 		# Pick the yelp business with a "best "match" ranking that corresponds to the current
@@ -233,6 +232,7 @@ private
 			return nil
 		end
 	end
+
 	def self.get_beer_morsel_data
 		beer_key = Figaro.env.beer_key
 		begin
@@ -431,7 +431,6 @@ private
 			return nil
 		end
 	end
-
 
 	def self.get_charity_morsel_data
 		just_giving_key = Figaro.env.just_giving_key
