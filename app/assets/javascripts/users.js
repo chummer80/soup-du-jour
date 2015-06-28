@@ -70,7 +70,7 @@ $(function() {
 		var $otherSelect;
 
 		// check if option is in user list or available list
-		if ($(this).parent().is($userMorselSelect)) {
+		if ($(this).is($userMorselSelect)) {
 			$otherSelect = $availableMorselSelect;
 		}
 		else {
@@ -198,7 +198,7 @@ $(function() {
 	// 	buildFinalMorselList();
 	// });
 
-	$('option').mouseup(function() {
+	$('#morsels-container select').change(function() {
 		deselectOtherList.call(this);
 		showHideToggleButton();
 		// showHideUpDownButtons();
