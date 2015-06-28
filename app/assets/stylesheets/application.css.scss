@@ -13,3 +13,11 @@
  *= require_tree .
  *= require_self
  */
+
+.page-content {
+	min-height: 100vh;
+	background-image: image-url("chickbg.jpeg");
+	background-size: cover;
+	background-attachment: fixed;
+}
+
