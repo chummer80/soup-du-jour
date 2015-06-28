@@ -108,7 +108,7 @@ article:hover .image img {
     -o-transform:scale(1.3);
 }
 
-.text{
+.text-info{
     position: absolute;    
     width: 100%;
     height: 100%;
@@ -119,7 +119,7 @@ article:hover .image img {
     transition: all 500ms ease;
 }
 
-.text:hover{
+.text-info:hover{
     background: rgba(255, 255, 255, 0.5);    
 }
 
@@ -136,7 +136,7 @@ article:hover .tile-header {
   display: block;
 }
 
-.text span {
+.text-info span {
   position: absolute;
   top: -100%;   
    -webkit-transition: all 500ms ease;
@@ -145,6 +145,6 @@ article:hover .tile-header {
     transition: all 500ms ease;
 }
 
-.text:hover span {    
+.text-info:hover span {    
     top: 50%;
 }
