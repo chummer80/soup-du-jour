@@ -33,6 +33,8 @@ $(document).ready(function() {
 
 	window.morselCBs.wordCB = function wordCB(response, status, jqXHR) {
 		$(".word").find('p').eq(0).html(response.word);
+		$(".word img").attr("src", "http://www.idea.org/blog/wp-content/uploads/2012/11/Screen-Shot-2012-11-12-at-10.52.15-PM-545x248.png");
+		// $(".word img").attr("src", "https://cdn.daysoftheyear.com/wp-content/images/dictionary-day2-e1376750259297-764x382.jpg");
 
 		$('.word').click(function(){
 			var modalContent = $("#templates .soup-content").clone();
@@ -225,43 +227,41 @@ $(document).ready(function() {
 
 			modalContent.appendTo(modal);
 		});
-
-		$.getJSON(baseUrl + "/api/video",function(response, status, jqXHR){
-			$(".video iframe").eq(0).attr("src", response['video_url']);
-		});
-
-		$.getJSON(baseUrl + "/api/musicvideo",function(response, status, jqXHR){
-			$(".musicvideo iframe").eq(0).attr("src", response['video_url']);
-		});
 	};
 
+	window.morselCBs.videoCB = function videoCB (response, status, jqXHR) {
+		$(".video iframe").eq(0).attr("src", response['video_url']);
+	};
 
+	window.morselCBs.musicvideoCB = function musicvideoCB (response, status, jqXHR) {
+		$(".musicvideo iframe").eq(0).attr("src", response['video_url']);
+	};
 	
 
 	////////// Event Handlers //////////
 
-	$(window).load(function() {
+	// $(window).load(function() {
 
-		// external js: isotope.pkgd.js
-		var $grid = $('.grid').imagesLoaded(function() {
-			$grid.isotope({
-				itemSelector: '.grid-item',
-				layoutMode: 'masonry',
-				masonry: {
-					columnWidth: 50
-				}
+	// external js: isotope.pkgd.js
+	var $grid = $('.grid').imagesLoaded(function() {
+		$grid.isotope({
+			itemSelector: '.grid-item',
+			layoutMode: 'masonry',
+			masonry: {
+				columnWidth: 50
+			}
 
-			});
-
-			$grid.isotope('layout');
 		});
 
-
-		$('.shuffle-div').on( 'click', function() {
-			$grid.isotope('shuffle');
-		});
-
+		$grid.isotope('layout');
 	});
+
+
+	$('.shuffle-div').on( 'click', function() {
+		$grid.isotope('shuffle');
+	});
+
+	// });
 
 
 

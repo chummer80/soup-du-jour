@@ -21,11 +21,11 @@
 
 var ready = function(){ 
     $("#menu-toggle").click(function(e) {
-            e.preventDefault();
-            $("#wrapper").toggleClass("active");
+        e.preventDefault();
+        $("#wrapper").toggleClass("active");
     });
 };
 
 
 $(document).ready(ready);
-$(document).on('page:load', ready);
+// $(document).on('page:load', ready);

@@ -5,7 +5,7 @@
 
 
 
-%preferences-container {
+.form-panel {
 	background-color: white;
 	border-radius: 10px;
 	padding: 20px;
@@ -13,7 +13,7 @@
 }
 
 #morsels-container {
-	@extend %preferences-container;
+	@extend .form-panel;
 	width: 1000px;
 
 	.morsel-list {
@@ -23,7 +23,7 @@
 }
 
 #settings-container {
-	@extend %preferences-container;
+	@extend .form-panel;
 	width: 250px;
 	
 	input[name="user[interests][]"] {
