@@ -123,16 +123,25 @@ private
 	def self.get_reddit_morsel_data
 		begin
 			reddit_api_data = HTTParty.get("https://www.reddit.com/hot.json", timeout: 15)
+			reddit_posts = reddit_api_data['data']['children']
+			reddit_post_data = nil
+			reddit_posts.each do |post|
+				reddit_post_data = post['data']
+
+				# prevent NSFW posts from being used for the morsel
+				break unless reddit_post_data['over_18']
+			end
+
 			begin
-				reddit_pic = reddit_api_data['data']['children'][0]['data']['preview']['images'][0]['source']['url']
+				reddit_pic = reddit_post_data['preview']['images'][0]['source']['url']
 			rescue
 				reddit_pic = "https://www.redditstatic.com/about/assets/reddit-alien.png"
 			end
 
 			reddit_morsel_data = {
-				'title' => reddit_api_data['data']['children'][0]['data']['title'],
+				'title' => reddit_post_data['title'],
 				'image' => reddit_pic,
-				'permalink' => "http://www.reddit.com/" + reddit_api_data['data']['children'][0]['data']['permalink']
+				'permalink' => "http://www.reddit.com/" + reddit_post_data['permalink']
 			}
 		rescue
 			return nil
