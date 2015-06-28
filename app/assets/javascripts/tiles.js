@@ -13,7 +13,7 @@ $(document).ready(function() {
 
 		$('.soup').click(function(){
 			var modalContent = $("#templates .soup-content").clone();
-			var modal = $('#soup-modal .modal-dialog');
+			var modal = $('#morsel-modal .modal-dialog');
 
 			modal.empty();
 
@@ -36,7 +36,7 @@ $(document).ready(function() {
 
 		$('.word').click(function(){
 			var modalContent = $("#templates .soup-content").clone();
-			var modal = $('#word-modal .modal-dialog');
+			var modal = $('#morsel-modal .modal-dialog');
 
 			modal.empty();
 
@@ -53,7 +53,7 @@ $(document).ready(function() {
 
 		$('.reddit').click(function(){
 			var modalContent = $("#templates .soup-content").clone();
-			var modal = $('#reddit-modal .modal-dialog');
+			var modal = $('#remorsel-modal .modal-dialog');
 
 			modal.empty();
 
@@ -70,7 +70,7 @@ $(document).ready(function() {
 
 		$('.restaurant').click(function(){
 			var modalContent = $("#templates .soup-content").clone();
-			var modal = $('#restaurant-modal .modal-dialog');
+			var modal = $('#restaumorsel-modal .modal-dialog');
 
 			modal.empty();
 
@@ -88,7 +88,7 @@ $(document).ready(function() {
 
 		$('.photo').click(function(){
 			var modalContent = $("#templates .soup-content").clone();
-			var modal = $('#photo-modal .modal-dialog');
+			var modal = $('#pmorsel-modal .modal-dialog');
 
 			modal.empty();
 
@@ -106,7 +106,7 @@ $(document).ready(function() {
 
 		$('.view').click(function(){
 			var modalContent = $("#templates .soup-content").clone();
-			var modal = $('#view-modal .modal-dialog');
+			var modal = $('#morsel-modal .modal-dialog');
 
 			modal.empty();
 
@@ -124,7 +124,7 @@ $(document).ready(function() {
 
 		$('.beer').click(function(){
 			var modalContent = $("#templates .soup-content").clone();
-			var modal = $('#beer-modal .modal-dialog');
+			var modal = $('#morsel-modal .modal-dialog');
 
 			modal.empty();
 
@@ -141,7 +141,7 @@ $(document).ready(function() {
 
 		$('.charity').click(function(){
 			var modalContent = $("#templates .soup-content").clone();
-			var modal = $('#charity-modal .modal-dialog');
+			var modal = $('#chamorsel-modal .modal-dialog');
 
 			modal.empty();
 
@@ -159,7 +159,7 @@ $(document).ready(function() {
 
 		$('.event').click(function(){
 			var modalContent = $("#templates .soup-content").clone();
-			var modal = $('#event-modal .modal-dialog');
+			var modal = $('#emorsel-modal .modal-dialog');
 
 			modal.empty();
 
@@ -177,7 +177,7 @@ $(document).ready(function() {
 
 		$('.recipe').click(function(){
 			var modalContent = $("#templates .soup-content").clone();
-			var modal = $('#recipe-modal .modal-dialog');
+			var modal = $('#remorsel-modal .modal-dialog');
 
 			modal.empty();
 
@@ -196,7 +196,7 @@ $(document).ready(function() {
 
 		$('.deal').click(function(){
 			var modalContent = $("#templates .soup-content").clone();
-			var modal = $('#deal-modal .modal-dialog');
+			var modal = $('#morsel-modal .modal-dialog');
 
 			modal.empty();
 
@@ -214,7 +214,7 @@ $(document).ready(function() {
 
 		$('.news').click(function(){
 			var modalContent = $("#templates .soup-content").clone();
-			var modal = $('#news-modal .modal-dialog');
+			var modal = $('#morsel-modal .modal-dialog');
 
 			modal.empty();
 

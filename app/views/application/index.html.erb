@@ -1,11 +1,16 @@
 <div class="grid">
 
+	<div class="modal fade" id="morsel-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog">
+		</div>
+	</div>
+
 	<div class="grid-item shuffle-div date">
 		<p class="well lead"><%= Date.today.strftime("%A, %B %d") %>
 		</p>
 	</div>
 
-	<article class="grid-item soup" a data-toggle="modal" href="#soup-modal">
+	<article class="grid-item soup" a data-toggle="modal" href="#morsel-modal">
 		<header class="tile-header">
 			<h4>Soup du Jour</h4>
 			<p></p>
@@ -24,12 +29,7 @@
 		</div>
 	</article>
 
-	<div class="modal fade" id="soup-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog">
-		</div>
-	</div>
-
-	<article class="grid-item weather" a data-toggle="modal" href="#weather-modal">
+	<article class="grid-item weather" a data-toggle="modal" href="#morsel-modal">
 		<header class="tile-header">
 			<h4>Weather du Jour</h4>
 			<p></p>
@@ -48,12 +48,7 @@
 		</div>
 	</article>
 
-	<div class="modal fade" id="weather-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog">
-		</div>
-	</div>
-
-	<article class="grid-item charity" a data-toggle="modal" href="#charity-modal">
+	<article class="grid-item charity" a data-toggle="modal" href="#morsel-modal">
 		<header class="tile-header">
 			<h4>Charity du Jour</h4>
 			<p></p>
@@ -72,12 +67,7 @@
 		</div>
 	</article>
 
-	<div class="modal fade" id="charity-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog">
-		</div>
-	</div>
-
-	<article class="grid-item view" a data-toggle="modal" href="#view-modal">
+	<article class="grid-item view" a data-toggle="modal" href="#morsel-modal">
 		<header class="tile-header">
 			<h4>View du Jour</h4>
 			<p></p>
@@ -96,12 +86,7 @@
 		</div>
 	</article>
 
-	<div class="modal fade" id="view-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog">
-		</div>
-	</div>
-
-	<article class="grid-item restaurant" a data-toggle="modal" href="#restaurant-modal">
+	<article class="grid-item restaurant" a data-toggle="modal" href="#morsel-modal">
 		<header class="tile-header">
 			<h4>Restaurant du Jour</h4>
 			<p></p>
@@ -120,12 +105,7 @@
 		</div>
 	</article>
 
-	<div class="modal fade" id="restaurant-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog">
-		</div>
-	</div>
-
-	<article class="grid-item photo" a data-toggle="modal" href="#photo-modal">
+	<article class="grid-item photo" a data-toggle="modal" href="#morsel-modal">
 		<header class="tile-header">
 			<h4>Photo du Jour</h4>
 			<p></p>
@@ -144,12 +124,7 @@
 		</div>
 	</article>
 
-	<div class="modal fade" id="photo-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog">
-		</div>
-	</div>
-
-	<article class="grid-item reddit" a data-toggle="modal" href="#reddit-modal">
+	<article class="grid-item reddit" a data-toggle="modal" href="#morsel-modal">
 		<header class="tile-header">
 			<h4>Reddit du Jour</h4>
 			<p></p>
@@ -168,16 +143,11 @@
 		</div>
 	</article>
 
-	<div class="modal fade" id="reddit-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog">
-		</div>
-	</div>
-
 	<div class="musicvideo grid-item">
 		<iframe width="488" height="275" src="" frameborder="0" allowfullscreen></iframe>
 	</div>
 	
-	<article class="grid-item word" a data-toggle="modal" href="#word-modal">
+	<article class="grid-item word" a data-toggle="modal" href="#morsel-modal">
 		<header class="tile-header">
 			<h4>Word du Jour</h4>
 			<p></p>
@@ -196,12 +166,7 @@
 		</div>
 	</article>
 
-	<div class="modal fade" id="word-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog">
-		</div>
-	</div>
-
-	<article class="grid-item beer" a data-toggle="modal" href="#beer-modal">
+	<article class="grid-item beer" a data-toggle="modal" href="#morsel-modal">
 		<header class="tile-header">
 			<h4>Beer du Jour</h4>
 			<p></p>
@@ -220,12 +185,7 @@
 		</div>
 	</article>
 
-	<div class="modal fade" id="beer-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog">
-		</div>
-	</div>
-
-	<article class="grid-item event" a data-toggle="modal" href="#event-modal">
+	<article class="grid-item event" a data-toggle="modal" href="#morsel-modal">
 		<header class="tile-header">
 			<h4>Event du Jour</h4>
 			<p></p>
@@ -244,12 +204,7 @@
 		</div>
 	</article>
 
-	<div class="modal fade" id="event-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog">
-		</div>
-	</div>
-
-	<article class="grid-item deal" a data-toggle="modal" href="#deal-modal">
+	<article class="grid-item deal" a data-toggle="modal" href="#morsel-modal">
 		<header class="tile-header">
 			<h4>Deal du Jour</h4>
 			<p></p>
@@ -268,12 +223,7 @@
 		</div>
 	</article>
 
-	<div class="modal fade" id="deal-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog">
-		</div>
-	</div>
-
-	<article class="grid-item recipe" a data-toggle="modal" href="#recipe-modal">
+	<article class="grid-item recipe" a data-toggle="modal" href="#morsel-modal">
 		<header class="tile-header">
 			<h4>Recipe du Jour</h4>
 			<p></p>
@@ -292,12 +242,7 @@
 		</div>
 	</article>
 
-	<div class="modal fade" id="recipe-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog">
-		</div>
-	</div>
-
-	<article class="grid-item news" a data-toggle="modal" href="#news-modal">
+	<article class="grid-item news" a data-toggle="modal" href="#morsel-modal">
 		<header class="tile-header">
 			<h4>News du Jour</h4>
 			<p></p>
@@ -315,11 +260,6 @@
 			</figure>
 		</div>
 	</article>
-
-	<div class="modal fade" id="news-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog">
-		</div>
-	</div>
 
 	<div class="video grid-item">
 		<iframe width="488" height="275" src="" frameborder="0" allowfullscreen></iframe>
