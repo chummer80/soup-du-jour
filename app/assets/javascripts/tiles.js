@@ -269,9 +269,10 @@ $(document).ready(function() {
 
 	// Get the list of morsels from the input element hidden in the HTML page
 	var morselList = $('select#morsel-list').val();
-
-	for (var i = 0; i < morselList.length; i++) {
-		$.getJSON(baseUrl + "/api/" + morselList[i], window.morselCBs[morselList[i] + "CB"]);
+	if (morselList) {
+		for (var i = 0; i < morselList.length; i++) {
+			$.getJSON(baseUrl + "/api/" + morselList[i], window.morselCBs[morselList[i] + "CB"]);
+		}
 	}
 });
 
