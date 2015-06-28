@@ -26,8 +26,7 @@ $.getJSON(baseUrl + "/api/weather", function(response, status, jqXHR){
 });
 
 $.getJSON(baseUrl + "/api/word", function(response, status, jqXHR){
-	$(".word").find('h4').eq(0).html(response.word);
-	$(".word").find('p').eq(0).html(response.definition);
+	$(".word").find('p').eq(0).html(response.word);
 
 	$('.word').click(function(){
 		var modalContent = $("#templates .soup-content").clone();
