@@ -113,7 +113,8 @@ private
 		word_api_data = HTTParty.get("http://api.wordnik.com:80/v4/words.json/wordOfTheDay?api_key=#{word_key}", timeout:15)
 		word_morsel_data = {
 			'word' => word_api_data['word'].capitalize,
-			'definition' => word_api_data["note"]
+			'definition' => word_api_data["note"],
+			'url' => "https://www.wordnik.com/words/#{word_api_data['word']}"
 		}
 		rescue
 			nil
