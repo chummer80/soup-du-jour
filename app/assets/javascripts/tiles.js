@@ -25,6 +25,7 @@ $(document).ready(function() {
 		});
 	};
 
+
 	window.morselCBs.weatherCB = function weatherCB(response, status, jqXHR) {
 		$(".weather").find('p').eq(0).html(response.location);
 		$(".weather").find('p').eq(1).html(response.current_temp);

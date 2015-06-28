@@ -5,7 +5,16 @@
 }
 
 body {
+  padding-top: 75px;
   font-family: sans-serif;
+  margin: 0 auto;
+  background-image: image-url('chickbg.jpeg');
+  background-size: cover;
+  background-position: fixed;
+}
+
+.container {
+  margin: 0 auto;
 }
 
 /* clear fix */
@@ -70,20 +79,35 @@ figure img {
 
 }
 
+.modal-body img{
+  margin: 0 auto;
+}
+
+.word figure {
+  background: blue;
+}
+.word h1 {
+    color: white;
+   -webkit-text-fill-color: blue; /* Will override color (regardless of order) */
+   -webkit-text-stroke-width: 1px;
+   -webkit-text-stroke-color: white;
+}
+
 #box {
   text-align: center;
-    margin: auto;
-    width: 275px;
-    height: 205px;
-    overflow: hidden;
-    position: relative;
+  margin: auto;
+  width: 275px;
+  height: 205px;
+  overflow: hidden;
+  position: relative;
 }
 
 .image img {
-    display:block;
-    width: 100%;
-    height: 100%;
+  display:block;
+  width: 100%;
+  height: 100%;
 }
+
 .image img {
     transform:scale(1);
     -ms-transform:scale(1);
@@ -106,18 +130,18 @@ article:hover .image img {
 }
 
 .text-info{
-    position: absolute;    
-    width: 100%;
-    height: 100%;
-    top: 0;
-    -webkit-transition: all 500ms ease;
-    -moz-transition: all 500ms ease;
-    -o-transition: all 500ms ease;
-    transition: all 500ms ease;
+  position: absolute;    
+  width: 100%;
+  height: 100%;
+  top: 0;
+  -webkit-transition: all 500ms ease;
+  -moz-transition: all 500ms ease;
+  -o-transition: all 500ms ease;
+  transition: all 500ms ease;
 }
 
-.text-info:hover{
-    background: rgba(255, 255, 255, 0.5);    
+article:hover .text-info {
+  background: rgba(255, 255, 255, 0.5);    
 }
 
 article:hover .tile-header {
@@ -136,12 +160,12 @@ article:hover .tile-header {
 .text-info span {
   position: absolute;
   top: -100%;   
-   -webkit-transition: all 500ms ease;
-    -moz-transition: all 500ms ease;
-    -o-transition: all 500ms ease;
-    transition: all 500ms ease;
+  -webkit-transition: all 500ms ease;
+  -moz-transition: all 500ms ease;
+  -o-transition: all 500ms ease;
+  transition: all 500ms ease;
 }
 
-.text-info:hover span {    
-    top: 50%;
+article:hover .text-info span {    
+  top: 50%;
 }
