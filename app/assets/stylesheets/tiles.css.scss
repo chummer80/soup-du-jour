@@ -11,6 +11,10 @@ body {
   background-position: fixed;
 }
 
+.container {
+  margin: auto;
+}
+
 /* clear fix */
 .grid:after {
   content: '';
@@ -71,6 +75,10 @@ figure img {
   height: 100%;
   max-width: 100%;
 
+}
+
+.modal-body img{
+  margin: 0 auto;
 }
 
 .word figure {
