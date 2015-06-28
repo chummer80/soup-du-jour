@@ -3,7 +3,31 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 
-.morsel-list {
-	height: 200px;
-	width: 100%;
+
+
+%preferences-container {
+	background-color: white;
+	border-radius: 10px;
+	padding: 20px;
+	margin: 20px;
+}
+
+#morsels-container {
+	@extend %preferences-container;
+	width: 1000px;
+
+	.morsel-list {
+		height: 240px;
+		width: 100%;
+	}
+}
+
+#settings-container {
+	@extend %preferences-container;
+	width: 250px;
+	
+	input[name="user[interests][]"] {
+		display: block;
+		width: 100%;
+	}
 }
