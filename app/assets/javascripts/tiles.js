@@ -33,6 +33,8 @@ $(document).ready(function() {
 
 	window.morselCBs.wordCB = function wordCB(response, status, jqXHR) {
 		$(".word").find('p').eq(0).html(response.word);
+		$(".word img").attr("src", "http://www.idea.org/blog/wp-content/uploads/2012/11/Screen-Shot-2012-11-12-at-10.52.15-PM-545x248.png");
+		// $(".word img").attr("src", "https://cdn.daysoftheyear.com/wp-content/images/dictionary-day2-e1376750259297-764x382.jpg");
 
 		$('.word').click(function(){
 			var modalContent = $("#templates .soup-content").clone();
