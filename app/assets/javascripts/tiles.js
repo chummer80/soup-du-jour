@@ -27,6 +27,7 @@ $(document).ready(function() {
 			modalContent.find('.modal-title').html(response.name);
 			modalContent.find('img').attr("src", response['image_url']);
 			modalContent.find('.modal-body p').html(response.description);
+			modalContent.find('a').attr("href", response['recipe_url']);
 
 			modalContent.appendTo(modal);
 		});	
@@ -35,13 +36,28 @@ $(document).ready(function() {
 
 	window.morselCBs.weatherCB = function weatherCB(response, status, jqXHR) {
 		$(".weather").find('p').eq(0).html(response.location);
-		$(".weather").find('p').eq(1).html(response.current_temp);
+		$(".weather").find('h4').eq(1).html(response.current_temp);
 		$(".weather img").attr("src", response['image_url']);
 		$(".weather img").on("load", null, $(".weather"), imageLoadCB);
+		$('.weather').click(function(){
+			var modalContent = $("#templates .soup-content").clone();
+			var modal = $('#morsel-modal .modal-dialog');
+
+			modal.empty();
+
+			modalContent.find('.modal-title').html(response.location);
+			modalContent.find('img').attr("src", response['image_url']);
+			modalContent.find('.modal-body p').html(response.description);
+			modalContent.find('a').attr("href", response['url']);
+
+
+			modalContent.appendTo(modal);
+		});
 	};
 
 	window.morselCBs.wordCB = function wordCB(response, status, jqXHR) {
 		$(".word").find('p').eq(0).html(response.word);
+		$(".word").find('h1').eq(0).html(response.word);
 		$(".word img").attr("src", "http://www.idea.org/blog/wp-content/uploads/2012/11/Screen-Shot-2012-11-12-at-10.52.15-PM-545x248.png");
 		// $(".word img").attr("src", "https://cdn.daysoftheyear.com/wp-content/images/dictionary-day2-e1376750259297-764x382.jpg");
 		$(".word img").on("load", null, $(".word"), imageLoadCB);
@@ -54,6 +70,8 @@ $(document).ready(function() {
 
 			modalContent.find('.modal-title').html(response.word);
 			modalContent.find('.modal-body p').html(response.definition);
+			modalContent.find('a').attr("href", 'https://www.wordnik.com/');
+
 
 			modalContent.appendTo(modal);
 		});
@@ -66,12 +84,15 @@ $(document).ready(function() {
 
 		$('.reddit').click(function(){
 			var modalContent = $("#templates .soup-content").clone();
-			var modal = $('#remorsel-modal .modal-dialog');
+			var modal = $('#morsel-modal .modal-dialog');
 
 			modal.empty();
 
-			modalContent.find('.modal-title').html("Reddit");
+			modalContent.find('.modal-title').html("Reddit Du Jour");
+			modalContent.find('img').attr("src", response['image']);
 			modalContent.find('.modal-body p').html(response.title);
+			modalContent.find('a').attr("href", response['permalink']);
+
 
 			modalContent.appendTo(modal);
 		});
@@ -84,39 +105,43 @@ $(document).ready(function() {
 
 		$('.restaurant').click(function(){
 			var modalContent = $("#templates .soup-content").clone();
-			var modal = $('#restaumorsel-modal .modal-dialog');
+			var modal = $('#morsel-modal .modal-dialog');
 
 			modal.empty();
 
 			modalContent.find('.modal-title').html(response.bizname);
 			modalContent.find('img').attr("src", response['first_img']);
 			modalContent.find('.modal-body p').html(response.comment);
+			modalContent.find('a').attr("href", response['yelp_link']);
+
 
 			modalContent.appendTo(modal);
 		});
 	};
 
 	window.morselCBs.photoCB = function photoCB(response, status, jqXHR) {
-		$(".photo").find('p').eq(0).html(response.username);
+
 		$(".photo img").eq(0).attr("src", response['image_url']);
 		$(".photo img").on("load", null, $(".photo"), imageLoadCB);
 
 		$('.photo').click(function(){
 			var modalContent = $("#templates .soup-content").clone();
-			var modal = $('#pmorsel-modal .modal-dialog');
+			var modal = $('#morsel-modal .modal-dialog');
 
 			modal.empty();
 
 			modalContent.find('.modal-title').html(response.username);
 			modalContent.find('img').attr("src", response['image_url']);
-			modalContent.find('.modal-body p').html(response.caption);
+			modalContent.find('.modal-body p').html(response.description);
+			modalContent.find('a').attr("href", response['url']);
+
 
 			modalContent.appendTo(modal);
 		});
 	};
 
 	window.morselCBs.viewCB = function viewCB(response, status, jqXHR) {
-		$(".view").find('p').eq(0).html("Instagram");
+
 		$(".view img").eq(0).attr("src", response['image_url']);
 		$(".view img").on("load", null, $(".view"), imageLoadCB);
 
@@ -129,6 +154,8 @@ $(document).ready(function() {
 			modalContent.find('.modal-title').html("Instagram");
 			modalContent.find('img').attr("src", response['image_url']);
 			modalContent.find('.modal-body p').html(response.caption);
+			modalContent.find('a').attr("href", response['url']);
+
 
 			modalContent.appendTo(modal);
 		});
@@ -146,7 +173,10 @@ $(document).ready(function() {
 			modal.empty();
 
 			modalContent.find('.modal-title').html(response.beer);
+			modalContent.find('img').attr("src", response['image']);
 			modalContent.find('.modal-body p').html(response.description);
+			modalContent.find('a').attr("href", 'http://www.bevmo.com/');
+
 
 			modalContent.appendTo(modal);
 		});
@@ -159,12 +189,15 @@ $(document).ready(function() {
 
 		$('.charity').click(function(){
 			var modalContent = $("#templates .soup-content").clone();
-			var modal = $('#chamorsel-modal .modal-dialog');
+			var modal = $('#morsel-modal .modal-dialog');
 
 			modal.empty();
 
 			modalContent.find('.modal-title').html(response.name);
+			modalContent.find('img').attr("src", response['image_url']);
 			modalContent.find('.modal-body p').html(response.description);
+			modalContent.find('a').attr("href", response['url']);
+
 
 			modalContent.appendTo(modal);
 		});
@@ -177,13 +210,15 @@ $(document).ready(function() {
 
 		$('.event').click(function(){
 			var modalContent = $("#templates .soup-content").clone();
-			var modal = $('#emorsel-modal .modal-dialog');
+			var modal = $('#morsel-modal .modal-dialog');
 
 			modal.empty();
 
 			modalContent.find('.modal-title').html(response.name);
 			modalContent.find('img').attr("src", response['event_pic']);
 			modalContent.find('.modal-body p').html(response.description);
+			modalContent.find('a').attr("href", response['event_url']);
+
 
 			modalContent.appendTo(modal);
 		});
@@ -199,13 +234,14 @@ $(document).ready(function() {
 
 		$('.recipe').click(function(){
 			var modalContent = $("#templates .soup-content").clone();
-			var modal = $('#remorsel-modal .modal-dialog');
+			var modal = $('#morsel-modal .modal-dialog');
 
 			modal.empty();
 
 			modalContent.find('.modal-title').html(response.name);
 			modalContent.find('img').attr("src", response['image']);
 			modalContent.find('.modal-body p').html(response.source);
+			modalContent.find('a').attr("href", response['source']);
 
 			modalContent.appendTo(modal);
 		});
@@ -225,6 +261,8 @@ $(document).ready(function() {
 			modalContent.find('.modal-title').html(response.title);
 			modalContent.find('img').attr("src", response['image']);
 			modalContent.find('.modal-body p').html(response.description);
+			modalContent.find('a').attr("href", response['source']);
+
 
 			modalContent.appendTo(modal);
 		});
@@ -252,12 +290,44 @@ $(document).ready(function() {
 
 	window.morselCBs.videoCB = function videoCB (response, status, jqXHR) {
 		$(".video iframe").eq(0).attr("src", response['video_url']);
+		$(".video").find('p').eq(0).html(response.title);
 		$(".video iframe").on("load", null, $(".video"), imageLoadCB);
+
+		$('.video').click(function(){
+			var modalContent = $("#video-template .soup-content").clone();
+			var modal = $('#morsel-modal .modal-dialog');
+
+			modal.empty();
+
+			modalContent.find('.modal-title').html(response.title);
+			modalContent.find('.modal-body iframe').attr("src", response['video_url']);
+			modalContent.find('.modal-body p').html(response.description);
+			modalContent.find('.modal-body a').attr("href", response['video_url']);
+
+			modalContent.appendTo(modal);
+		});
 	};
 
 	window.morselCBs.musicvideoCB = function musicvideoCB (response, status, jqXHR) {
 		$(".musicvideo iframe").eq(0).attr("src", response['video_url']);
+		$(".musicvideo").find('p').eq(0).html(response.title);
 		$(".musicvideo iframe").on("load", null, $(".musicvideo"), imageLoadCB);
+
+		$('.musicvideo').click(function(){
+			var modalContent = $("#video-template .soup-content").clone();
+			var modal = $('#morsel-modal .modal-dialog');
+
+			modal.empty();
+
+			modalContent.find('.modal-title').html(response.title);
+			modalContent.find('.modal-body iframe').attr("src", response['video_url']);
+			modalContent.find('.modal-body p').html(response.description);
+			modalContent.find('.modal-body a').attr("href", response['video_url']);
+
+			modalContent.appendTo(modal);
+		});
+
+
 	};
 	
 

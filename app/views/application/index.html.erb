@@ -42,7 +42,7 @@
       			  <img src="">
  			     </div>
    				 <div class="text text-info">
-  			      <span><p>Click for more info</p></span>
+  			      <span><h4></h4></span>
   				  </div>
 				</div>
 			</figure>
@@ -144,9 +144,17 @@
 		</div>
 	</article>
 
-	<div class="musicvideo grid-item hidden">
-		<iframe width="488" height="275" src="" frameborder="0" allowfullscreen></iframe>
-	</div>
+	<article class="grid-item musicvideo hidden" a data-toggle="modal" href="#morsel-modal">
+		<header class="tile-header">
+			<h4>Music Video du Jour</h4>
+			<p></p>
+		</header>
+		<div class="musicvideo tile-content">
+			
+		<iframe src="" frameborder="0" allowfullscreen></iframe>
+
+		</div>
+	</article>
 	
 	<article class="grid-item hidden word" a data-toggle="modal" href="#morsel-modal">
 		<header class="tile-header">
@@ -262,9 +270,18 @@
 		</div>
 	</article>
 
-	<div class="video grid-item hidden">
-		<iframe width="488" height="275" src="" frameborder="0" allowfullscreen></iframe>
-	</div>
+	<article class="grid-item video hidden" a data-toggle="modal" href="#morsel-modal">
+		<header class="tile-header">
+			<h4>Video du Jour</h4>
+			<p></p>
+		</header>
+		<div class="video tile-content">
+			
+		<iframe src="" frameborder="0" allowfullscreen></iframe>
+
+		</div>
+	</article>
+
 </div>
 
 <div id="templates" class="hidden">
@@ -278,7 +295,28 @@
       <div class="modal-body">
       <img src="" alt="" class="img-responsive">
 		<p></p>
-		<a href="">Link to More</a>
+		<a href="" target="_blank">Link to More</a>
+      </div>
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+</div>
+
+<div id="video-template" class="hidden">
+	<div class="soup-content modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">
+
+        </h4>
+      </div>
+      <div class="modal-body">
+		<div class="embed-responsive embed-responsive-4by3">
+		<iframe class="embed-responsive-item" src=""></iframe>
+		</div>
+		<div><p></p></div>
       </div>
       <div class="modal-footer">
 
