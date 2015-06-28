@@ -20,7 +20,7 @@ class UsersController < ApplicationController
 			# set some default values for user stats
 			user_params[:zip_code] = ""
 			user_params[:interests] = []
-			user_params[:morsels] = ["soup"]
+			user_params[:morsels] = MorselsHelper.get_morsel_list("all")
 
 			user = User.create(user_params)
 			if user.valid?
