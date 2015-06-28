@@ -274,13 +274,14 @@ $(document).ready(function() {
 		$(".video").find('p').eq(0).html(response.title);
 
 		$('.video').click(function(){
-			var modalContent = $("#templates .soup-content").clone();
+			var modalContent = $("#video-template .soup-content").clone();
 			var modal = $('#morsel-modal .modal-dialog');
 
 			modal.empty();
 
 			modalContent.find('.modal-title').html(response.title);
-			modalContent.find('.modal-body p').html(response.abstract);
+			modalContent.find('.modal-body iframe').attr("src", response['video_url']);
+			modalContent.find('.modal-body p').html(response.description);
 			modalContent.find('.modal-body a').attr("href", response['video_url']);
 
 			modalContent.appendTo(modal);
@@ -292,17 +293,20 @@ $(document).ready(function() {
 		$(".musicvideo").find('p').eq(0).html(response.title);
 
 		$('.musicvideo').click(function(){
-			var modalContent = $("#templates .soup-content").clone();
+			var modalContent = $("#video-template .soup-content").clone();
 			var modal = $('#morsel-modal .modal-dialog');
 
 			modal.empty();
 
 			modalContent.find('.modal-title').html(response.title);
-			modalContent.find('.modal-body p').html(response.abstract);
+			modalContent.find('.modal-body iframe').attr("src", response['video_url']);
+			modalContent.find('.modal-body p').html(response.description);
 			modalContent.find('.modal-body a').attr("href", response['video_url']);
 
 			modalContent.appendTo(modal);
 		});
+
+
 	};
 	
 
