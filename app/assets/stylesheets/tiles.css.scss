@@ -10,7 +10,8 @@ body {
   margin: 0 auto;
   background-image: image-url('chickbg.jpeg');
   background-size: cover;
-  background-position: fixed;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
 }
 
 div.navbar-brand {
