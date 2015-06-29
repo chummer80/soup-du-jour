@@ -1,5 +1,6 @@
-<div id="settings-container">
+<div id="settings-container" class="center-block">
 	<h1>User Settings</h1>
+	<hr>
 
 	<%= simple_form_for @user, url: update_user_settings_path, method: :patch do |f| %>
 		<%= f.input :zip_code %>

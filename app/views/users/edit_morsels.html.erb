@@ -1,14 +1,17 @@
-<div id="morsels-container">
+<div id="morsels-container" class="center-block text-center">
+	<h1>Morsel Preferences</h1>
+	<hr>
+
 	<%= simple_form_for @user, url: update_user_morsels_path, method: :patch do |f| %>
 
 		<div id="morsel-control-grid" class="container-fluid center-block">
 			<div class="row">
-				<div class="col-xs-5 text-center">
+				<div class="col-xs-5 ">
 					<h3>Your Morsels</h3>
 				</div>
 				<div class="col-xs-2">
 				</div>
-				<div class="col-xs-5 text-center">
+				<div class="col-xs-5 ">
 					<h3>Available Morsels</h3>
 				</div>
 			</div>
@@ -17,7 +20,7 @@
 					<%= f.input_field :morsels, collection: @user.morsels, multiple: true, selected: false, class: "morsel-list" %>
 				</div>
 		
-				<div class="col-xs-2 text-center">
+				<div class="col-xs-2 ">
 					<button id="morsel-up" type="button" class="btn-block" style="display: none;">Up</button>
 					<button id="morsel-down" type="button" class="btn-block" style="display: none;">Down</button>
 
@@ -31,16 +34,17 @@
 			<div class="row">
 				<div class="col-xs-5">
 				</div>
-				<div class="col-xs-2 text-center">
+				<div class="col-xs-2 ">
 					<%= f.button :submit, "Update Morsels", {id: "morsels-submit-btn"} %>
 				</div>
 				<div class="col-xs-5">
 				</div>
 			</div>
+			<br><br>
 			<div class="row">
 				<div class="col-xs-5">
 				</div>
-				<div class="col-xs-2 text-center">
+				<div class="col-xs-2 ">
 					<%= f.button :submit, "Cancel", {name: "cancel"} %>
 				</div>
 				<div class="col-xs-5">
