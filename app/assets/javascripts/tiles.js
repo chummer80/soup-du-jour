@@ -332,8 +332,8 @@ $(document).ready(function() {
 
 	window.morselCBs.triviaCB = function triviaCB(response, status, jqXHR) {
 		$(".trivia").find('p').eq(0).html(response.question);
-		// $(".word img").attr("src", "https://cdn.daysoftheyear.com/wp-content/images/dictionary-day2-e1376750259297-764x382.jpg");
-		$(".trivia img").on("load", null, $(".trivia"), imageLoadCB);
+		// fake the image loaded event to make the tile appear
+		imageLoadCB({data: $(".trivia")});
 
 		$('.trivia').click(function(){
 			var modalContent = $("#trivia-template .soup-content").clone();
@@ -354,8 +354,6 @@ $(document).ready(function() {
        			$(".answer").click(function() {
            			$("#show-answer").toggle();
        			});
-
-
 		});
 	};
 	
