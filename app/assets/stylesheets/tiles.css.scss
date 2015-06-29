@@ -13,13 +13,17 @@ body {
   background-position: fixed;
 }
 
-.navbar-brand img {
-  padding: 0;
-  height: 50px;
+div.navbar-brand {
+  padding: 0 22px;
+  
+  img {
+    padding: 0;
+    height: 50px;
+  }
 }
 
 .grid {
-  margin: 0 auto;
+  // margin: 0 auto;
 }
 
 /* clear fix */
