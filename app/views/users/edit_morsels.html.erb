@@ -1,57 +1,58 @@
 <div id="morsels-container" class="center-block text-center">
-	<h1>Morsel Preferences</h1>
-	<hr>
+	<div class="form-header-div text-center">
+		<h1>Morsel Preferences</h1>
+	</div>
 
-	<%= simple_form_for @user, url: update_user_morsels_path, method: :patch do |f| %>
+	<div class="form-content-div">
+		<%= simple_form_for @user, url: update_user_morsels_path, method: :patch do |f| %>
+			<div id="morsel-control-grid" class="container-fluid center-block">
+				<div class="row">
+					<div class="col-xs-5 ">
+						<h3>Your Morsels</h3>
+					</div>
+					<div class="col-xs-2">
+					</div>
+					<div class="col-xs-5 ">
+						<h3>Available Morsels</h3>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-5">
+						<%= f.input_field :morsels, collection: @user.morsels, multiple: true, selected: false, class: "morsel-list" %>
+					</div>
+			
+					<div class="col-xs-2 ">
+						<button id="morsel-up" type="button" class="btn-block" style="display: none;">Up</button>
+						<button id="morsel-down" type="button" class="btn-block" style="display: none;">Down</button>
 
-		<div id="morsel-control-grid" class="container-fluid center-block">
-			<div class="row">
-				<div class="col-xs-5 ">
-					<h3>Your Morsels</h3>
+						<button id="toggle-morsel" type="button" class="btn btn-warning disabled">Toggle Morsel</button>
+					</div>
+
+					<div class="col-xs-5">
+						<%= select_tag "Available Morsels", options_for_select(@unselected_morsels), {id: "available_morsels", multiple: true, class: "morsel-list"} %>
+					</div>
 				</div>
-				<div class="col-xs-2">
+				<div class="row">
+					<div class="col-xs-5">
+					</div>
+					<div class="col-xs-2 ">
+						<%= f.button :submit, "Update Morsels", {id: "morsels-submit-btn", class: "btn-warning"} %>
+					</div>
+					<div class="col-xs-5">
+					</div>
 				</div>
-				<div class="col-xs-5 ">
-					<h3>Available Morsels</h3>
+				<div class="row">
+					<div class="col-xs-5">
+					</div>
+					<div class="col-xs-2 ">
+						<%= f.button :submit, "Cancel", {name: "cancel", class: "btn-warning"} %>
+					</div>
+					<div class="col-xs-5">
+					</div>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-xs-5">
-					<%= f.input_field :morsels, collection: @user.morsels, multiple: true, selected: false, class: "morsel-list" %>
-				</div>
-		
-				<div class="col-xs-2 ">
-					<button id="morsel-up" type="button" class="btn-block" style="display: none;">Up</button>
-					<button id="morsel-down" type="button" class="btn-block" style="display: none;">Down</button>
 
-					<button id="toggle-morsel" type="button" class="btn btn-default disabled">Toggle Morsel</button>
-				</div>
-
-				<div class="col-xs-5">
-					<%= select_tag "Available Morsels", options_for_select(@unselected_morsels), {id: "available_morsels", multiple: true, class: "morsel-list"} %>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-5">
-				</div>
-				<div class="col-xs-2 ">
-					<%= f.button :submit, "Update Morsels", {id: "morsels-submit-btn"} %>
-				</div>
-				<div class="col-xs-5">
-				</div>
-			</div>
-			<br><br>
-			<div class="row">
-				<div class="col-xs-5">
-				</div>
-				<div class="col-xs-2 ">
-					<%= f.button :submit, "Cancel", {name: "cancel"} %>
-				</div>
-				<div class="col-xs-5">
-				</div>
-			</div>
-		</div>
-
-		<%= hidden_field_tag('final_user_morsels', "") %>
-	<% end %>
+			<%= hidden_field_tag('final_user_morsels', "") %>
+		<% end %>
+	</div>
 </div>

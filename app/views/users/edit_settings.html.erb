@@ -1,14 +1,17 @@
 <div id="settings-container" class="center-block">
-	<h1>User Settings</h1>
-	<hr>
+	<div class="form-header-div text-center">
+		<h1>User Settings</h1>
+	</div>
 
-	<%= simple_form_for @user, url: update_user_settings_path, method: :patch do |f| %>
-		<%= f.input :zip_code %>
-		
-		<%= f.input :interests, as: :array %>
-		<button id="add-interest" type="button" class="btn btn-default btn-block">Add Another Interest</button>
-		<br><br>
-		<%= f.button :submit, "Save Settings", class: "btn-block" %>
-		<%= f.button :submit, "Cancel", {name: "cancel", class: "btn-block"} %>
-	<% end %>
+	<div class="form-content-div">
+		<%= simple_form_for @user, url: update_user_settings_path, method: :patch do |f| %>
+			<%= f.input :zip_code %>
+			
+			<%= f.input :interests, as: :array %>
+			<button id="add-interest" type="button" class="btn btn-warning btn-block">Add Another Interest</button>
+			<br><br>
+			<%= f.button :submit, "Save Settings", class: "btn-block btn-warning" %>
+			<%= f.button :submit, "Cancel", {name: "cancel", class: "btn-block btn-warning"} %>
+		<% end %>
+	</div>
 </div>

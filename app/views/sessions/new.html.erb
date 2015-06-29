@@ -1,26 +1,27 @@
 <div id="login-container" class="center-block text-center">
-	<h1>Log In</h1>
-	<hr>
+	<div class="form-header-div">
+		<h1>Log In</h1>
+	</div>
 
-	<%= form_for @user, url: create_session_path, method: :post do |f| %>
-		<div class="row">
-			<div class="col-xs-6 text-right">
-				<%= f.label :email %>
+	<div class="form-content-div">
+		<%= form_for @user, url: create_session_path, method: :post do |f| %>
+			<div class="row">
+				<div class="col-xs-6 text-right">
+					<%= f.label :email %>
+				</div>
+				<div class="col-xs-6">
+					<%= f.text_field :email, class: "login-text-field" %>
+				</div>
 			</div>
-			<div class="col-xs-6">
-				<%= f.text_field :email, class: "login-text-field" %>
+			<div class="row">
+				<div class="col-xs-6 text-right">
+					<%= f.label :password %>
+				</div>
+				<div class="col-xs-6">
+					<%= f.password_field :password, class: "login-text-field" %>
+				</div>
 			</div>
-		</div>
-		<br><br>
-		<div class="row">
-			<div class="col-xs-6 text-right">
-				<%= f.label :password %>
-			</div>
-			<div class="col-xs-6">
-				<%= f.password_field :password, class: "login-text-field" %>
-			</div>
-		</div>
-		<br><br>
-		<%= f.submit "Log In" %>
-	<% end %>
+			<%= f.submit "Log In", class: "btn-warning" %>
+		<% end %>
+	</div>
 </div>

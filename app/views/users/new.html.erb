@@ -1,35 +1,35 @@
 <div id="signup-container" class="center-block text-center">
-	<h1>Sign Up</h1>
-	<hr>
+	<div class="form-header-div">
+		<h1>Sign Up</h1>
+	</div>
 
-	<%= form_for @user, url: create_user_path, method: :post do |f| %>
-		<div class="row">
-			<div class="col-xs-6 text-right">
-				<%= f.label :email %>
+	<div class="form-content-div">
+		<%= form_for @user, url: create_user_path, method: :post do |f| %>
+			<div class="row">
+				<div class="col-xs-6 text-right">
+					<%= f.label :email %>
+				</div>
+				<div class="col-xs-6">
+					<%= f.text_field :email, class: "signup-text-field" %>
+				</div>
 			</div>
-			<div class="col-xs-6">
-				<%= f.text_field :email, class: "signup-text-field" %>
+			<div class="row">
+				<div class="col-xs-6 text-right">
+					<%= f.label :password %>
+				</div>
+				<div class="col-xs-6">
+					<%= f.password_field :password, class: "signup-text-field" %>
+				</div>
 			</div>
-		</div>
-		<br><br>
-		<div class="row">
-			<div class="col-xs-6 text-right">
-				<%= f.label :password %>
+			<div class="row">
+				<div class="col-xs-6 text-right">
+					<%= f.label :password_confirmation, "Confirm Password" %>
+				</div>
+				<div class="col-xs-6">
+					<%= f.password_field :password_confirmation, class: "signup-text-field" %>
+				</div>
 			</div>
-			<div class="col-xs-6">
-				<%= f.password_field :password, class: "signup-text-field" %>
-			</div>
-		</div>
-		<br><br>
-		<div class="row">
-			<div class="col-xs-6 text-right">
-				<%= f.label :password_confirmation, "Confirm Password" %>
-			</div>
-			<div class="col-xs-6">
-				<%= f.password_field :password_confirmation, class: "signup-text-field" %>
-			</div>
-		</div>
-		<br><br>
-		<%= f.submit "Sign Up" %>
-	<% end %>
+			<%= f.submit "Sign Up", class: "btn-warning" %>
+		<% end %>
+	</div>
 </div>
