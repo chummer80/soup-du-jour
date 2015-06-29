@@ -3,26 +3,25 @@
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
-Things you may want to cover:
+Link: soupdujour.herokuapp.com
 
-* Ruby version
+Welcome to the Soup Du Jour App.  This web application was developed by Mike Chu, Val Ngai, and Martin Maza for Project 3 of
+General Assembly's Web Development Immersive Course (DTLA WDI 003).
 
-* System dependencies
+This web application grabs data via APIs from various websites and stores it into our own API using ruby on rails as the
+backend.  We use jquery to call our API from the front end.  The idea is to create a hub that will allow the user to see
+what is popular around the Internet without having to type and scroll through the various websites.
 
-* Configuration
+Users can log in and adjust their preferences by adding and removing tiles.
 
-* Database creation
+Some API keys may expire and some API calls may be subject to change.
 
-* Database initialization
+If you decide to pull, please request the various api keys needed for
 
-* How to run the test suite
+Enjoy!
 
-* Services (job queues, cache servers, search engines, etc.)
 
-* Deployment instructions
-
-* ...
-
+Link: soupdujour.herokuapp.com
 
 Please feel free to use a different markup language if you do not plan to run
 <tt>rake doc:app</tt>.
