@@ -44,14 +44,18 @@ class UsersController < ApplicationController
 	end
 
 	def update_settings
-		user = current_user
-		user_params = params.require(:user).permit(:zip_code, interests: [])
-		
-		if user.update_attributes(user_params)
+		if params[:cancel]
 			redirect_to root_path
 		else
-			@user = User.new(user_params)
-			render 'edit_settings'
+			user = current_user
+			user_params = params.require(:user).permit(:zip_code, interests: [])
+			
+			if user.update_attributes(user_params)
+				redirect_to root_path
+			else
+				@user = User.new(user_params)
+				render 'edit_settings'
+			end
 		end
 	end
 

@@ -1,5 +1,6 @@
-<div id="settings-container">
+<div id="settings-container" class="center-block">
 	<h1>User Settings</h1>
+	<hr>
 
 	<%= simple_form_for @user, url: update_user_settings_path, method: :patch do |f| %>
 		<%= f.input :zip_code %>
@@ -8,5 +9,6 @@
 		<button id="add-interest" type="button" class="btn btn-default btn-block">Add Another Interest</button>
 		<br><br>
 		<%= f.button :submit, "Save Settings", class: "btn-block" %>
+		<%= f.button :submit, "Cancel", {name: "cancel", class: "btn-block"} %>
 	<% end %>
 </div>
