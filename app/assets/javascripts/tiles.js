@@ -340,7 +340,8 @@ $(document).ready(function() {
 			itemSelector: '.grid-item',
 			layoutMode: 'masonry',
 			masonry: {
-				columnWidth: 50
+				columnWidth: 50,
+				isFitWidth: true
 			}
 
 		});
