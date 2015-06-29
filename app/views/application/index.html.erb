@@ -5,11 +5,17 @@
 		</div>
 	</div>
 
-	<div class="grid-item shuffle-div date">
-		<p class="well lead">
-			<%= Date.today.strftime("%A, %B %d") %>
-		</p>
-	</div>
+	<article class="grid-item shuffle-div" id="brand">
+		<header class="tile-header">
+			<h4><%= Date.today.strftime("%A, %B %d") %></h4>
+			<p>Click here to stir the tiles</p>
+		</header>
+		<div class="tile-content">
+			<figure>
+				<%= image_tag('logo-white.png') %>
+			</figure>
+		</div>
+	</article>
 
 	<article class="grid-item hidden soup" a data-toggle="modal" href="#morsel-modal">
 		<header class="tile-header">

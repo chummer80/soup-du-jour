@@ -13,7 +13,12 @@ body {
   background-position: fixed;
 }
 
-.container {
+.navbar-brand img {
+  padding: 0;
+  height: 50px;
+}
+
+.grid {
   margin: 0 auto;
 }
 
@@ -50,6 +55,10 @@ body {
 
 .shuffle-div {
   border: 0;
+}
+
+#brand {
+  background: transparent;
 }
 
 article {
