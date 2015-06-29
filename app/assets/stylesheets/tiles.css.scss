@@ -13,9 +13,13 @@ body {
   background-position: fixed;
 }
 
-.navbar-brand img {
-  padding: 0;
-  height: 50px;
+div.navbar-brand {
+  padding: 0 10px;
+  
+  img {
+    padding: 0;
+    height: 50px;
+  }
 }
 
 .grid {
