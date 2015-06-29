@@ -333,27 +333,31 @@ $(document).ready(function() {
 
 	////////// Event Handlers //////////
 
-
-	// external js: isotope.pkgd.js
-	var $grid = $('.grid').imagesLoaded(function() {
-		$grid.isotope({
-			itemSelector: '.grid-item',
-			layoutMode: 'masonry',
-			masonry: {
-				columnWidth: 50,
-				isFitWidth: true
+	var $grid = $('.grid').isotope({
+		itemSelector: '.grid-item',
+		layoutMode: 'masonry',
+		masonry: {
+			columnWidth: 50,
+			isFitWidth: true
+		},
+		getSortData: {
+			myrandom: function (elem) {
+				if ($(elem).is('#brand')) {
+					 return -1;	 
+				}
+				return Math.random();
 			}
+		}
+	});
 
-		});
-
+	$grid.imagesLoaded(function() {
 		$grid.isotope('layout');
 	});
 
-
 	$('.shuffle-div').on( 'click', function() {
-		$grid.isotope('shuffle');
+		// $grid.isotope('shuffle');
+		$grid.isotope({sortBy: 'myrandom'}).isotope('reloadItems');
 	});
-
 
 
 	////////// Start morsel API calls //////////
