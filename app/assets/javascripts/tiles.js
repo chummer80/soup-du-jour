@@ -329,6 +329,35 @@ $(document).ready(function() {
 
 
 	};
+
+	window.morselCBs.triviaCB = function triviaCB(response, status, jqXHR) {
+		$(".trivia").find('p').eq(0).html(response.question);
+		// $(".word img").attr("src", "https://cdn.daysoftheyear.com/wp-content/images/dictionary-day2-e1376750259297-764x382.jpg");
+		$(".trivia img").on("load", null, $(".trivia"), imageLoadCB);
+
+		$('.trivia').click(function(){
+			var modalContent = $("#trivia-template .soup-content").clone();
+			var modal = $('#morsel-modal .modal-dialog');
+
+			modal.empty();
+
+			modalContent.find('.modal-body h3').eq(0).html(response.question);
+			modalContent.find('.modal-body li').eq(0).html(response.answer1);
+			modalContent.find('.modal-body li').eq(1).html(response.answer2);
+			modalContent.find('.modal-body li').eq(2).html(response.answer3);
+			modalContent.find('.modal-body li').eq(3).html(response.answer4);
+			modalContent.find('.modal-body h3').eq(1).html(response.correct);
+			modalContent.find('a').attr("href", 'https://doubleordonate.herokuapp.com');
+
+			modalContent.appendTo(modal);
+
+       			$(".answer").click(function() {
+           			$("#show-answer").toggle();
+       			});
+
+
+		});
+	};
 	
 
 	////////// Event Handlers //////////
