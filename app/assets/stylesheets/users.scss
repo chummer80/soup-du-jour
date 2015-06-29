@@ -8,7 +8,25 @@
 .form-container {
 	background-color: white;
 	border-radius: 10px;
-	padding: 20px;
+	.form-header-div {
+		padding-top: 20px;
+		padding-bottom: 20px;
+		border-top-left-radius: 10px;
+		border-top-right-radius: 10px;
+		background-color: #F9AA3A;
+		color: white;
+
+		h1 {
+			margin: 0;
+		}
+	}
+	.form-content-div {
+		padding: 20px;
+
+		.row {
+			margin-bottom: 10px;
+		}
+	}
 }
 
 #signup-container {
