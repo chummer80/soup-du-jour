@@ -95,6 +95,9 @@ private
 		end
 	end
 
+#API methods
+	#used ruby rescue to add default text/pictures to prevent certain key/value pairs from error-out (ie eventbrite photos will error without a default picture)
+	# added another rescue to have the tiles return nil instead of error-out
 	def self.get_soup_morsel_data
 		soup_index = Time.zone.now.mday - 1
 		soup_morsel = Soup.all[soup_index]
