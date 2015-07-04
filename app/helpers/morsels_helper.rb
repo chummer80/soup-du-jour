@@ -330,7 +330,7 @@ private
 	def self.get_musicvideo_morsel_data
 		# Youtube channel "#PopularOnYoutube" has a playlist called "Popular Right Now".
 		# Grab the first musicvideo on that playlist as our musicvideo morsel.
-		playlist = Yt::Playlist.new(id: 'PLFgquLnL59alCl_2TQvOiD5Vgm1hCaGSI')
+		playlist = Yt::Playlist.new(id: 'PLFgquLnL59akA2PflFpeQG9L01VFg90wS')
 		musicvideo = playlist.playlist_items.first
 
 		# this method gives the default-sized image. change it to the max-res image.

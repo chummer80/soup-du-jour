@@ -70,7 +70,7 @@ $(document).ready(function() {
 
 			modalContent.find('.modal-title').html(response.word);
 			modalContent.find('.modal-body p').html(response.definition);
-			modalContent.find('a').attr("href", 'https://www.wordnik.com/');
+			modalContent.find('a').attr("href", response.url);
 
 
 			modalContent.appendTo(modal);
