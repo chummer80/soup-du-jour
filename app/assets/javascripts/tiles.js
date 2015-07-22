@@ -69,7 +69,7 @@ $(document).ready(function() {
 			modal.empty();
 
 			modalContent.find('.modal-title').html(response.word);
-			modalContent.find('.modal-body p').html(response.definition);
+			modalContent.find('.modal-body p').html(response.part_of_speech + ": " + response.definition);
 			modalContent.find('a').attr("href", response.url);
 
 
